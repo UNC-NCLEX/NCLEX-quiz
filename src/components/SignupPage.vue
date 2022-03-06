@@ -19,6 +19,12 @@
                 <n-button type="primary" id="submit" color="#ffc634" text-color="black">Sign Up</n-button>
             </div>
         </form>
+        <br>
+        <div class="signup-help">
+            <!-- TODO: Fix href links for the log in and forgot password links -->
+            <p>Have an account? <a id="signup" href="test">Log in here</a></p>
+            <p>Forgot your password? <a id="forgot-password" href="test">Click here</a></p>
+        </div>
     </div>
 </template>
 
