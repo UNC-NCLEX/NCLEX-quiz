@@ -1,31 +1,52 @@
 <template>
     <div class="signup-page">
-        <h1>Pharmacology & Pathophysiology</h1>
+        <h1 id="header">Pharmacology & Pathophysiology</h1>
         <h3>Interactive tool to help you learn</h3>
         <form class="signup-form">
             <div class="form-group">
                 <label for="name" class="signup-label">Name</label>
-                <input type="text" id="name" name="name" placeholder="Name"><br><br>
+                <n-input v-model:value="value" type="text" class="form-field" id="name" name="name" placeholder="Name" /><br><br>
             </div>
             <div class="form-group">
                 <label for="email" class="signup-label">Email</label>
-                <input type="text" id="email" name="email" placeholder="Email"><br><br>
+                <n-input v-model:value="value" type="text" class="form-field" id="email" name="email" placeholder="Email Address" /><br><br>
             </div>
             <div class="form-group">
                 <label for="password" class="signup-label">Password</label>
-                <input type="text" id="password" name="password" placeholder="Password"><br><br>
+              <n-input type="password" show-password-on="mousedown" class="form-field" id="password" name="password" placeholder="Password" :maxlength="64"/><br><br>
             </div>
             <div class="form-group">
-                <button id="submit">Sign Up</button>
+                <n-button type="primary" id="submit" color="#ffc634" text-color="black">Sign Up</n-button>
             </div>
         </form>
     </div>
 </template>
 
+<script>
+import { ref } from 'vue'
+import { NButton, NInput } from 'naive-ui'
+export default {
+  name: 'SignupPage',
+  components: {
+    NButton,
+    NInput
+  },
+  setup() {
+    return {
+      value: ref(null)
+    };
+  }
+}
+</script>
+
 <style scoped>
-    input[type='text'] {
-        display: inline-block;
-        width: 30%;
+    .form-field {
+        color: black;
+        text-align: left;
+    }
+
+    .form-group {
+        width: 350px;
     }
 
     .signup-form {
@@ -36,19 +57,26 @@
         color: white;
         display: block;
         margin-bottom: 0.5rem;
-        text-align: center;
+        text-align: left;
     }
 
     .signup-page {
+        align-items: center;
         color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
-    #submit {
-        background-color: #f1c40f;
-        border: 2px solid #f1c40f;
-        color: black;
-        padding: 10px;
-        text-align: center;
-        width: 10%;
+    #forgot-password {
+        color: #ffc634;
+    }
+
+    #header {
+        height: 25px;
+    }
+
+    #signup {
+        color: #ffc634;
     }
 </style>
