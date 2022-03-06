@@ -1,15 +1,15 @@
 <template>
     <div class="login-page">
-        <h1>Pharmacology & Pathophysiology</h1>
+        <h1 id="header">Pharmacology & Pathophysiology</h1>
         <h3>Interactive tool to help you learn</h3>
         <form class="login-form">
             <div class="form-group">
                 <label for="email" class="login-label">Email</label>
-                <input type="text" class="form-field" id="email" name="email" placeholder="Email Address"><br><br>
+                <n-input v-model:value="value" type="text" class="form-field" id="email" name="email" placeholder="Email Address" /><br><br>
             </div>
             <div class="form-group">
                 <label for="password" class="login-label">Password</label>
-                <input type="text" class="form-field" id="password" name="password" placeholder="Password"><br><br>
+                <n-input type="password" show-password-on="mousedown" class="form-field" id="password" name="password" placeholder="Password" :maxlength="64"/><br><br>
             </div>
             <div class="form-group">
                 <n-button type="primary" id="submit" color="#ffc634" text-color="black">Log In</n-button>
@@ -24,19 +24,34 @@
     </div>
 </template>
 
-<!-- TODO: Incorporate more Naive UI components -->
 <script>
-import { NButton } from 'naive-ui'
+import { ref } from 'vue'
+import { NButton, NInput } from 'naive-ui'
 
 export default {
   name: 'LoginPage',
   components: {
-    NButton
+    NButton,
+    NInput
+  },
+  setup() {
+    return {
+      value: ref(null)
+    };
   }
 }
 </script>
 
 <style scoped>
+    .form-field {
+        color: black;
+        text-align: left;
+    }
+
+    .form-group {
+        width: 350px;
+    }
+
     .login-form {
         display: center;
     }
@@ -58,6 +73,10 @@ export default {
 
     #forgot-password {
         color: #ffc634;
+    }
+
+    #header {
+        height: 25px;
     }
 
     #signup {
