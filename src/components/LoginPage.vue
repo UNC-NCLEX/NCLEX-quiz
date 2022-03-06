@@ -5,14 +5,14 @@
         <form class="login-form">
             <div class="form-group">
                 <label for="email" class="login-label">Email</label>
-                <input type="text" id="email" name="email" placeholder="Email Address"><br><br>
+                <input type="text" class="form-field" id="email" name="email" placeholder="Email Address"><br><br>
             </div>
             <div class="form-group">
                 <label for="password" class="login-label">Password</label>
-                <input type="text" id="password" name="password" placeholder="Password"><br><br>
+                <input type="text" class="form-field" id="password" name="password" placeholder="Password"><br><br>
             </div>
             <div class="form-group">
-                <button id="submit">Log In</button>
+                <n-button type="primary" id="submit" color="#ffc634" text-color="black">Log In</n-button>
             </div>
         </form>
         <br>
@@ -24,16 +24,19 @@
     </div>
 </template>
 
+<!-- TODO: Incorporate more Naive UI components -->
 <script>
+import { NButton } from 'naive-ui'
 
+export default {
+  name: 'LoginPage',
+  components: {
+    NButton
+  }
+}
 </script>
 
 <style scoped>
-    input[type='text'] {
-        display: inline-block;
-        width: 30%;
-    }
-
     .login-form {
         display: center;
     }
@@ -42,27 +45,22 @@
         color: white;
         display: block;
         margin-bottom: 0.5rem;
-        text-align: center;
+        text-align: left;
     }
 
     .login-page {
+        align-items: center;
         color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     #forgot-password {
-        color: #f1c40f;
+        color: #ffc634;
     }
 
     #signup {
-        color: #f1c40f;
-    }
-
-    #submit {
-        background-color: #f1c40f;
-        border: 2px solid #f1c40f;
-        color: black;
-        padding: 10px;
-        text-align: center;
-        width: 10%;
+        color: #ffc634;
     }
 </style>
