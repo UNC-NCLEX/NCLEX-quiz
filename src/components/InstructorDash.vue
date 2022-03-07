@@ -1,10 +1,13 @@
 <template>
   <div class='main'>
+    <div class='top'>
     <h1>Pharmacology & Pathophysiology</h1>
+    <h3 id="subtitle">Interactive tool to help you learn</h3>
+    </div>
     <div class="header">
-    <h4 id="subtitle"> Instructor Dashboard </h4>
     <h4> <router-link :to="{}">Sign Out </router-link> </h4>
     </div>
+
     
     <div class="cont">
     <div class="quiz">
@@ -16,32 +19,14 @@
     <h3><router-link :to="{}">Add a quiz</router-link></h3>
     <h3><router-link :to="{}">Edit a quiz</router-link></h3>
     </div>
-    <div class="scores">
-    <h2>Student Scores</h2>
+    <div class="right">
+    <h2 id="scores">Student Scores</h2>
 
-    <table>
-      <tr>
-          <th>Onyen</th>
-          <th>Scores</th>
-      </tr>
-      <tr>
-          <td>ex1</td>
-          <!--TODO add links to pages -->
-          <td><a href=""> *</a></td>
-      </tr>
-      <tr>
-          <td>ex2</td>
-          <!--TODO add links to pages -->
-          <td><a href=""> *</a></td>
-      </tr>
-    </table>
-
+    <h2 id="roster">Manage Roster</h2>
 
     </div>
     </div>
-    
-    <!--TODO add links to pages -->
-    <h2> <router-link :to="{}"> Manage Roster </router-link></h2>
+
     <!--TODO add other emails, maybe change to embedded form -->
     <p> <a href="mailto: aelisebe@live.unc.edu"> Report a problem</a></p>
   </div>
@@ -77,43 +62,64 @@ export default {
 .main{
   font-family: 'Montserrat';
 }
+.top{
+  background-color: #0094FF;
+  padding-top: 5%;
+  padding-bottom: 3%;
+}
 .cont{
     display: flex;
+    justify-content: center;
     padding: 10px;
+    padding-top: 3%;
+    width:auto;
+    margin:auto;
     margin-bottom: 15px;
+    align-content: center;
 }
 .quiz{
     text-align: center;
     padding:10px;
-    margin-right:10%;
-    width: 30%;
-    background-color: rgba(170, 173, 173, 0.315);
+    margin-right:3%;
+    width: 25%;
+    background-color: #e0dbd9;
     border-radius: 5%;
-    box-shadow: 10px 10px 5px rgb(177, 168, 162);
+    box-shadow: 10px 10px 5px #cac9c9;
 
 }
 
-.scores{
+.right{
     text-align: center;
     padding: 10px;
-    margin-left:15%;
-    width:55%;
-    background-color: rgba(170, 173, 173, 0.315); 
-    border-radius: 5%;
-    box-shadow: 10px 10px 5px rgb(177, 168, 162);
+    margin-left:3%;
+    width:25%;
 }
+#scores{
+  background-color: #ff5c00;
+  color:white;
+  border-radius: 5%;
+  margin-top: 5%;
+  box-shadow: 10px 10px 5px #cac9c9;
+}
+
+#roster{
+  background-color: #ff5c00;
+  color:white;
+  border-radius: 5%;
+  margin-top: 15%;
+  box-shadow: 10px 10px 5px #cac9c9;
+}
+
 .header{
   text-align: right;
   margin-top: 3px;
 }
 #subtitle{
-  background-color: #f1c40f;
-  text-align: center;
-  margin-left:85%;
-  padding:5px;
+  color: white;
 }
 h2{
-    background-color: #fc5000;
+    color: #ff5c00;
+    font-weight: 900;
     text-align: center;
     padding:10px;
     margin: 5px;
@@ -125,7 +131,9 @@ h2{
 h3 {
   text-align: center;
 }
-
+h1{
+  color: white;
+}
 table{
   border: 1px solid black;
   margin-left: auto;
