@@ -3,13 +3,14 @@
     <h1>Content</h1>
     <div v-for="(item, index) in quizzes" :key="item.qid">
         <div class=quizzes__card>
-            <div>{{ quizzes[index].name}}</div>  
+            <div>{{ quizzes[index].name}}</div>
         </div> 
     </div>
   </div>  
 </template>
 
 <script>
+
 export default {
   name: 'QuizzesContainer',
   props: {

@@ -1,18 +1,25 @@
 <template>
   <div class="student">
     <h1>{{ "Welcome <user>. Here is how you have done in your past quizzes:" }}</h1>
-    <div v-for="(item, index) in scores" :key="item.qid">
-        <li class=student__score__section>{{ past_quizzes[index].name}}: <span class=student__score>{{ item.score}}</span></li>     
+    <div class="scores">
+      <div class="centered" v-for="(item, index) in scores" :key="item.qid">
+        <div class=student__score__section>{{ past_quizzes[index].name}}</div>
+        <n-progress type="line" :percentage="item.score" :indicator-placement="'inside'"/>
+      </div>
     </div>
   </div>  
-</template>
+</template> 
 
 <script>
+import { NProgress } from 'naive-ui'
 export default {
   name: 'StudentDashboard',
   props: {
     scores: Array,
     past_quizzes: Array
+  },
+  components: {
+    NProgress
   }
 }
 </script>
@@ -21,12 +28,24 @@ export default {
 <style scoped>
   .student{
     color:black;
+    text-align: center;
   }
   .student__score__section {
     font-size:1.5rem;
   }
   .student__score{
     font-weight: 700;
+  }
+  .centered {
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding-bottom: 2%;
+  }
+  .scores {
+    padding: 5%;
+    box-shadow: -10px 4px 6px rgba(0, 0, 0, 0.25);  
+    margin-bottom: 5%;
   }
   
 </style>

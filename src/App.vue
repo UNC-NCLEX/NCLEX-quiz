@@ -1,66 +1,129 @@
 <template>
-    <StudentDashboard :scores=scores :past_quizzes=past_quizzes></StudentDashboard>
-    <QuizzesContainer :quizzes=past_quizzes></QuizzesContainer>
+  <StudentDashboard
+    :scores="scores"
+    :past_quizzes="past_quizzes"
+  ></StudentDashboard>
+  <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
+  <DropDownTable :columns="columns" :data="data"></DropDownTable>
 </template>
 
 <script>
-import StudentDashboard from './components/StudentDashboard.vue'
-import QuizzesContainer from './components/QuizzesContainer.vue'
+import { h } from "vue";
+import StudentDashboard from "./components/StudentDashboard.vue";
+import QuizzesContainer from "./components/QuizzesContainer.vue";
+import DropDownTable from "./components/DropDownTable.vue";
+import { NSelect } from "naive-ui";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     StudentDashboard,
-    QuizzesContainer
+    QuizzesContainer,
+    DropDownTable,
   },
-  data () {
+  data() {
     return {
       scores: [
         {
           qid: 1,
-          score: 100
+          score: 100,
         },
         {
           qid: 2,
-          score: 70
+          score: 70,
         },
         {
           qid: 3,
-          score: 90
-        }
+          score: 90,
+        },
       ],
       past_quizzes: [
         {
           qid: 1,
-          name: "Unit 1"
+          name: "Unit 1",
         },
         {
           qid: 2,
-          name: "Unit 2"
+          name: "Unit 2",
         },
         {
           qid: 3,
-          name: "Unit 3"
-        }
-      ]
-    }
-  }
-}
+          name: "Unit 3",
+        },
+      ],
+      columns: [
+        {
+          key: "medication",
+          title: "Medication",
+        },
+        {
+          key: "DrugClassification",
+          title: "Drug Classification",
+          render() {
+            return h(
+              NSelect,
+              {
+                options: [
+                  {
+                    value: "option1",
+                    label: "This is an example Medication",
+                  },
+                  {
+                    value: "option2",
+                    label: "This is an example Medicatioweqaen",
+                  },
+                  {
+                    value: "option2",
+                    label: "This is an example Medicatwearawrion",
+                  },
+                ],
+              },
+              {
+                default: () => "her",
+              }
+            );
+          },
+        },
+        {
+          key: "ClientTeaching",
+          title: "Client Teaching",
+        },
+      ],
+      data: [
+        {
+          medication: "he4y",
+          DrugClassification: ["hey", "hey"],
+          ClientTeaching: "hey",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-left:10%;
-  padding-right:10%;
+  padding-left: 10%;
+  padding-right: 10%;
   color: #2c3e50;
   margin-top: 60px;
-  background-color: linear-gradient(172.4deg, #24A3FF 5.89%, #24A3FF 5.9%, #0038FF 91.52%);
+  background-color: linear-gradient(
+    172.4deg,
+    #24a3ff 5.89%,
+    #24a3ff 5.9%,
+    #0038ff 91.52%
+  );
 }
 
-.container{
-  background-color: linear-gradient(172.4deg, #24A3FF 5.89%, #24A3FF 5.9%, #0038FF 91.52%);
+.container {
+  background-color: linear-gradient(
+    172.4deg,
+    #24a3ff 5.89%,
+    #24a3ff 5.9%,
+    #0038ff 91.52%
+  );
 }
 </style>
