@@ -1,15 +1,16 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  
+  <StudentRoster :students="this.$store.state.students"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import StudentRoster from './components/Roster.vue';
+//import studentData from './components/studentData.js'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    StudentRoster,
+  
   }
 }
 </script>
@@ -21,6 +22,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
