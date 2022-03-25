@@ -1,4 +1,5 @@
 <template>
+  <StudentRoster :students="this.$store.state.students"/>
   <StudentDashboard
     :scores="scores"
     :past_quizzes="past_quizzes"
@@ -9,6 +10,8 @@
 
 <script>
 import { h } from "vue";
+import StudentRoster from './components/Roster.vue';
+//import studentData from './components/studentData.js'
 import StudentDashboard from "./components/StudentDashboard.vue";
 import QuizzesContainer from "./components/QuizzesContainer.vue";
 import DropDownTable from "./components/DropDownTable.vue";
@@ -17,6 +20,7 @@ import { NSelect } from "naive-ui";
 export default {
   name: "App",
   components: {
+    StudentRoster,
     StudentDashboard,
     QuizzesContainer,
     DropDownTable,
@@ -117,7 +121,6 @@ export default {
     #0038ff 91.52%
   );
 }
-
 .container {
   background-color: linear-gradient(
     172.4deg,
