@@ -1,4 +1,5 @@
 <template>
+  <InstructorDash />
   <StudentRoster :students="this.$store.state.students"/>
   <StudentDashboard
     :scores="scores"
@@ -10,6 +11,8 @@
 
 <script>
 import { h } from "vue";
+//import HelloWorld from './components/HelloWorld.vue'
+import InstructorDash from './components/InstructorDash.vue'
 import StudentRoster from './components/Roster.vue';
 //import studentData from './components/studentData.js'
 import StudentDashboard from "./components/StudentDashboard.vue";
@@ -20,6 +23,7 @@ import { NSelect } from "naive-ui";
 export default {
   name: "App",
   components: {
+    InstructorDash,
     StudentRoster,
     StudentDashboard,
     QuizzesContainer,
@@ -103,6 +107,7 @@ export default {
     };
   },
 };
+
 </script>
 
 <style>
