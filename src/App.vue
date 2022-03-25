@@ -1,5 +1,7 @@
 <template>
-  <SignupPage />
+  <n-message-provider>
+    <SignupPage />
+  </n-message-provider>
 </template>
 
 <script>
