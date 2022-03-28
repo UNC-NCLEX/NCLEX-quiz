@@ -1,4 +1,6 @@
 <template>
+
+
   <InstructorDash />
   <StudentRoster :students="this.$store.state.students"/>
   <StudentDashboard
@@ -7,6 +9,10 @@
   ></StudentDashboard>
   <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
   <DropDownTable :columns="columns" :data="data"></DropDownTable>
+  
+   <multiple-choice />
+  <DropDown :drugs="drugs" :options="options"></DropDown>
+  <drop-down-sentence />
 </template>
 
 <script>
@@ -18,11 +24,53 @@ import StudentRoster from './components/Roster.vue';
 import StudentDashboard from "./components/StudentDashboard.vue";
 import QuizzesContainer from "./components/QuizzesContainer.vue";
 import DropDownTable from "./components/DropDownTable.vue";
+
+import MultipleChoice from "./components/MultipleChoice.vue";
+import DropDown from "./components/DropDown.vue";
+import DropDownSentence from "./components/DropDownSentence.vue";
+
 import { NSelect } from "naive-ui";
+
 
 export default {
   name: "App",
   components: {
+    MultipleChoice,
+    DropDown,
+    DropDownSentence,
+  },
+  data() {
+    return {
+      drugs: [
+        {
+          name: "Tylenol",
+        },
+        {
+          name: "Advil",
+        },
+        {
+          name: "Aceptaminophen",
+        },
+      ],
+
+      options: [
+        {
+          label: "Marina Bay Sands",
+          key: "marina bay sands"
+          // disabled: true,
+        },
+        {
+          label: "Brown's Hotel, London",
+          key: "brown's hotel, london",
+        },
+        {
+          label: "Atlantis Bahamas, Nassau",
+          key: "atlantis nahamas, nassau",
+        },
+        {
+          label: "The Beverly Hills Hotel, Los Angeles",
+          key: "the beverly hills hotel, los angeles",
+
     InstructorDash,
     StudentRoster,
     StudentDashboard,
@@ -102,12 +150,12 @@ export default {
           medication: "he4y",
           DrugClassification: ["hey", "hey"],
           ClientTeaching: "hey",
+
         },
       ],
     };
   },
 };
-
 </script>
 
 <style>
@@ -118,6 +166,8 @@ export default {
   padding-left: 10%;
   padding-right: 10%;
   color: #2c3e50;
+
+
   margin-top: 60px;
   background-color: linear-gradient(
     172.4deg,
@@ -133,5 +183,6 @@ export default {
     #24a3ff 5.9%,
     #0038ff 91.52%
   );
+
 }
 </style>
