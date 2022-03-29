@@ -51,34 +51,22 @@
                 <n-button class="dropdown"> Select </n-button>
               </n-dropdown>
             </td>
-            <!-- <td>
-              <n-dropdown
-                trigger="click"
-                :options="options"
-                :show-arrow="true"
-                @select="handleSelect"
-              >
-                <n-button class="dropdown"> Select </n-button>
-              </n-dropdown>
-            </td> -->
             <td>
               <n-space vertical>
-              <n-select
-                v-model:value="value"
-                :options="options"
-                clearable
-                :consistent-menu-width="false"
-              />
+                <n-select
+                  v-model:value="value"
+                  :options="options"
+                  clearable
+                  :consistent-menu-width="false"
+                />
               </n-space>
             </td>
           </tr>
         </table>
       </div>
-
-      <!-- <n-radio >{{song.label}} </n-radio> -->
     </div>
 
-    <n-button size="large">Submit</n-button>
+    <a href="RationalePopup.vue"><n-button size="large">Submit</n-button> </a>
   </div>
 </template>
 
@@ -98,7 +86,7 @@ export default {
     NTabs,
     NDropdown,
     NSelect,
-    NSpace
+    NSpace,
   },
 };
 </script>
@@ -115,10 +103,16 @@ export default {
   border: 1px #808080 solid;
   padding: 35px;
   margin: 35px 0;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px #cac9c9;
 }
 
 h2 {
   color: #fe4400;
+}
+
+a {
+  text-decoration: none;
 }
 
 .question {
@@ -141,25 +135,25 @@ h2 {
   align-items: center;
 }
 
-
 .n-button {
   background-color: #ffc633;
   margin: 25px 0;
 }
 
-.dropdown, .n-select {
+.dropdown,
+.n-select {
   background-color: white;
   width: 250px;
 }
 
 .n-space {
-  background-color: red ;
+  /* background-color: red ; */
   text-align: center;
 }
 
-
 /*****TABLE*****/
-td, th {
+td,
+th {
   border-right: 1px #808080 solid;
   border-bottom: 1px #808080 solid;
 }
@@ -173,5 +167,4 @@ table {
 tr:last-child td {
   border-bottom: none;
 }
-
 </style>

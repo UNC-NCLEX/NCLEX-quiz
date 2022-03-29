@@ -82,43 +82,6 @@ export default {
   },
 };
 
-// document.getElementByClass("n-button").addEventListener("click", displayMessage);
-// function displayMessage() {
-//   document.getElementById("demo").innerHTML = "Rationale:"
-// }
-
-// export class defineComponent({
-//   setup() {
-//     return {
-//       value: ref(null),
-//       songs: [
-//         {
-//           value: "Rock'n'Roll Star",
-//           label: "Rock'n'Roll Star"
-//         },
-//         {
-//           value: "Shakermaker",
-//           label: "Shakermaker"
-//         },
-//         {
-//           value: "Live Forever",
-//           label: "Live Forever"
-//         },
-//         {
-//           value: "Up in the Sky",
-//           label: "Up in the Sky"
-//         },
-//         {
-//           value: "...",
-//           label: "..."
-//         }
-//       ].map((s) => {
-//         s.value = s.value.toLowerCase();
-//         return s;
-//       })
-//     };
-//   }
-// });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -133,14 +96,21 @@ export default {
   border: 1px #808080 solid;
   padding: 35px;
   margin: 35px 0;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px #cac9c9;
+
+
 }
 
 h2 {
   color: #fe4400;
 }
 
+a {
+  text-decoration: none;
+}
+
 .question {
-  /* background-color: pink; */
   width: 75vw;
   text-align: left;
 }

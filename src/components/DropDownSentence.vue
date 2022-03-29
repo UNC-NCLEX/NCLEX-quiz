@@ -29,90 +29,47 @@
         </n-tabs>
       </div>
       <h4>
-        Which of the following assessment findings indicates the therapeutic
-        effect of blood transfusion?
+        Choose the most likely options for the information missing from the
+        statements regarding absorption of intravenous medications by selecting
+        from the list of options provided.
       </h4>
       <div>
-        <table style="width: 100%">
-          <tr>
-            <th>Medication</th>
-            <th>Drug Calssification</th>
-            <th>Client Teaching</th>
-          </tr>
-          <tr>
-            <td>Drug 1</td>
-            <td>choice</td>
-            <td>choice</td>
-          </tr>
-          <tr>
-            <td>Drug 2</td>
-            <td>14</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td>Drug 3</td>
-            <td>choice</td>
-            <td>choice</td>
-          </tr>
-        </table>
-
-        <n-dropdown trigger="hover" :options="options" @select="handleSelect">
-          <n-button> Go For a Trip </n-button>
-        </n-dropdown>
+        <tr v-for="(item, index) in dropdownSentQuestions" :key="index">
+          <h4 class="questions">
+            {{ dropdownSentQuestions[index].name }} ... ... ... ...
+          </h4>
+          <td>
+            <n-space vertical>
+              <n-select
+                v-model:value="value"
+                :options="options"
+                clearable
+                :consistent-menu-width="false"
+              />
+            </n-space>
+          </td>
+        </tr>
       </div>
-
-      <!-- <n-radio >{{song.label}} </n-radio> -->
     </div>
-
-    <n-button size="large">Submit</n-button>
-
+    <a href="RationalePopup.vue"><n-button size="large">Submit</n-button> </a>
   </div>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NDropdown } from "naive-ui";
-// import {defineComponent} from 'data.js';
-import { defineComponent } from "vue";
-import { useMessage } from "naive-ui";
+import { NButton, NTabPane, NTabs, NSpace, NSelect } from "naive-ui";
 
 export default {
   name: "DropDownSentence",
+  props: {
+    dropdownSentQuestions: Array,
+    options: Array,
+  },
   components: {
     NButton,
     NTabPane,
     NTabs,
-    NDropdown
-  },
-  mounted() {
-    defineComponent({
-      setup() {
-        const message = useMessage();
-        return {
-          options: [
-            {
-              label: "Marina Bay Sands",
-              key: "marina bay sands",
-              disabled: true,
-            },
-            {
-              label: "Brown's Hotel, London",
-              key: "brown's hotel, london",
-            },
-            {
-              label: "Atlantis Bahamas, Nassau",
-              key: "atlantis nahamas, nassau",
-            },
-            {
-              label: "The Beverly Hills Hotel, Los Angeles",
-              key: "the beverly hills hotel, los angeles",
-            },
-          ],
-          handleSelect(key) {
-            message.info(String(key));
-          },
-        };
-      },
-    });
+    NSpace,
+    NSelect,
   },
 };
 </script>
@@ -129,14 +86,19 @@ export default {
   border: 1px #808080 solid;
   padding: 35px;
   margin: 35px 0;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px #cac9c9;
 }
 
 h2 {
   color: #fe4400;
 }
 
+a {
+  text-decoration: none;
+}
+
 .question {
-  /* background-color: pink; */
   width: 75vw;
   text-align: left;
 }
@@ -163,5 +125,11 @@ h2 {
 .n-button {
   background-color: #ffc633;
   margin: 25px 0;
+}
+
+.dropdown,
+.n-select {
+  background-color: white;
+  width: 250px;
 }
 </style>
