@@ -35,13 +35,18 @@ import { NSelect } from "naive-ui";
 export default {
   name: "App",
   components: {
+    InstructorDash,
+    StudentRoster,
+    StudentDashboard,
+    QuizzesContainer,
+    DropDownTable,
     MultipleChoice,
     DropDown,
     DropDownSentence,
   },
   data() {
     return {
-      drugs: [
+           drugs: [
         {
           name: "Tylenol",
         },
@@ -70,15 +75,8 @@ export default {
         {
           label: "The Beverly Hills Hotel, Los Angeles",
           key: "the beverly hills hotel, los angeles",
-
-    InstructorDash,
-    StudentRoster,
-    StudentDashboard,
-    QuizzesContainer,
-    DropDownTable,
-  },
-  data() {
-    return {
+        }
+      ],
       scores: [
         {
           qid: 1,
