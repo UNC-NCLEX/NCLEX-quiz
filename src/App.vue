@@ -1,25 +1,24 @@
 <template>
-
-
   <InstructorDash />
-  <StudentRoster :students="this.$store.state.students"/>
+  <StudentRoster :students="this.$store.state.students" />
   <StudentDashboard
     :scores="scores"
     :past_quizzes="past_quizzes"
   ></StudentDashboard>
   <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
   <DropDownTable :columns="columns" :data="data"></DropDownTable>
-  
-   <multiple-choice />
+
+  <MultipleChoice />
   <DropDown :drugs="drugs" :options="options"></DropDown>
-  <drop-down-sentence />
+  <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
+  <RationalePopup/>
 </template>
 
 <script>
 import { h } from "vue";
 //import HelloWorld from './components/HelloWorld.vue'
-import InstructorDash from './components/InstructorDash.vue'
-import StudentRoster from './components/Roster.vue';
+import InstructorDash from "./components/InstructorDash.vue";
+import StudentRoster from "./components/Roster.vue";
 //import studentData from './components/studentData.js'
 import StudentDashboard from "./components/StudentDashboard.vue";
 import QuizzesContainer from "./components/QuizzesContainer.vue";
@@ -28,9 +27,9 @@ import DropDownTable from "./components/DropDownTable.vue";
 import MultipleChoice from "./components/MultipleChoice.vue";
 import DropDown from "./components/DropDown.vue";
 import DropDownSentence from "./components/DropDownSentence.vue";
+import RationalePopup from "./components/RationalePopup.vue";
 
 import { NSelect } from "naive-ui";
-
 
 export default {
   name: "App",
@@ -43,10 +42,11 @@ export default {
     MultipleChoice,
     DropDown,
     DropDownSentence,
+    RationalePopup
   },
   data() {
     return {
-           drugs: [
+      drugs: [
         {
           name: "Tylenol",
         },
@@ -61,7 +61,7 @@ export default {
       options: [
         {
           label: "Marina Bay Sands",
-          key: "marina bay sands"
+          key: "marina bay sands",
           // disabled: true,
         },
         {
@@ -75,8 +75,21 @@ export default {
         {
           label: "The Beverly Hills Hotel, Los Angeles",
           key: "the beverly hills hotel, los angeles",
-        }
+        },
       ],
+
+      dropdownSentQuestions: [
+        {
+          name: "Absorption is the process of",
+        },
+        {
+          name: "Intravenous medications are directly delivered to the",
+        },
+        {
+          name: "Intravenous medications have",
+        },
+      ],
+
       scores: [
         {
           qid: 1,
@@ -148,7 +161,6 @@ export default {
           medication: "he4y",
           DrugClassification: ["hey", "hey"],
           ClientTeaching: "hey",
-
         },
       ],
     };
@@ -165,7 +177,6 @@ export default {
   padding-right: 10%;
   color: #2c3e50;
 
-
   margin-top: 60px;
   background-color: linear-gradient(
     172.4deg,
@@ -181,6 +192,5 @@ export default {
     #24a3ff 5.9%,
     #0038ff 91.52%
   );
-
 }
 </style>
