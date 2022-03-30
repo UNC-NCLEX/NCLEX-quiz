@@ -10,8 +10,11 @@
 
   <MultipleChoice />
   <DropDown :drugs="drugs" :options="options"></DropDown>
-  <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
-  <RationalePopup/>
+  <DropDownSentence
+    :dropdownSentQuestions="dropdownSentQuestions"
+    :options="options"
+  ></DropDownSentence>
+  <RationalePopup />
 </template>
 
 <script>
@@ -42,7 +45,7 @@ export default {
     MultipleChoice,
     DropDown,
     DropDownSentence,
-    RationalePopup
+    RationalePopup,
   },
   data() {
     return {
