@@ -1,18 +1,20 @@
 <template>
-  <NewSelectAll :quizzes="this.$store.state.quizzes"></NewSelectAll>
-  <NewMultipleChoice :quizzes="this.$store.state.quizzes"></NewMultipleChoice>
+  <NewSelectAll :quizzes="this.$store.state.selectAll"></NewSelectAll>
+  <NewMultipleChoice :quizzes="this.$store.state.multChoice"></NewMultipleChoice>
   <InstructorDash />
-  <StudentRoster :students="this.$store.state.students"/>
+  <StudentRoster :students="this.$store.state.students" />
   <StudentDashboard
     :scores="scores"
     :past_quizzes="past_quizzes"
   ></StudentDashboard>
   <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
   <DropDownTable :columns="columns" :data="data"></DropDownTable>
-  
-   <MultipleChoice />
-  <DropDown :drugs="drugs" :options="options"></DropDown>
-  <DropDownSentence />
+  <MultipleChoice />
+  <DropDown></DropDown>
+  <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
+  <MultipleResponse />
+  <RationalePopup/>
+
 </template>
 
 <script>
@@ -20,8 +22,8 @@ import { h } from "vue";
 import NewSelectAll from './components/NewSelectAll.vue'
 import NewMultipleChoice from './components/NewMultChoice.vue';
 //import HelloWorld from './components/HelloWorld.vue'
-import InstructorDash from './components/InstructorDash.vue';
-import StudentRoster from './components/Roster.vue';
+import InstructorDash from "./components/InstructorDash.vue";
+import StudentRoster from "./components/Roster.vue";
 //import studentData from './components/studentData.js'
 import StudentDashboard from "./components/StudentDashboard.vue";
 import QuizzesContainer from "./components/QuizzesContainer.vue";
@@ -30,26 +32,58 @@ import DropDownTable from "./components/DropDownTable.vue";
 import MultipleChoice from "./components/MultipleChoice.vue";
 import DropDown from "./components/DropDown.vue";
 import DropDownSentence from "./components/DropDownSentence.vue";
+import MultipleResponse from "./components/MultipleResponse.vue";
+import RationalePopup from "./components/RationalePopup.vue";
 
 import { NSelect } from "naive-ui";
-
 
 export default {
   name: "App",
   components: {
     NewSelectAll,
     MultipleChoice,
+    NewMultipleChoice,
+    InstructorDash,
+    StudentRoster,
+    StudentDashboard,
+    QuizzesContainer,
+    DropDownTable,
+    MultipleChoice,
     DropDown,
     DropDownSentence,
-    DropDownTable,
-    QuizzesContainer,
-    StudentDashboard,
-    StudentRoster,
-    InstructorDash,
-    NewMultipleChoice
+    MultipleResponse,
+    RationalePopup
   },
   data() {
     return {
+      scores: [
+        {
+          qid: 1,
+          score: 100,
+        },
+        {
+          qid: 2,
+          score: 70,
+        },
+        {
+          qid: 3,
+          score: 90,
+        },
+      ],
+      past_quizzes: [
+        {
+          qid: 1,
+          name: "Unit 1",
+        },
+        {
+          qid: 2,
+          name: "Unit 2",
+        },
+        {
+          qid: 3,
+          name: "Unit 3",
+        },
+      ],
       drugs: [
         {
           name: "Tylenol",
@@ -80,34 +114,6 @@ export default {
           label: "The Beverly Hills Hotel, Los Angeles",
           key: "the beverly hills hotel, los angeles",
   },],
-      scores: [
-        {
-          qid: 1,
-          score: 100,
-        },
-        {
-          qid: 2,
-          score: 70,
-        },
-        {
-          qid: 3,
-          score: 90,
-        },
-      ],
-      past_quizzes: [
-        {
-          qid: 1,
-          name: "Unit 1",
-        },
-        {
-          qid: 2,
-          name: "Unit 2",
-        },
-        {
-          qid: 3,
-          name: "Unit 3",
-        },
-      ],
       columns: [
         {
           key: "medication",
@@ -146,14 +152,6 @@ export default {
           title: "Client Teaching",
         },
       ],
-      data: [
-        {
-          medication: "he4y",
-          DrugClassification: ["hey", "hey"],
-          ClientTeaching: "hey",
-
-        },
-      ],
     };
   },
 };
@@ -167,7 +165,6 @@ export default {
   padding-left: 10%;
   padding-right: 10%;
   color: #2c3e50;
-
 
   margin-top: 60px;
   background-color: linear-gradient(
@@ -184,6 +181,5 @@ export default {
     #24a3ff 5.9%,
     #0038ff 91.52%
   );
-
 }
 </style>

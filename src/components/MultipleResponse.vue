@@ -5,9 +5,8 @@
       <p>Interactive tool to help you learn</p>
     </div>
     <h2>Week 1 Review</h2>
-
     <div class="question">
-      <h3>Question 3</h3>
+      <h3>Question 4</h3>
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
@@ -29,79 +28,60 @@
         </n-tabs>
       </div>
       <h4>
-        Choose the most likely options for the information missing from the
-        statements regarding absorption of intravenous medications by selecting
-        from the list of options provided.
+        Which of the following assessment findings indicates the therapeutic
+        effect of blood transfusion? Check all that apply.
       </h4>
-      <div>
-        <tr v-for="(item, index) in questions" :key="index">
-          <h4 class="questions">{{ questions[index].name }} ... ... ... ...</h4>
-          <td>
-            <n-space vertical>
-              <n-select
-                v-model="options[index].value"
-                :options="options"
-                clearable
-              />
-            </n-space>
-          </td>
-        </tr>
-      </div>
+      <n-checkbox-group v-model:value="value" name="radiogroup">
+        <n-checkbox v-for="choice in choices" :key="choice.value" :value="choice.value">
+          <div class="choice-text">{{ choice.label }}</div>
+        </n-checkbox>
+      </n-checkbox-group>
     </div>
-    <a href="RationalePopup.vue"><n-button size="large">Submit</n-button> </a>
+    <n-button size="large">Submit</n-button>
   </div>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSpace, NSelect } from "naive-ui";
+import { NButton, NTabPane, NTabs, NCheckbox, NCheckboxGroup } from "naive-ui";
 import { ref } from "vue";
 
 export default {
-  name: "DropDownSentence",
+  name: "MultipleResponse",
   components: {
     NButton,
     NTabPane,
     NTabs,
-    NSpace,
-    NSelect,
+    NCheckbox,
+    NCheckboxGroup,
   },
   setup() {
     return {
       value: ref(null),
-      questions: [
+      choices: [
         {
-          name: "Absorption is the process of",
+          value: "Hemoglobin level of 6.5mg/dl",
+          label: "Hemoglobin level of 6.5mg/dl",
         },
         {
-          name: "Intravenous medications are directly delivered to the",
+          value: "Hemoglobin level of 6.2mg/dl",
+          label: "Hemoglobin level of 6.2mg/d",
         },
         {
-          name: "Intravenous medications have",
-        },
-      ],
-
-      options: [
-        {
-          label: "Answer 1",
-          value: "Answer 1",
+          value: "Hemoglobin level of 11mg/dl",
+          label: "Hemoglobin level of 11mg/dl",
         },
         {
-          label: "Answer 2",
-          value: "Answer 2",
+          value: "Hemoglobin level of 6.3 mg/dl",
+          label: "Hemoglobin level of 6.3 mg/dl",
         },
         {
-          label: "Answer 3",
-          value: "Answer 3",
+          value: "Hemoglobin level of 5mg/d",
+          label: "Hemoglobin level of 5mg/d",
         },
-        {
-          label: "Answer 4",
-          value: "Answer 4",
-        },
-        {
-          label: "Answer 5",
-          value: "Answer 5",
-        },
-      ],
+      ].map((s) => {
+        s.value = s.value.toLowerCase();
+        return s;
+      }),
     };
   },
 };
@@ -143,15 +123,17 @@ h2 {
 }
 
 /*****ANSWERS*****/
-.answer {
+.n-checkbox {
   border: 1px #808080 solid;
+  box-shadow: 10px 10px 5px #cac9c9;
   border-radius: 10px;
-  margin: 0;
+  width: 72vw;
+  padding: 20px 1.5vw;
   margin-top: 10px;
 }
 
-.n-select {
-  width: 250px;
+.choice-text {
+  padding: 0 10px;
 }
 
 /*****BUTTON*****/
