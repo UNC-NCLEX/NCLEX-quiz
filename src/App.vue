@@ -1,4 +1,6 @@
 <template>
+  <NewSelectAll :quizzes="this.$store.state.selectAll"></NewSelectAll>
+  <NewMultipleChoice :quizzes="this.$store.state.multChoice"></NewMultipleChoice>
   <InstructorDash />
   <StudentRoster :students="this.$store.state.students" />
   <StudentDashboard
@@ -7,16 +9,18 @@
   ></StudentDashboard>
   <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
   <DropDownTable :columns="columns" :data="data"></DropDownTable>
-
   <MultipleChoice />
   <DropDown></DropDown>
   <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
   <MultipleResponse />
   <RationalePopup/>
+
 </template>
 
 <script>
 import { h } from "vue";
+import NewSelectAll from './components/NewSelectAll.vue'
+import NewMultipleChoice from './components/NewMultChoice.vue';
 //import HelloWorld from './components/HelloWorld.vue'
 import InstructorDash from "./components/InstructorDash.vue";
 import StudentRoster from "./components/Roster.vue";
@@ -36,6 +40,9 @@ import { NSelect } from "naive-ui";
 export default {
   name: "App",
   components: {
+    NewSelectAll,
+    MultipleChoice,
+    NewMultipleChoice,
     InstructorDash,
     StudentRoster,
     StudentDashboard,
@@ -77,6 +84,36 @@ export default {
           name: "Unit 3",
         },
       ],
+      drugs: [
+        {
+          name: "Tylenol",
+        },
+        {
+          name: "Advil",
+        },
+        {
+          name: "Aceptaminophen",
+        },
+      ],
+
+      options: [
+        {
+          label: "Marina Bay Sands",
+          key: "marina bay sands"
+          // disabled: true,
+        },
+        {
+          label: "Brown's Hotel, London",
+          key: "brown's hotel, london",
+        },
+        {
+          label: "Atlantis Bahamas, Nassau",
+          key: "atlantis nahamas, nassau",
+        },
+        {
+          label: "The Beverly Hills Hotel, Los Angeles",
+          key: "the beverly hills hotel, los angeles",
+  },],
       columns: [
         {
           key: "medication",
@@ -113,13 +150,6 @@ export default {
         {
           key: "ClientTeaching",
           title: "Client Teaching",
-        },
-      ],
-      data: [
-        {
-          medication: "he4y",
-          DrugClassification: ["hey", "hey"],
-          ClientTeaching: "hey",
         },
       ],
     };
