@@ -9,8 +9,9 @@
   <DropDownTable :columns="columns" :data="data"></DropDownTable>
 
   <MultipleChoice />
-  <DropDown :drugs="drugs" :options="options"></DropDown>
+  <DropDown></DropDown>
   <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
+  <MultipleResponse />
   <RationalePopup/>
 </template>
 
@@ -27,6 +28,7 @@ import DropDownTable from "./components/DropDownTable.vue";
 import MultipleChoice from "./components/MultipleChoice.vue";
 import DropDown from "./components/DropDown.vue";
 import DropDownSentence from "./components/DropDownSentence.vue";
+import MultipleResponse from "./components/MultipleResponse.vue";
 import RationalePopup from "./components/RationalePopup.vue";
 
 import { NSelect } from "naive-ui";
@@ -42,54 +44,11 @@ export default {
     MultipleChoice,
     DropDown,
     DropDownSentence,
+    MultipleResponse,
     RationalePopup
   },
   data() {
     return {
-      drugs: [
-        {
-          name: "Tylenol",
-        },
-        {
-          name: "Advil",
-        },
-        {
-          name: "Aceptaminophen",
-        },
-      ],
-
-      options: [
-        {
-          label: "Marina Bay Sands",
-          key: "marina bay sands",
-          // disabled: true,
-        },
-        {
-          label: "Brown's Hotel, London",
-          key: "brown's hotel, london",
-        },
-        {
-          label: "Atlantis Bahamas, Nassau",
-          key: "atlantis nahamas, nassau",
-        },
-        {
-          label: "The Beverly Hills Hotel, Los Angeles",
-          key: "the beverly hills hotel, los angeles",
-        },
-      ],
-
-      dropdownSentQuestions: [
-        {
-          name: "Absorption is the process of",
-        },
-        {
-          name: "Intravenous medications are directly delivered to the",
-        },
-        {
-          name: "Intravenous medications have",
-        },
-      ],
-
       scores: [
         {
           qid: 1,
