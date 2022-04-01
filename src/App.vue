@@ -48,7 +48,6 @@ export default {
     StudentDashboard,
     QuizzesContainer,
     DropDownTable,
-    MultipleChoice,
     DropDown,
     DropDownSentence,
     MultipleResponse,
