@@ -22,7 +22,7 @@
     <div class="right">
     <h2 id="scores">Student Scores</h2>
 
-    <h2 id="roster">Manage Roster</h2>
+    <h2 id="roster"><router-link :to="'/Roster'">Manage Roster</router-link></h2>
 
     </div>
     </div>
@@ -149,9 +149,5 @@ th, td{
   padding: 5px;
 }
 
-router-link, a {
-  color: rgb(75, 85, 97);
-  text-decoration: underline;
-}
 @import url(https://fonts.googleapis.com/css?family=Montserrat)
 </style>

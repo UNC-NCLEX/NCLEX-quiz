@@ -1,6 +1,6 @@
 <template>
-
-
+  <NewSelectAll :quizzes="this.$store.state.quizzes"></NewSelectAll>
+  <NewMultipleChoice :quizzes="this.$store.state.quizzes"></NewMultipleChoice>
   <InstructorDash />
   <StudentRoster :students="this.$store.state.students"/>
   <StudentDashboard
@@ -10,15 +10,17 @@
   <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
   <DropDownTable :columns="columns" :data="data"></DropDownTable>
   
-   <multiple-choice />
+   <MultipleChoice />
   <DropDown :drugs="drugs" :options="options"></DropDown>
-  <drop-down-sentence />
+  <DropDownSentence />
 </template>
 
 <script>
 import { h } from "vue";
+import NewSelectAll from './components/NewSelectAll.vue'
+import NewMultipleChoice from './components/NewMultChoice.vue';
 //import HelloWorld from './components/HelloWorld.vue'
-import InstructorDash from './components/InstructorDash.vue'
+import InstructorDash from './components/InstructorDash.vue';
 import StudentRoster from './components/Roster.vue';
 //import studentData from './components/studentData.js'
 import StudentDashboard from "./components/StudentDashboard.vue";
@@ -35,9 +37,16 @@ import { NSelect } from "naive-ui";
 export default {
   name: "App",
   components: {
+    NewSelectAll,
     MultipleChoice,
     DropDown,
     DropDownSentence,
+    DropDownTable,
+    QuizzesContainer,
+    StudentDashboard,
+    StudentRoster,
+    InstructorDash,
+    NewMultipleChoice
   },
   data() {
     return {
@@ -70,15 +79,7 @@ export default {
         {
           label: "The Beverly Hills Hotel, Los Angeles",
           key: "the beverly hills hotel, los angeles",
-
-    InstructorDash,
-    StudentRoster,
-    StudentDashboard,
-    QuizzesContainer,
-    DropDownTable,
-  },
-  data() {
-    return {
+  },],
       scores: [
         {
           qid: 1,
