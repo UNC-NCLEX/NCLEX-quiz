@@ -1,11 +1,10 @@
 <template>
-  <div class="hello">
+  <div class="container">
     <div class="header">
       <h1>Pharmacoloy &amp; Pathophysiology</h1>
       <p>Interactive tool to help you learn</p>
     </div>
     <h2>Week 1 Review</h2>
-
     <div class="question">
       <h3>Question 1</h3>
       <div class="information">
@@ -32,45 +31,23 @@
         Which of the following assessment findings indicates the therapeutic
         effect of blood transfusion?
       </h4>
-      <div>
-        <div class="answer">
-          <n-radio value="answer1" name="answer1" @change="handleChange"
-            >Hemoglobin level of 6.5mg/dl</n-radio
-          >
-        </div>
-        <div class="answer">
-          <n-radio value="answer2" name="answer2" @change="handleChange"
-            >Hemoglobin level of 6.2mg/dl</n-radio
-          >
-        </div>
-        <div class="answer">
-          <n-radio value="answer3" name="answer3" @change="handleChange"
-            >Hemoglobin level of 11mg/dl</n-radio
-          >
-        </div>
-        <div class="answer">
-          <n-radio value="answer4" name="answer4" @change="handleChange"
-            >Hemoglobin level of 6.3 mg/dl</n-radio
-          >
-        </div>
-        <div class="answer">
-          <n-radio value="answer5" name="answer5" @change="handleChange"
-            >Hemoglobin level of 5mg/dl</n-radio
-          >
-        </div>
-      </div>
-
-      <!-- <n-radio >{{song.label}} </n-radio> -->
+      <n-radio-group v-model:value="value" name="radiogroup">
+        <n-radio
+          v-for="choice in choices"
+          :key="choice.value"
+          :value="choice.value"
+        >
+          <div class="choice-text">{{ choice.label }}</div>
+        </n-radio>
+      </n-radio-group>
     </div>
-
     <n-button size="large">Submit</n-button>
-    <!-- <div id="demo"></div> -->
   </div>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NRadio } from "naive-ui";
-// import { defineComponent, ref } from "vue";
+import { NButton, NTabPane, NTabs, NRadio, NRadioGroup } from "naive-ui";
+import { ref } from "vue";
 
 export default {
   name: "MultipleChoice",
@@ -79,63 +56,98 @@ export default {
     NTabPane,
     NTabs,
     NRadio,
+    NRadioGroup,
+  },
+  setup() {
+    return {
+      value: ref(null),
+      choices: [
+        {
+          value: "Hemoglobin level of 6.5mg/dl",
+          label: "Hemoglobin level of 6.5mg/dl",
+        },
+        {
+          value: "Hemoglobin level of 6.2mg/dl",
+          label: "Hemoglobin level of 6.2mg/d",
+        },
+        {
+          value: "Hemoglobin level of 11mg/dl",
+          label: "Hemoglobin level of 11mg/dl",
+        },
+        {
+          value: "Hemoglobin level of 6.3 mg/dl",
+          label: "Hemoglobin level of 6.3 mg/dl",
+        },
+        {
+          value: "Hemoglobin level of 5mg/d",
+          label: "Hemoglobin level of 5mg/d",
+        },
+      ].map((s) => {
+        s.value = s.value.toLowerCase();
+        return s;
+      }),
+    };
   },
 };
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.header {
-  background-color: #2094ff;
-  color: white;
-  width: 100%;
-}
-
-.information {
-  border: 1px #808080 solid;
-  padding: 35px;
-  margin: 35px 0;
-  border-radius: 10px;
-  box-shadow: 10px 10px 5px #cac9c9;
-
-
-}
-
-h2 {
-  color: #fe4400;
-}
-
-a {
-  text-decoration: none;
-}
-
-.question {
-  width: 75vw;
-  text-align: left;
-}
-
-.answer {
-  border: 1px #808080 solid;
-  border-radius: 10px;
-  margin: 0;
-  margin-top: 10px;
-}
-
-.hello {
+/*****CONTAINER*****/
+.container {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
 }
 
-.n-checkbox,
-.n-radio {
-  padding: 15px;
+/*****HEADER/TITLE*****/
+.header {
+  background-color: #2094ff;
+  color: white;
+  width: 100%;
+}
+h2 {
+  color: #fe4400;
 }
 
+/*****TABS*****/
+.information {
+  border: 1px #808080 solid;
+  padding: 35px;
+  margin: 35px 0;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px #cac9c9;
+}
+
+/*****QUESTION*****/
+.question {
+  width: 75vw;
+  text-align: left;
+}
+
+/*****ANSWERS*****/
+.n-radio {
+  border: 1px #808080 solid;
+  box-shadow: 10px 10px 5px #cac9c9;
+  border-radius: 10px;
+  width: 72vw;
+  padding: 20px 1.5vw;
+  margin-top: 10px;
+}
+
+.choice-text {
+  padding: 0 10px;
+}
+
+/*****BUTTON*****/
 .n-button {
   background-color: #ffc633;
+  box-shadow: 10px 10px 5px #cac9c9;
   margin: 25px 0;
+}
+
+a {
+  text-decoration: none;
 }
 </style>
