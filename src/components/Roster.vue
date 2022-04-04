@@ -47,8 +47,8 @@ export default {
   },
   setup(){
     return {
-      newpid:ref(null),
-      newOnyen:ref(null)
+      newpid: ref(null),
+      newOnyen: ref(null)
     };
   },
   props: {

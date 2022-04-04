@@ -4,36 +4,31 @@
       <h1>Pharmacoloy &amp; Pathophysiology</h1>
       <p>Interactive tool to help you learn</p>
     </div>
-    <h2>Week 1 Review</h2>
+    <h2>Quiz {{question.qid}} Review</h2>
     <div class="question">
-      <h3>Question 4</h3>
-      <div class="information">
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            A patient is presented to the emergency department with unexplained
-            fever, diarrhea (6 loose stools within 4 hours) and extreme fatigue
-            at 7AM.
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            On assessment, the patient’s temperature is 101 degree Fahrenheit.
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet"> </n-tab-pane>
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            Hemoglobin level is 6.8mg/dL
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            Tylenol 650 mg by mouth once; administer antidiarrheal medication
-            once and administer one unit of packed RBC
-          </n-tab-pane>
-        </n-tabs>
-      </div>
+      <h3>Question</h3>
+
       <h4>
-        Which of the following assessment findings indicates the therapeutic
-        effect of blood transfusion? Check all that apply.
+        {{question.questText}}
       </h4>
-      <n-checkbox-group v-model:value="value" name="radiogroup">
-        <n-checkbox v-for="choice in choices" :key="choice.value" :value="choice.value">
-          <div class="choice-text">{{ choice.label }}</div>
+      <n-checkbox-group v-model:value="choiceSel" name="radiogroup">
+        <n-checkbox :value=1>
+          <div class="choice-text">{{ question.a1 }}</div>
+        </n-checkbox>
+        <n-checkbox :value=2>
+          <div class="choice-text">{{ question.a2 }}</div>
+        </n-checkbox>
+        <n-checkbox :value=3>
+          <div class="choice-text">{{ question.a3 }}</div>
+        </n-checkbox>
+        <n-checkbox :value=4>
+          <div class="choice-text">{{ question.a4 }}</div>
+        </n-checkbox>
+        <n-checkbox :value=5>
+          <div class="choice-text">{{ question.a5 }}</div>
+        </n-checkbox>
+        <n-checkbox :value=6>
+          <div class="choice-text">{{ question.a6 }}</div>
         </n-checkbox>
       </n-checkbox-group>
     </div>
@@ -42,46 +37,22 @@
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NCheckbox, NCheckboxGroup } from "naive-ui";
+import { NButton, NCheckbox, NCheckboxGroup } from "naive-ui";
 import { ref } from "vue";
 
 export default {
   name: "MultipleResponse",
   components: {
     NButton,
-    NTabPane,
-    NTabs,
     NCheckbox,
     NCheckboxGroup,
+  },  computed: {
+    question() { return this.$store.getters.questionNext
+    }
   },
   setup() {
     return {
-      value: ref(null),
-      choices: [
-        {
-          value: "Hemoglobin level of 6.5mg/dl",
-          label: "Hemoglobin level of 6.5mg/dl",
-        },
-        {
-          value: "Hemoglobin level of 6.2mg/dl",
-          label: "Hemoglobin level of 6.2mg/d",
-        },
-        {
-          value: "Hemoglobin level of 11mg/dl",
-          label: "Hemoglobin level of 11mg/dl",
-        },
-        {
-          value: "Hemoglobin level of 6.3 mg/dl",
-          label: "Hemoglobin level of 6.3 mg/dl",
-        },
-        {
-          value: "Hemoglobin level of 5mg/d",
-          label: "Hemoglobin level of 5mg/d",
-        },
-      ].map((s) => {
-        s.value = s.value.toLowerCase();
-        return s;
-      }),
+      value: ref(null)
     };
   },
 };

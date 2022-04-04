@@ -1,15 +1,15 @@
 <template>
-  <NewSelectAll :quizzes="this.$store.state.selectAll"></NewSelectAll>
-  <NewMultipleChoice :quizzes="this.$store.state.multChoice"></NewMultipleChoice>
+  <NewSelectAll :quizzes="this.$store.state.quizzes"></NewSelectAll>
+  <NewMultipleChoice :quizzes="this.$store.state.quizzes"></NewMultipleChoice>
   <InstructorDash />
-  <StudentRoster :students="this.$store.state.students" />
+  <Roster :students="this.$store.state.students" />
   <StudentDashboard
     :scores="scores"
     :past_quizzes="past_quizzes"
   ></StudentDashboard>
   <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
   <DropDownTable :columns="columns" :data="data"></DropDownTable>
-  <MultipleChoice />
+  <MultipleChoice></MultipleChoice>
   <DropDown></DropDown>
   <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
   <MultipleResponse />
@@ -23,7 +23,7 @@ import NewSelectAll from './components/NewSelectAll.vue'
 import NewMultipleChoice from './components/NewMultChoice.vue';
 //import HelloWorld from './components/HelloWorld.vue'
 import InstructorDash from "./components/InstructorDash.vue";
-import StudentRoster from "./components/Roster.vue";
+import Roster from "./components/Roster.vue";
 //import studentData from './components/studentData.js'
 import StudentDashboard from "./components/StudentDashboard.vue";
 import QuizzesContainer from "./components/QuizzesContainer.vue";
@@ -44,11 +44,10 @@ export default {
     MultipleChoice,
     NewMultipleChoice,
     InstructorDash,
-    StudentRoster,
+    Roster,
     StudentDashboard,
     QuizzesContainer,
     DropDownTable,
-    MultipleChoice,
     DropDown,
     DropDownSentence,
     MultipleResponse,
