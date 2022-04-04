@@ -59,9 +59,11 @@
           
         </div>
       </div>
+      <n-input v-model:value="rationale" type="text" class="form-field" id="rationale" name="rationale" :input-props="{ type: 'clearable' }" placeholder="Enter Rationale Text" />
+      
     </div>
 
-    <n-button size="large" @click="enterQuestion(qid, histAndPhys, nurseNotes, flowSheet, labResults, orders, questText, answer, answerText1, answerText2, answerText3, answerText4, answerText5)">Add Question</n-button>
+    <n-button size="large" @click="enterQuestion(qid, histAndPhys, nurseNotes, flowSheet, labResults, orders, questText, answer, answerText1, answerText2, answerText3, answerText4, answerText5, rationale)">Add Question</n-button>
 
   </div>
 </template>
@@ -92,7 +94,8 @@ export default {
       answerText2: ref(null), 
       answerText3: ref(null), 
       answerText4: ref(null), 
-      answerText5: ref(null)
+      answerText5: ref(null),
+      rationale: ref(null)
     };
   },
   props: {
@@ -100,7 +103,7 @@ export default {
   },
   methods: {
       enterQuestion() {
-        var newQ = {"qid":this.qid, "histAndPhys": this.histAndPhys, "nurseNotes":this.nurseNotes, "flowSheet":this.flowSheet, "labResults":this.labResults, "orders":this.orders, "questText": this.questText, "correct":this.answer, "a1": this.answerText1, "a2": this.answerText2, "a3": this.answerText3, "a4": this.answerText4, "a5":this.answerText5}
+        var newQ = {"qid":this.qid, "histAndPhys": this.histAndPhys, "nurseNotes":this.nurseNotes, "flowSheet":this.flowSheet, "labResults":this.labResults, "orders":this.orders, "questText": this.questText, "correct":this.answer, "a1": this.answerText1, "a2": this.answerText2, "a3": this.answerText3, "a4": this.answerText4, "a5":this.answerText5, "rationale": this.rationale}
         console.log(newQ)
         this.$store.dispatch('newMult', newQ);
       }}

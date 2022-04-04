@@ -7,7 +7,7 @@
     <h2>Week {{question.qid}} Review</h2>
 
     <div class="question">
-      <h3>Question 3</h3>
+      <h3>Question</h3>
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">

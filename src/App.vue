@@ -1,4 +1,5 @@
 <template>
+  <NewDDS :quizzes="this.$store.state.quizzes"></NewDDS>
   <NewSelectAll :quizzes="this.$store.state.quizzes"></NewSelectAll>
   <NewMultipleChoice :quizzes="this.$store.state.quizzes"></NewMultipleChoice>
   <InstructorDash />
@@ -19,6 +20,7 @@
 
 <script>
 import { h } from "vue";
+import NewDDS from './components/NewDDS.vue'
 import NewSelectAll from './components/NewSelectAll.vue'
 import NewMultipleChoice from './components/NewMultChoice.vue';
 //import HelloWorld from './components/HelloWorld.vue'
@@ -40,6 +42,7 @@ import { NSelect } from "naive-ui";
 export default {
   name: "App",
   components: {
+    NewDDS,
     NewSelectAll,
     MultipleChoice,
     NewMultipleChoice,

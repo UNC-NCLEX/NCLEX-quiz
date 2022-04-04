@@ -35,7 +35,7 @@
         <n-radio :value=5 class="choice-text">{{question.a5}}</n-radio>
       </n-radio-group>     
     </div>
-    <n-button size="large">Submit</n-button>
+    <n-button size="large" @click=checkAnswer()>Submit</n-button>
   </div>
 </template>
 
@@ -51,6 +51,13 @@ export default {
     NTabs,
     NRadio,
     NRadioGroup,
+  },
+  methods: {
+    checkAnswer() {
+      if(this.question.qid === this.choiceSelected){
+        console.log("correct")
+      } else (console.log("incorrect"))
+    }
   },
   setup() {
     return {

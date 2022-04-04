@@ -2,7 +2,7 @@ import {createStore} from 'vuex'
 
 export default createStore({
   state: {
-      currentXid: 3,
+      currentXid: 1,
       currentQid:1,
       students: [{
         onyen: 'john1',
@@ -99,7 +99,8 @@ export default createStore({
           p2correct: 3,
           questionp3: "part 3 question text for multiple choice",
           p3choices: ["choice 1 for 3rd part","second choice for 3rd part", "third choice for 3rd part"],
-          p3correct: 2
+          p3correct: 2,
+          rationale: "this is my reasoning"
       }]
   },
   mutations: {
@@ -110,13 +111,9 @@ export default createStore({
           state.students.push(newVal)
         },
         MULT_ADD(state, newQ){
-          newQ['xid']= state.currentXid;
-          state.currentXid=state.currentXid+1;
           state.multChoice.push(newQ);
         },
         SEL_ADD(state, newQ){
-          newQ['xid']= state.currentXid;
-          state.currentXid=state.currentXid+1;
           state.selectAll.push(newQ)
         },
         QUIZ_SELECT(state, qid){
@@ -124,6 +121,9 @@ export default createStore({
         },
         INC_QUESTION(state){
           state.currentQid=state.currentQid+1;
+        },
+        DDS_ADD(state, newQ){
+          state.dropDownSentence.push(newQ)
         }
   },
   actions: {
@@ -145,7 +145,10 @@ export default createStore({
       },
       nextQuestion(store){
         store.commit("INC_QUESTION")
-      }
+      },
+      newDDS(store, newQ){
+        store.commit('DDS_ADD', newQ)
+      } 
   },
   getters: {
       onyen: function(state, index){
@@ -171,6 +174,9 @@ export default createStore({
           const target_copy = Object.assign({}, toRet);
           console.log(target_copy)
           return target_copy
+      },
+      multByXID: function(state, id){
+        return`${state.multChoice[id-1]}`
       }
   }
 })
