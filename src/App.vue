@@ -7,15 +7,17 @@
   ></StudentDashboard>
   <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
   <DropDownTable :columns="columns" :data="data"></DropDownTable>
-
   <MultipleChoice />
   <DropDown :drugs="drugs" :options="options"></DropDown>
-  <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
-  <RationalePopup/>
+  <DropDownSentence
+    :dropdownSentQuestions="dropdownSentQuestions"
+    :options="options"
+  ></DropDownSentence>
+  <RationalePopup />
 </template>
 
 <script>
-import { h } from "vue";
+import { ref } from "vue";
 //import HelloWorld from './components/HelloWorld.vue'
 import InstructorDash from "./components/InstructorDash.vue";
 import StudentRoster from "./components/Roster.vue";
@@ -23,13 +25,11 @@ import StudentRoster from "./components/Roster.vue";
 import StudentDashboard from "./components/StudentDashboard.vue";
 import QuizzesContainer from "./components/QuizzesContainer.vue";
 import DropDownTable from "./components/DropDownTable.vue";
-
 import MultipleChoice from "./components/MultipleChoice.vue";
 import DropDown from "./components/DropDown.vue";
 import DropDownSentence from "./components/DropDownSentence.vue";
 import RationalePopup from "./components/RationalePopup.vue";
-
-import { NSelect } from "naive-ui";
+import { supabase } from "./supabase/init";
 
 export default {
   name: "App",
@@ -42,128 +42,27 @@ export default {
     MultipleChoice,
     DropDown,
     DropDownSentence,
-    RationalePopup
+    RationalePopup,
   },
-  data() {
-    return {
-      drugs: [
-        {
-          name: "Tylenol",
-        },
-        {
-          name: "Advil",
-        },
-        {
-          name: "Aceptaminophen",
-        },
-      ],
+  setup() {
+    const data = ref([]);
+    const dataLoaded = ref(null);
 
-      options: [
-        {
-          label: "Marina Bay Sands",
-          key: "marina bay sands",
-          // disabled: true,
-        },
-        {
-          label: "Brown's Hotel, London",
-          key: "brown's hotel, london",
-        },
-        {
-          label: "Atlantis Bahamas, Nassau",
-          key: "atlantis nahamas, nassau",
-        },
-        {
-          label: "The Beverly Hills Hotel, Los Angeles",
-          key: "the beverly hills hotel, los angeles",
-        },
-      ],
-
-      dropdownSentQuestions: [
-        {
-          name: "Absorption is the process of",
-        },
-        {
-          name: "Intravenous medications are directly delivered to the",
-        },
-        {
-          name: "Intravenous medications have",
-        },
-      ],
-
-      scores: [
-        {
-          qid: 1,
-          score: 100,
-        },
-        {
-          qid: 2,
-          score: 70,
-        },
-        {
-          qid: 3,
-          score: 90,
-        },
-      ],
-      past_quizzes: [
-        {
-          qid: 1,
-          name: "Unit 1",
-        },
-        {
-          qid: 2,
-          name: "Unit 2",
-        },
-        {
-          qid: 3,
-          name: "Unit 3",
-        },
-      ],
-      columns: [
-        {
-          key: "medication",
-          title: "Medication",
-        },
-        {
-          key: "DrugClassification",
-          title: "Drug Classification",
-          render() {
-            return h(
-              NSelect,
-              {
-                options: [
-                  {
-                    value: "option1",
-                    label: "This is an example Medication",
-                  },
-                  {
-                    value: "option2",
-                    label: "This is an example Medicatioweqaen",
-                  },
-                  {
-                    value: "option2",
-                    label: "This is an example Medicatwearawrion",
-                  },
-                ],
-              },
-              {
-                default: () => "her",
-              }
-            );
-          },
-        },
-        {
-          key: "ClientTeaching",
-          title: "Client Teaching",
-        },
-      ],
-      data: [
-        {
-          medication: "he4y",
-          DrugClassification: ["hey", "hey"],
-          ClientTeaching: "hey",
-        },
-      ],
+    const getData = async () => {
+      try {
+        let { data: question, error } = await supabase
+          .from("question")
+          .select("*");
+        if (error) throw error;
+        data.value = question;
+        dataLoaded.value = true;
+        console.log(data.value);
+      } catch (error) {
+        console.warn(error.message);
+      }
     };
+    getData();
+    return { data, dataLoaded };
   },
 };
 </script>
