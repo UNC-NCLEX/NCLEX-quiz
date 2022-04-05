@@ -19,6 +19,10 @@
       <div class="right">
         <h2 id="scores">Student Scores</h2>
 
+        <h2 id="roster">
+          <router-link :to="'/Roster'">Manage Roster</router-link>
+        </h2>
+
         <h2 id="roster">Manage Roster</h2>
       </div>
     </div>

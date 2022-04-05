@@ -6,11 +6,11 @@
         <h3> Add New Student </h3>
     <div class="form-group">
         <label for="pid" class="pid-label">Pid</label>
-        <n-input v-model:value="newPid" type="text" class="form-field" id="pid" name="pidInput" placeholder="Student Pid" />
+        <n-input v-model:value="newPid" type="text" class="form-field" id="pid" name="pidInput" :input-props="{ type: 'clearable' }" placeholder="Student Pid" />
     </div>
     <div class="form-group">
         <label for="onyen" class="onyen-label">Onyen</label>
-        <n-input v-model:value="newOnyen" type="text" class="form-field" id="onyen" name="onyenInput" placeholder="Student Onyen" />
+        <n-input v-model:value="newOnyen" type="text" class="form-field" id="onyen" name="onyenInput" :input-props="{ type: 'clearable' }" placeholder="Student Onyen" />
     </div>
     <div class="form-group">
         <n-button @click="enrollButton()" type="primary" id="add" color="#ff853e" text-color="black">Enroll Student</n-button>
@@ -36,13 +36,20 @@
 </template>
 
 <script>
-import {NButton, NInput} from 'naive-ui'
+import {NButton, NInput} from 'naive-ui';
+import {ref} from 'vue';
 
 export default {
   name: 'StudentRoster',
   components: {
       NButton,
       NInput
+  },
+  setup(){
+    return {
+      newpid: ref(null),
+      newOnyen: ref(null)
+    };
   },
   props: {
     students: Array
@@ -54,8 +61,6 @@ export default {
       enrollButton(){
           var temp = {"onyen": this.newOnyen, "pid": this.newPid};
           this.$store.dispatch('enrollStudent', temp);
-          this.newOnyen="";
-          this.newPid="";
       }
   }
 }
