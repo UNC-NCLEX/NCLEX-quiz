@@ -40,8 +40,7 @@
             </th>
           </thead>
           <tbody>
-                 <th v-for="(item, index) in categories" :key="index">
-            </th>
+           
             <tr v-for="(item, index) in medication" :key="index">
               <td>{{ medication[index].name }}</td>
               <td class="options">

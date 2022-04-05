@@ -12,6 +12,8 @@
   <DropDown></DropDown>
   <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
   <MultipleResponse />
+  <MatrixTable />
+
   <RationalePopup/>
 </template>
 
@@ -29,6 +31,8 @@ import MultipleChoice from "./components/MultipleChoice.vue";
 import DropDown from "./components/DropDown.vue";
 import DropDownSentence from "./components/DropDownSentence.vue";
 import MultipleResponse from "./components/MultipleResponse.vue";
+import MatrixTable from "./components/MatrixTable.vue";
+
 import RationalePopup from "./components/RationalePopup.vue";
 
 import { NSelect } from "naive-ui";
@@ -45,6 +49,7 @@ export default {
     DropDown,
     DropDownSentence,
     MultipleResponse,
+    MatrixTable,
     RationalePopup
   },
   data() {

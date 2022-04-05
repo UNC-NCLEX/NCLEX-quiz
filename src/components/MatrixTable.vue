@@ -5,8 +5,9 @@
       <p>Interactive tool to help you learn</p>
     </div>
     <h2>Week 1 Review</h2>
+
     <div class="question">
-      <h3>Question 4</h3>
+      <h3>Question 5</h3>
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
@@ -28,60 +29,86 @@
         </n-tabs>
       </div>
       <h4>
-        Which of the following assessment findings indicates the therapeutic
-        effect of blood transfusion? Check all that apply.
+        The nursing student reviews this medication and identified that Drug A
+        has a narrow therapeutic index, and drug B has a long half-life. Based
+        on this knowledge, select the statements that are correct for drug A and
+        B.
       </h4>
-      <n-checkbox-group v-model:value="value" name="radiogroup">
-        <n-checkbox v-for="choice in choices" :key="choice.value" :value="choice.value" size="large">
-          <div class="choice-text">{{ choice.label }}</div>
-        </n-checkbox>
-      </n-checkbox-group>
+      <div>
+        <n-table>
+          <thead>
+            <th v-for="(item, index) in categories" :key="index">
+              <b>{{ categories[index].name }}</b>
+            </th>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in options" :key="index">
+              <td>{{ options[index].name }}</td>
+              <td>
+                <n-checkbox v-model="value" size="large" />
+              </td>
+              <td>
+                <n-checkbox v-model="value" size="large" />
+              </td>
+              <td>
+                <n-checkbox v-model="value" size="large" />
+              </td>
+            </tr>
+          </tbody>
+        </n-table>
+      </div>
     </div>
-    <n-button size="large">Submit</n-button>
+
+    <a href="RationalePopup.vue"><n-button size="large">Submit</n-button> </a>
   </div>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NCheckbox, NCheckboxGroup } from "naive-ui";
+import { NButton, NTabPane, NTabs, NTable, NCheckbox } from "naive-ui";
+
 import { ref } from "vue";
 
 export default {
-  name: "MultipleResponse",
+  name: "MatrixTable",
   components: {
     NButton,
     NTabPane,
     NTabs,
+    NTable,
     NCheckbox,
-    NCheckboxGroup,
   },
   setup() {
     return {
       value: ref(null),
-      choices: [
+      categories: [
         {
-          value: "Hemoglobin level of 6.5mg/dl",
-          label: "Hemoglobin level of 6.5mg/dl",
+          name: "Nursing student’s statements",
         },
         {
-          value: "Hemoglobin level of 6.2mg/dl",
-          label: "Hemoglobin level of 6.2mg/d",
+          name: "Drug A",
         },
         {
-          value: "Hemoglobin level of 11mg/dl",
-          label: "Hemoglobin level of 11mg/dl",
+          name: "Drug B",
         },
         {
-          value: "Hemoglobin level of 6.3 mg/dl",
-          label: "Hemoglobin level of 6.3 mg/dl",
+          name: "Not applicable for both Drug A & B",
+        },
+      ],
+
+      options: [
+        {
+          name: "The medication requires close monitoring",
         },
         {
-          value: "Hemoglobin level of 5mg/d",
-          label: "Hemoglobin level of 5mg/d",
+          name: "The medication needs less frequent dosing",
         },
-      ].map((s) => {
-        s.value = s.value.toLowerCase();
-        return s;
-      }),
+        {
+          name: "The medication needs less frequent dosing",
+        },
+        {
+          name: "The medication needs more frequent dosing",
+        },
+      ],
     };
   },
 };
@@ -122,18 +149,22 @@ h2 {
   text-align: left;
 }
 
-/*****ANSWERS*****/
-.n-checkbox {
-  border: 1px #808080 solid;
+/*****TABLE*****/
+.n-table {
   box-shadow: 10px 10px 5px #cac9c9;
-  border-radius: 10px;
-  width: 72vw;
-  padding: 20px 1.5vw;
-  margin-top: 10px;
 }
 
-.choice-text {
-  padding: 0 10px;
+th:not(:first-child) {
+    text-align: center;
+}
+
+/*****ANSWERS******/
+.n-checkbox {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 /*****BUTTON*****/
@@ -141,9 +172,10 @@ h2 {
   background-color: #ffc633;
   box-shadow: 10px 10px 5px #cac9c9;
   margin: 25px 0;
+  
 }
-
 a {
   text-decoration: none;
 }
+
 </style>
