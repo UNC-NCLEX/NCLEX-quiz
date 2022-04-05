@@ -4,44 +4,38 @@
       <h1>Pharmacoloy &amp; Pathophysiology</h1>
       <p>Interactive tool to help you learn</p>
     </div>
-    <h2>Week 1 Review</h2>
+    <h2>Week {{question.qid}} Review</h2>
     <div class="question">
-      <h3>Question 1</h3>
+      <h3>Question</h3>
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
-            A patient is presented to the emergency department with unexplained
-            fever, diarrhea (6 loose stools within 4 hours) and extreme fatigue
-            at 7AM.
+            {{question.histAndPhys}}
           </n-tab-pane>
           <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            On assessment, the patient’s temperature is 101 degree Fahrenheit.
+            {{question.nurseNotes}}
           </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet"> </n-tab-pane>
+          <n-tab-pane name="Flow Sheet" tab="Flow Sheet"> {{question.flowSheet}}</n-tab-pane>
           <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            Hemoglobin level is 6.8mg/dL
+            {{question.labResults}}
           </n-tab-pane>
           <n-tab-pane name="Orders" tab="Orders">
-            Tylenol 650 mg by mouth once; administer antidiarrheal medication
-            once and administer one unit of packed RBC
+            {{question.orders}}
           </n-tab-pane>
         </n-tabs>
       </div>
       <h4>
-        Which of the following assessment findings indicates the therapeutic
-        effect of blood transfusion?
+        {{question.questText}}
       </h4>
-      <n-radio-group v-model:value="value" name="radiogroup">
-        <n-radio
-          v-for="choice in choices"
-          :key="choice.value"
-          :value="choice.value"
-        >
-          <div class="choice-text">{{ choice.label }}</div>
-        </n-radio>
-      </n-radio-group>
+      <n-radio-group v-model:value="choiceSelected" name="radiogroup">
+        <n-radio :value=1 class="choice-text">{{question.a1}}</n-radio>
+        <n-radio :value=2 class="choice-text">{{question.a2}}</n-radio>
+        <n-radio :value=3 class="choice-text">{{question.a3}}</n-radio>
+        <n-radio :value=4 class="choice-text">{{question.a4}}</n-radio>
+        <n-radio :value=5 class="choice-text">{{question.a5}}</n-radio>
+      </n-radio-group>     
     </div>
-    <n-button size="large">Submit</n-button>
+    <n-button size="large" @click=checkAnswer()>Submit</n-button>
   </div>
 </template>
 
@@ -58,36 +52,22 @@ export default {
     NRadio,
     NRadioGroup,
   },
+  methods: {
+    checkAnswer() {
+      if(this.question.qid === this.choiceSelected){
+        console.log("correct")
+      } else (console.log("incorrect"))
+    }
+  },
   setup() {
     return {
       value: ref(null),
-      choices: [
-        {
-          value: "Hemoglobin level of 6.5mg/dl",
-          label: "Hemoglobin level of 6.5mg/dl",
-        },
-        {
-          value: "Hemoglobin level of 6.2mg/dl",
-          label: "Hemoglobin level of 6.2mg/d",
-        },
-        {
-          value: "Hemoglobin level of 11mg/dl",
-          label: "Hemoglobin level of 11mg/dl",
-        },
-        {
-          value: "Hemoglobin level of 6.3 mg/dl",
-          label: "Hemoglobin level of 6.3 mg/dl",
-        },
-        {
-          value: "Hemoglobin level of 5mg/d",
-          label: "Hemoglobin level of 5mg/d",
-        },
-      ].map((s) => {
-        s.value = s.value.toLowerCase();
-        return s;
-      }),
     };
   },
+  computed: {
+    question() {console.log(typeof this.$store.getters.questionNext); return this.$store.getters.questionNext
+    }
+  }
 };
 </script>
 
