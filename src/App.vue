@@ -1,63 +1,16 @@
 <template>
-  <NewDDS :quizzes="this.$store.state.quizzes"></NewDDS>
-  <NewSelectAll :quizzes="this.$store.state.quizzes"></NewSelectAll>
-  <NewMultipleChoice :quizzes="this.$store.state.quizzes"></NewMultipleChoice>
-  <InstructorDash />
-  <Roster :students="this.$store.state.students" />
-  <StudentDashboard
-    :scores="scores"
-    :past_quizzes="past_quizzes"
-  ></StudentDashboard>
-  <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
-  <DropDownTable :columns="columns" :data="data"></DropDownTable>
-  <MultipleChoice />
-  <DropDown></DropDown>
-  <DropDownSentence :dropdownSentQuestions="dropdownSentQuestions" :options="options"></DropDownSentence>
-  <MultipleResponse />
-  <MatrixTable />
-  <DropDown :drugs="drugs" :options="options"></DropDown>
-  <RationalePopup />
+  <router-view />
 </template>
 
 <script>
 import { h, ref } from "vue";
-import NewDDS from "./components/NewDDS.vue";
-import NewSelectAll from "./components/NewSelectAll.vue";
-import NewMultipleChoice from "./components/NewMultChoice.vue";
-//import HelloWorld from './components/HelloWorld.vue'
-import InstructorDash from "./components/InstructorDash.vue";
-import Roster from "./components/Roster.vue";
-//import studentData from './components/studentData.js'
-import StudentDashboard from "./components/StudentDashboard.vue";
-import QuizzesContainer from "./components/QuizzesContainer.vue";
-import DropDownTable from "./components/DropDownTable.vue";
-import MultipleChoice from "./components/MultipleChoice.vue";
-import DropDown from "./components/DropDown.vue";
-import DropDownSentence from "./components/DropDownSentence.vue";
-import MultipleResponse from "./components/MultipleResponse.vue";
-import MatrixTable from "./components/MatrixTable.vue";
-
-import RationalePopup from "./components/RationalePopup.vue";
 import { supabase } from "./supabase/init";
 import { NSelect } from "naive-ui";
 
 export default {
   name: "App",
   components: {
-    NewDDS,
-    NewSelectAll,
-    MultipleChoice,
-    NewMultipleChoice,
-    InstructorDash,
-    Roster,
-    StudentDashboard,
-    QuizzesContainer,
-    DropDownTable,
-    DropDown,
-    DropDownSentence,
-    MultipleResponse,
-    MatrixTable,
-    RationalePopup,
+    
   },
   setup() {
     const data = ref([]);
