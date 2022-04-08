@@ -4,33 +4,33 @@
       <h1>Pharmacoloy &amp; Pathophysiology</h1>
       <p>Interactive tool to help you learn</p>
     </div>
-    <h2>Quiz {{question.qid}} Review</h2>
+    <h2>{{ this.$store.state.currentQuiz.title }}</h2>
     <div class="question">
       <h3>Question</h3>
 
-      <h4>
-        {{question.questText}}
-      </h4>
-
-      <n-checkbox-group v-model:value="choiceSel" name="radiogroup">
-        <n-checkbox :value=1>
+      <n-checkbox-group
+        v-model:value="choiceSel"
+        name="radiogroup"
+        v-for="(item, index) in options"
+        :key="index"
+      >
+        <n-checkbox :value="1">
           <div class="choice-text">{{ question.a1 }}</div>
         </n-checkbox>
-        <n-checkbox :value=2>
+        <n-checkbox :value="2">
           <div class="choice-text">{{ question.a2 }}</div>
         </n-checkbox>
-        <n-checkbox :value=3>
+        <n-checkbox :value="3">
           <div class="choice-text">{{ question.a3 }}</div>
         </n-checkbox>
-        <n-checkbox :value=4>
+        <n-checkbox :value="4">
           <div class="choice-text">{{ question.a4 }}</div>
         </n-checkbox>
-        <n-checkbox :value=5>
+        <n-checkbox :value="5">
           <div class="choice-text">{{ question.a5 }}</div>
         </n-checkbox>
-        <n-checkbox :value=6>
+        <n-checkbox :value="6">
           <div class="choice-text">{{ question.a6 }}</div>
-
         </n-checkbox>
       </n-checkbox-group>
     </div>
@@ -44,17 +44,22 @@ import { ref } from "vue";
 
 export default {
   name: "MultipleResponse",
+  props: {
+    options: Array,
+  },
   components: {
     NButton,
     NCheckbox,
     NCheckboxGroup,
-  },  computed: {
-    question() { return this.$store.getters.questionNext
-    }
+  },
+  computed: {
+    question() {
+      return this.$store.getters.questionNext;
+    },
   },
   setup() {
     return {
-      value: ref(null)
+      value: ref(null),
     };
   },
 };

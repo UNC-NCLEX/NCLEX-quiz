@@ -3,6 +3,10 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     user: "32b776a4-8d98-4a82-a505-f1c84090fcde",
+    currentQuiz: {
+      quiz_id: 1,
+      title: "Week 1",
+    },
     currentXid: 1,
     currentQid: 1,
     currentScore: 0,

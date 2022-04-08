@@ -1,6 +1,6 @@
 <template>
   <div v-if="dataLoaded">
-    {{ scores }}
+    {{ question }}
     <div v-for="(item, index) in quizzes" :key="index">
       <div>hi</div>
       <div>{{ item }}</div>
@@ -70,6 +70,7 @@ export default {
     const store = useStore();
     const quizzes = ref([]);
     const scores = ref([]);
+    const question = ref([]);
     const dataLoaded = ref(null);
     const count = computed(() => store.state.user);
     const getData = async () => {
@@ -95,9 +96,19 @@ export default {
       } catch (error) {
         console.warn(error.message);
       }
+      try {
+        let { data: question, error } = await supabase
+          .from("question")
+          .select("*");
+        if (error) throw error;
+        question.value = question;
+        dataLoaded.value = true;
+      } catch (error) {
+        console.warn(error.message);
+      }
     };
     getData();
-    return { count, quizzes, scores, dataLoaded };
+    return { count, quizzes, scores, dataLoaded, question };
   },
   data() {
     return {
