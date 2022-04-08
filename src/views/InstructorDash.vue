@@ -11,7 +11,7 @@
     <div class="cont">
       <div class="quiz">
         <h2>Quiz Management</h2>
-        <!--TODO add links to pages -->
+        <!--TODO: add links to pages -->
         <h3><router-link :to="{}">View my quizzes</router-link></h3>
         <h3><router-link :to="{}">Add a quiz</router-link></h3>
         <h3><router-link :to="{}">Edit a quiz</router-link></h3>
@@ -20,15 +20,15 @@
         <h2 id="scores">Student Scores</h2>
 
         <h2 id="roster">
-          <router-link :to="'/Roster'">Manage Roster</router-link>
+          <router-link to='/Roster'>Manage Roster</router-link>
         </h2>
 
         <h2 id="roster">Manage Roster</h2>
       </div>
     </div>
 
-    <!--TODO add other emails, maybe change to embedded form -->
-    <p><a href="mailto: aelisebe@live.unc.edu"> Report a problem</a></p>
+    <!--TODO: maybe change to embedded form -->
+    <p><a href="mailto: unc-nclex-site@unc.edu"> Report a problem</a></p>
   </div>
 </template>
 
