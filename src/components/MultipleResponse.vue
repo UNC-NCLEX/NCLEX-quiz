@@ -11,6 +11,7 @@
       <h4>
         {{question.questText}}
       </h4>
+
       <n-checkbox-group v-model:value="choiceSel" name="radiogroup">
         <n-checkbox :value=1>
           <div class="choice-text">{{ question.a1 }}</div>
@@ -29,6 +30,7 @@
         </n-checkbox>
         <n-checkbox :value=6>
           <div class="choice-text">{{ question.a6 }}</div>
+
         </n-checkbox>
       </n-checkbox-group>
     </div>

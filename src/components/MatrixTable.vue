@@ -7,7 +7,7 @@
     <h2>Week 1 Review</h2>
 
     <div class="question">
-      <h3>Question 2</h3>
+      <h3>Question 5</h3>
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
@@ -29,8 +29,10 @@
         </n-tabs>
       </div>
       <h4>
-        Which of the following assessment findings indicates the therapeutic
-        effect of blood transfusion?
+        The nursing student reviews this medication and identified that Drug A
+        has a narrow therapeutic index, and drug B has a long half-life. Based
+        on this knowledge, select the statements that are correct for drug A and
+        B.
       </h4>
       <div>
         <n-table>
@@ -40,23 +42,16 @@
             </th>
           </thead>
           <tbody>
-            <th v-for="(item, index) in categories" :key="index"></th>
-
-            <tr v-for="(item, index) in medication" :key="index">
-              <td>{{ medication[index].name }}</td>
-              <td class="options">
-                <n-select
-                  v-model="options[index].value"
-                  :options="options"
-                  clearable
-                />
+            <tr v-for="(item, index) in options" :key="index">
+              <td>{{ options[index].name }}</td>
+              <td>
+                <n-checkbox v-model="value" size="large" />
               </td>
               <td>
-                <n-select
-                  v-model="options2[index].value"
-                  :options="options2"
-                  clearable
-                />
+                <n-checkbox v-model="value" size="large" />
+              </td>
+              <td>
+                <n-checkbox v-model="value" size="large" />
               </td>
             </tr>
           </tbody>
@@ -69,87 +64,49 @@
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSelect, NTable } from "naive-ui";
+import { NButton, NTabPane, NTabs, NTable, NCheckbox } from "naive-ui";
 
 import { ref } from "vue";
 
 export default {
-  name: "DropDown",
+  name: "MatrixTable",
   components: {
     NButton,
     NTabPane,
     NTabs,
-    NSelect,
     NTable,
+    NCheckbox,
   },
   setup() {
     return {
       value: ref(null),
       categories: [
         {
-          name: "Medication",
+          name: "Nursing student’s statements",
         },
         {
-          name: "Drug Classification",
+          name: "Drug A",
         },
         {
-          name: "Client Teaching",
+          name: "Drug B",
+        },
+        {
+          name: "Not applicable for both Drug A & B",
         },
       ],
 
-      medication: [
-        {
-          name: "Medication 1",
-        },
-        {
-          name: "Medication 2",
-        },
-        {
-          name: "Medication 3",
-        },
-      ],
       options: [
         {
-          label: "Classification 1",
-          value: "Classification 1",
+          name: "The medication requires close monitoring",
         },
         {
-          label: "Classification 2",
-          value: "Classification 2",
+          name: "The medication needs less frequent dosing",
         },
         {
-          label: "Classification 3",
-          value: "Classification 3",
+          name: "The medication needs less frequent dosing",
         },
         {
-          label: "Classification 4",
-          value: "Classification 4",
-        },
-        {
-          label: "Classification 5",
-          value: "Classification 5",
-        },
-      ],
-      options2: [
-        {
-          label: "Teaching 1",
-          value: "Teaching 1",
-        },
-        {
-          label: "Teaching 2",
-          value: "Teaching 2",
-        },
-        {
-          label: "Teaching 3",
-          value: "Teaching 3",
-        },
-        {
-          label: "Teaching 4",
-          value: "Teaching 4",
-        },
-        {
-          label: "Teaching 5",
-          value: "Teaching 5",
+          name: "The medication needs more frequent dosing",
         },
       ],
     };
@@ -172,7 +129,6 @@ export default {
   background-color: #2094ff;
   color: white;
   width: 100%;
-  text-align: center;
 }
 h2 {
   color: #fe4400;
@@ -198,12 +154,17 @@ h2 {
   box-shadow: 10px 10px 5px #cac9c9;
 }
 
+th:not(:first-child) {
+    text-align: center;
+}
+
 /*****ANSWERS******/
-.options {
-  display: flex;
+.n-checkbox {
+  display:flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 /*****BUTTON*****/
@@ -211,9 +172,10 @@ h2 {
   background-color: #ffc633;
   box-shadow: 10px 10px 5px #cac9c9;
   margin: 25px 0;
+  
 }
-
 a {
   text-decoration: none;
 }
+
 </style>

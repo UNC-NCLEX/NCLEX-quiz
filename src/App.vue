@@ -20,6 +20,8 @@
     <MultipleChoice />
     <DropDown :drugs="drugs" :options="options"></DropDown>
     <RationalePopup />
+    <MultipleResponse />
+    <MatrixTable />
   </div>
 </template>
 
@@ -38,7 +40,9 @@ import DropDownTable from "./components/DropDownTable.vue";
 import MultipleChoice from "./components/MultipleChoice.vue";
 import DropDown from "./components/DropDown.vue";
 // import DropDownSentence from "./components/DropDownSentence.vue";
-// import MultipleResponse from "./components/MultipleResponse.vue";
+import MultipleResponse from "./components/MultipleResponse.vue";
+import MatrixTable from "./components/MatrixTable.vue";
+
 import RationalePopup from "./components/RationalePopup.vue";
 import { supabase } from "./supabase/init";
 import { NSelect } from "naive-ui";
@@ -58,6 +62,8 @@ export default {
     QuizzesContainer,
     DropDownTable,
     DropDown,
+    MultipleResponse,
+    MatrixTable,
     RationalePopup,
   },
   setup() {
