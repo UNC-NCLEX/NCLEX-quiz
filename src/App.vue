@@ -6,6 +6,8 @@
 import { h, ref } from "vue";
 import { supabase } from "./supabase/init";
 import { NSelect } from "naive-ui";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
   name: "App",
@@ -13,55 +15,40 @@ export default {
     
   },
   setup() {
-    const data = ref([]);
+    const store = useStore();
+    const quizzes = ref([]);
+    const scores = ref([]);
     const dataLoaded = ref(null);
-
+    const count = computed(() => store.state.user);
     const getData = async () => {
+      // TODO: get user's past quizzes in an array
       try {
-        let { data: question, error } = await supabase
-          .from("question")
-          .select("*");
+        // TODO: SQL statement that selects all quizzes from DB and filters out the ones that are in the past quizzes array  .not('id','in',`(${arr})`)
+        let { data: quiz, error } = await supabase.from("quiz").select("*");
         if (error) throw error;
-        data.value = question;
+        quizzes.value = quiz;
         dataLoaded.value = true;
-        console.log(data.value);
+      } catch (error) {
+        console.warn(error.message);
+      }
+      // get the user's scores
+      try {
+        let { data: score, error } = await supabase
+          .from("scores")
+          .select("*")
+          .eq("user", count.value);
+        if (error) throw error;
+        scores.value = score;
+        dataLoaded.value = true;
       } catch (error) {
         console.warn(error.message);
       }
     };
     getData();
-    return { data, dataLoaded };
+    return { count, quizzes, scores, dataLoaded };
   },
   data() {
     return {
-      scores: [
-        {
-          qid: 1,
-          score: 100,
-        },
-        {
-          qid: 2,
-          score: 70,
-        },
-        {
-          qid: 3,
-          score: 90,
-        },
-      ],
-      past_quizzes: [
-        {
-          qid: 1,
-          name: "Unit 1",
-        },
-        {
-          qid: 2,
-          name: "Unit 2",
-        },
-        {
-          qid: 3,
-          name: "Unit 3",
-        },
-      ],
       drugs: [
         {
           name: "Tylenol",
@@ -73,7 +60,6 @@ export default {
           name: "Aceptaminophen",
         },
       ],
-
       options: [
         {
           label: "Marina Bay Sands",
