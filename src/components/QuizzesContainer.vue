@@ -1,9 +1,9 @@
 <template>
   <div class="quizzes">
     <h1>Content</h1>
-    <div v-for="(item, index) in quizzes" :key="item.qid">
+    <div v-for="(item, index) in quizzes" :key="item.quiz_id">
       <div class="quizzes__card">
-        <div>{{ quizzes[index].name }}</div>
+        <div>{{ quizzes[index].title }}</div>
       </div>
     </div>
   </div>

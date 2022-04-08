@@ -1,22 +1,26 @@
 <template>
-  <NewDDS :quizzes="this.$store.state.quizzes"></NewDDS>
-  <NewSelectAll :quizzes="this.$store.state.quizzes"></NewSelectAll>
-  <NewMultipleChoice :quizzes="this.$store.state.quizzes"></NewMultipleChoice>
-  <InstructorDash />
-  <Roster :students="this.$store.state.students" />
-  <StudentDashboard
-    :scores="scores"
-    :past_quizzes="past_quizzes"
-  ></StudentDashboard>
-  <QuizzesContainer :quizzes="past_quizzes"></QuizzesContainer>
-  <DropDownTable :columns="columns" :data="data"></DropDownTable>
-  <MultipleChoice />
-  <DropDown :drugs="drugs" :options="options"></DropDown>
-  <DropDownSentence
-    :dropdownSentQuestions="dropdownSentQuestions"
-    :options="options"
-  ></DropDownSentence>
-  <RationalePopup />
+  <div v-if="dataLoaded">
+    {{ scores }}
+    <div v-for="(item, index) in quizzes" :key="index">
+      <div>hi</div>
+      <div>{{ item }}</div>
+      <div>{{ index }}</div>
+    </div>
+    <NewDDS :quizzes="this.$store.state.quizzes"></NewDDS>
+    <NewSelectAll :quizzes="this.$store.state.quizzes"></NewSelectAll>
+    <NewMultipleChoice :quizzes="this.$store.state.quizzes"></NewMultipleChoice>
+    <InstructorDash />
+    <Roster :students="this.$store.state.students" />
+    <StudentDashboard
+      :scores="scores"
+      :past_quizzes="quizzes"
+    ></StudentDashboard>
+    <QuizzesContainer :quizzes="quizzes"></QuizzesContainer>
+    <DropDownTable :columns="columns" :data="data"></DropDownTable>
+    <MultipleChoice />
+    <DropDown :drugs="drugs" :options="options"></DropDown>
+    <RationalePopup />
+  </div>
 </template>
 
 <script>
@@ -33,11 +37,13 @@ import QuizzesContainer from "./components/QuizzesContainer.vue";
 import DropDownTable from "./components/DropDownTable.vue";
 import MultipleChoice from "./components/MultipleChoice.vue";
 import DropDown from "./components/DropDown.vue";
-import DropDownSentence from "./components/DropDownSentence.vue";
+// import DropDownSentence from "./components/DropDownSentence.vue";
 // import MultipleResponse from "./components/MultipleResponse.vue";
 import RationalePopup from "./components/RationalePopup.vue";
 import { supabase } from "./supabase/init";
 import { NSelect } from "naive-ui";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
   name: "App",
@@ -52,59 +58,43 @@ export default {
     QuizzesContainer,
     DropDownTable,
     DropDown,
-    DropDownSentence,
     RationalePopup,
   },
   setup() {
-    const data = ref([]);
+    const store = useStore();
+    const quizzes = ref([]);
+    const scores = ref([]);
     const dataLoaded = ref(null);
-
+    const count = computed(() => store.state.user);
     const getData = async () => {
+      // TODO: get user's past quizzes in an array
       try {
-        let { data: question, error } = await supabase
-          .from("question")
-          .select("*");
+        // TODO: SQL statement that selects all quizzes from DB and filters out the ones that are in the past quizzes array  .not('id','in',`(${arr})`)
+        let { data: quiz, error } = await supabase.from("quiz").select("*");
         if (error) throw error;
-        data.value = question;
+        quizzes.value = quiz;
         dataLoaded.value = true;
-        console.log(data.value);
+      } catch (error) {
+        console.warn(error.message);
+      }
+      // get the user's scores
+      try {
+        let { data: score, error } = await supabase
+          .from("scores")
+          .select("*")
+          .eq("user", count.value);
+        if (error) throw error;
+        scores.value = score;
+        dataLoaded.value = true;
       } catch (error) {
         console.warn(error.message);
       }
     };
     getData();
-    return { data, dataLoaded };
+    return { count, quizzes, scores, dataLoaded };
   },
   data() {
     return {
-      scores: [
-        {
-          qid: 1,
-          score: 100,
-        },
-        {
-          qid: 2,
-          score: 70,
-        },
-        {
-          qid: 3,
-          score: 90,
-        },
-      ],
-      past_quizzes: [
-        {
-          qid: 1,
-          name: "Unit 1",
-        },
-        {
-          qid: 2,
-          name: "Unit 2",
-        },
-        {
-          qid: 3,
-          name: "Unit 3",
-        },
-      ],
       drugs: [
         {
           name: "Tylenol",
@@ -116,7 +106,6 @@ export default {
           name: "Aceptaminophen",
         },
       ],
-
       options: [
         {
           label: "Marina Bay Sands",

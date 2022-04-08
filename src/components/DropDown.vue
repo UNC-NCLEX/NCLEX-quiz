@@ -40,8 +40,7 @@
             </th>
           </thead>
           <tbody>
-                 <th v-for="(item, index) in categories" :key="index">
-            </th>
+            <th v-for="(item, index) in categories" :key="index"></th>
             <tr v-for="(item, index) in medication" :key="index">
               <td>{{ medication[index].name }}</td>
               <td class="options">
@@ -172,6 +171,7 @@ export default {
   background-color: #2094ff;
   color: white;
   width: 100%;
+  text-align: center;
 }
 h2 {
   color: #fe4400;
