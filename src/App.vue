@@ -15,7 +15,6 @@ export default {
   setup() {
     const store = useStore();
     const quizzes = ref([]);
-    const scores = ref([]);
     const question = ref([]);
     const dataLoaded = ref(null);
     const count = computed(() => store.state.user);
@@ -32,17 +31,6 @@ export default {
       }
       // get the user's scores
       try {
-        let { data: score, error } = await supabase
-          .from("scores")
-          .select("*")
-          .eq("user", count.value);
-        if (error) throw error;
-        scores.value = score;
-        dataLoaded.value = true;
-      } catch (error) {
-        console.warn(error.message);
-      }
-      try {
         let { data: question, error } = await supabase
           .from("question")
           .select("*");
@@ -54,7 +42,7 @@ export default {
       }
     };
     getData();
-    return { count, quizzes, scores, dataLoaded, question };
+    return { count, quizzes, dataLoaded, question };
   },
   data() {
     return {

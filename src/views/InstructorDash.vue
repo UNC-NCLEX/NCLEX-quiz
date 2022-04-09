@@ -17,10 +17,10 @@
         <h3><router-link :to="{}">Edit a quiz</router-link></h3>
       </div>
       <div class="right">
-        <h2 id="scores">Student Scores</h2>
+        <h2 class="scores">Student Scores</h2>
 
         <h2 id="roster">
-          <router-link to='/Roster'>Manage Roster</router-link>
+          <router-link to="/Roster">Manage Roster</router-link>
         </h2>
 
         <h2 id="roster">Manage Roster</h2>
@@ -90,7 +90,7 @@ export default {
   margin-left: 3%;
   width: 25%;
 }
-#scores {
+.scores {
   background-color: #ff5c00;
   color: white;
   border-radius: 5%;
