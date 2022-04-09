@@ -1,9 +1,5 @@
 <template>
   <div class="container">
-    <div class="header">
-      <h1>Pharmacoloy &amp; Pathophysiology</h1>
-      <p>Interactive tool to help you learn</p>
-    </div>
     <h2>Week 1 Review</h2>
 
     <div class="question">
@@ -167,13 +163,7 @@ export default {
   align-items: center;
 }
 
-/*****HEADER/TITLE*****/
-.header {
-  background-color: #2094ff;
-  color: white;
-  width: 100%;
-  text-align: center;
-}
+/*****TITLE*****/
 h2 {
   color: #fe4400;
 }

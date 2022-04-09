@@ -1,4 +1,9 @@
 <template>
+    <div class="header">
+      <h1>Pharmacoloy &amp; Pathophysiology</h1>
+      <p>Interactive tool to help you learn</p>
+    </div>
+    <br>
   <router-view />
 </template>
 
@@ -12,7 +17,6 @@ import { computed } from "vue";
 export default {
   name: "App",
   components: {
-    
   },
   setup() {
     const store = useStore();
@@ -130,21 +134,14 @@ export default {
   padding-left: 10%;
   padding-right: 10%;
   color: #2c3e50;
-
-  margin-top: 60px;
-  background-color: linear-gradient(
-    172.4deg,
-    #24a3ff 5.89%,
-    #24a3ff 5.9%,
-    #0038ff 91.52%
-  );
 }
-.container {
-  background-color: linear-gradient(
-    172.4deg,
-    #24a3ff 5.89%,
-    #24a3ff 5.9%,
-    #0038ff 91.52%
-  );
+.header {
+  text-align: center;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  background: rgb(36,163,255);
+  background: linear-gradient(0deg, rgba(36,163,255,1) 15%, rgba(0,56,255,1) 100%);
+  color: white;
+  width: 100%;
 }
 </style>
