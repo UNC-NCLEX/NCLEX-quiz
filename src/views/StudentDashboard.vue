@@ -17,6 +17,7 @@
         />
       </div>
     </div>
+    <QuizzesContainer :quizzes="quizzes"></QuizzesContainer>
   </div>
 </template>
 
@@ -26,12 +27,13 @@ import { ref } from "vue";
 import { supabase } from "../supabase/init";
 import { useStore } from "vuex";
 import { computed } from "vue";
-import
+import QuizzesContainer from "../components/QuizzesContainer.vue";
 
 export default {
   name: "StudentDashboard",
   components: {
     NProgress,
+    QuizzesContainer,
   },
   setup() {
     const store = useStore();

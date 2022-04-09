@@ -1,19 +1,24 @@
 <template>
   <div class="quizzes">
-    <h1>Content</h1>
+    <h1>New Content</h1>
     <div v-for="(item, index) in quizzes" :key="item.quiz_id">
-      <div class="quizzes__card">
-        <div>{{ quizzes[index].title }}</div>
-      </div>
+      <NButton class="quizzes__card">
+        <p>{{ quizzes[index].title }}</p>
+      </NButton>
     </div>
   </div>
 </template>
 
 <script>
+import { NButton } from "naive-ui";
+
 export default {
   name: "QuizzesContainer",
   props: {
     quizzes: Array,
+  },
+  components: {
+    NButton,
   },
 };
 </script>
