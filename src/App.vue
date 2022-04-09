@@ -148,8 +148,8 @@ export default {
 }
 .header {
   text-align: center;
-  padding-top: 10%;
-  padding-bottom: 10%;
+  padding-top: 5%;
+  padding-bottom: 5%;
   background: rgb(36,163,255);
   background: linear-gradient(0deg, rgba(36,163,255,1) 15%, rgba(0,56,255,1) 100%);
   color: white;
