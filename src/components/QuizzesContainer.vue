@@ -2,9 +2,9 @@
   <div class="quizzes">
     <h1>New Content</h1>
     <div v-for="(item, index) in quizzes" :key="item.quiz_id">
-      <NButton class="quizzes__card">
+      <n-button @click="navToQuiz" class="quizzes__card" :id="item.quiz_id">
         <p>{{ quizzes[index].title }}</p>
-      </NButton>
+      </n-button>
     </div>
   </div>
 </template>
@@ -19,6 +19,13 @@ export default {
   },
   components: {
     NButton,
+  },
+  methods: {
+    navToQuiz(e) {
+      const selected_quiz_id = e.target.id;
+      this.$store.state.currentQid = selected_quiz_id;
+      this.$router.push(`/Quiz/${selected_quiz_id}`);
+    },
   },
 };
 </script>

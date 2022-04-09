@@ -1,23 +1,26 @@
 <template>
   <div class="student">
     {{ quizzes }}
-    <h1>
-      Welcome {{ this.$store.state.user.id }}. Here is how you have done in your
-      past quizzes:
-    </h1>
-    <div class="scores">
-      <div class="centered" v-for="item in scores" :key="item.id">
-        <p class="student__score__section">
-          {{ item.title }}
-        </p>
-        <n-progress
-          type="line"
-          :percentage="item.score"
-          :indicator-placement="'inside'"
-        />
+    <TopHeader></TopHeader>
+    <div class="content">
+      <h1>
+        Welcome {{ this.$store.state.user.id }}. Here is how you have done in
+        your past quizzes:
+      </h1>
+      <div class="scores">
+        <div class="centered" v-for="item in scores" :key="item.id">
+          <p class="student__score__section">
+            {{ item.title }}
+          </p>
+          <n-progress
+            type="line"
+            :percentage="item.score"
+            :indicator-placement="'inside'"
+          />
+        </div>
       </div>
+      <QuizzesContainer :quizzes="quizzes"></QuizzesContainer>
     </div>
-    <QuizzesContainer :quizzes="quizzes"></QuizzesContainer>
   </div>
 </template>
 
@@ -27,6 +30,7 @@ import { ref } from "vue";
 import { supabase } from "../supabase/init";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import TopHeader from "../components/Header.vue";
 import QuizzesContainer from "../components/QuizzesContainer.vue";
 
 export default {
@@ -34,6 +38,7 @@ export default {
   components: {
     NProgress,
     QuizzesContainer,
+    TopHeader,
   },
   setup() {
     const store = useStore();
@@ -76,6 +81,17 @@ export default {
 .student {
   color: black;
   text-align: center;
+  background: linear-gradient(
+    172.4deg,
+    #24a3ff 5.89%,
+    #24a3ff 5.9%,
+    #0038ff 91.52%
+  );
+}
+.content {
+  background: white;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 .student__score__section {
   font-size: 1.5rem;
