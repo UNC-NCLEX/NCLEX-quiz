@@ -4,6 +4,7 @@ import StudentDashboard from "../views/StudentDashboard.vue";
 import InstructorDash from "../views/InstructorDash.vue";
 import Roster from "../views/Roster.vue";
 import NotFound from "../views/NotFound.vue";
+import QuizMain from "../views/QuizMain.vue";
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: "/Roster",
     name: "Roster",
     component: Roster,
+  },
+  {
+    path: "/Quiz/:id",
+    name: "QuizMain",
+    component: QuizMain,
   },
   {
     path: "/:catchAll(.*)",

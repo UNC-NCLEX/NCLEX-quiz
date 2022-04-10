@@ -1,24 +1,30 @@
 <template>
-  <h1>NCLEX Interactive Quiz</h1>
-  <div class="form_group">
-    <n-button @click="login()" type="primary" color="#ff5c00" text-color="white"
-      >Login</n-button
-    >
-    <n-button
-      @click="signup()"
-      type="primary"
-      color="#ff5c00"
-      text-color="white"
-      >Sign Up</n-button
-    >
-    <n-button
-      @click="login_supabase()"
-      type="primary"
-      color="#ff5c00"
-      text-color="white"
-      >Test</n-button
-    >
-  </div>
+  <section id="homePage">
+    <h1>NCLEX Interactive Quiz</h1>
+    <div class="form_group">
+      <n-button
+        @click="login()"
+        type="primary"
+        color="#ff5c00"
+        text-color="white"
+        >Login</n-button
+      >
+      <n-button
+        @click="signup()"
+        type="primary"
+        color="#ff5c00"
+        text-color="white"
+        >Sign Up</n-button
+      >
+      <n-button
+        @click="login_supabase()"
+        type="primary"
+        color="#ff5c00"
+        text-color="white"
+        >Test</n-button
+      >
+    </div>
+  </section>
 </template>
 
 <script>
@@ -51,6 +57,11 @@ export default {
 </script>
 
 <style scoped>
+#homePage {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
 .form_group {
   align-items: center;
 }

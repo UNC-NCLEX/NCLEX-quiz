@@ -1,7 +1,7 @@
 <template lang="">
   <div class="header">
-    <h1 class="header__title">Pharmacoloy &amp; Pathophysiology</h1>
-    <p>Interactive tool to help you learn</p>
+    <div class="header__title">Pharmacoloy &amp; Pathophysiology</div>
+    <p class="header__subtitle">Interactive tool to help you learn</p>
   </div>
 </template>
 <script>
@@ -12,6 +12,7 @@ export default {
 <style>
 .header {
   color: white;
+  padding: 5%;
 }
 .header__title {
   font-family: "Montserrat";
@@ -22,7 +23,7 @@ export default {
   text-align: center;
 }
 
-p {
+.header__subtitle {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 400;

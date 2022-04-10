@@ -124,10 +124,7 @@ export default {
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   color: #2c3e50;
-
-  margin-top: 60px;
   background-color: linear-gradient(
     172.4deg,
     #24a3ff 5.89%,
