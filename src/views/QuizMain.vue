@@ -1,11 +1,17 @@
 <template lang="">
   <div id="quiz">
-    <TopHeader />
-    <h1>Quiz</h1>
+    <h1>{{ currentQuestion.text }}</h1>
+    <div id="question">
+      <div v-if="currentQuestion.type === 'mc'">
+        <h1>mc</h1>
+      </div>
+      <div v-else-if="currentQuestion.type === 'select'">
+        <h1>select</h1>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import TopHeader from "../components/Header.vue";
 import { ref } from "vue";
 import { supabase } from "../supabase/init";
 import { useStore } from "vuex";
@@ -13,7 +19,6 @@ import { computed } from "vue";
 
 export default {
   name: "QuizMain",
-  components: { TopHeader },
   setup() {
     const store = useStore();
     const allQuestions = ref([]);
@@ -26,10 +31,13 @@ export default {
         let { data: questions, error } = await supabase
           .from("question")
           .select("*")
-          .eq("quiz_id", qid.value);
+          .eq("quiz_id", qid.value)
+          .order("qid", { ascending: true });
         if (error) throw error;
         allQuestions.value = questions;
+        console.log(allQuestions.value);
         currentQuestion.value = allQuestions.value[0];
+        console.log(currentQuestion.value);
       } catch (error) {
         console.warn(error.message);
       }
@@ -41,11 +49,5 @@ export default {
 </script>
 <style>
 #quiz {
-  background: linear-gradient(
-    172.4deg,
-    #24a3ff 5.89%,
-    #24a3ff 5.9%,
-    #0038ff 91.52%
-  );
 }
 </style>

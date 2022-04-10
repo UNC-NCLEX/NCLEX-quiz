@@ -1,7 +1,6 @@
 <template>
   <div class="student">
     {{ quizzes }}
-    <TopHeader></TopHeader>
     <div class="content">
       <h1>
         Welcome {{ this.$store.state.user.id }}. Here is how you have done in
@@ -30,7 +29,6 @@ import { ref } from "vue";
 import { supabase } from "../supabase/init";
 import { useStore } from "vuex";
 import { computed } from "vue";
-import TopHeader from "../components/Header.vue";
 import QuizzesContainer from "../components/QuizzesContainer.vue";
 
 export default {
@@ -38,7 +36,6 @@ export default {
   components: {
     NProgress,
     QuizzesContainer,
-    TopHeader,
   },
   setup() {
     const store = useStore();
@@ -81,12 +78,6 @@ export default {
 .student {
   color: black;
   text-align: center;
-  background: linear-gradient(
-    172.4deg,
-    #24a3ff 5.89%,
-    #24a3ff 5.9%,
-    #0038ff 91.52%
-  );
 }
 .content {
   background: white;
