@@ -12,8 +12,8 @@ export default {
 <style>
 .header {
   color: white;
-  padding: 5%;
 }
+
 .header__title {
   font-family: "Montserrat";
   font-style: normal;
