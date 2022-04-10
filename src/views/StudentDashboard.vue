@@ -1,34 +1,77 @@
 <template>
   <div class="student">
-    <h1>
-      Welcome {{ this.$store.state.user }}. Here is how you have done in your
-      past quizzes:
-    </h1>
-    <div class="scores">
-      <div class="centered" v-for="item in scores" :key="item.quiz">
-        <div class="student__score__section">
-          {{ item.title }}
+    {{ quizzes }}
+    <TopHeader></TopHeader>
+    <div class="content">
+      <h1>
+        Welcome {{ this.$store.state.user.id }}. Here is how you have done in
+        your past quizzes:
+      </h1>
+      <div class="scores">
+        <div class="centered" v-for="item in scores" :key="item.id">
+          <p class="student__score__section">
+            {{ item.title }}
+          </p>
+          <n-progress
+            type="line"
+            :percentage="item.score"
+            :indicator-placement="'inside'"
+          />
         </div>
-        <n-progress
-          type="line"
-          :percentage="item.score"
-          :indicator-placement="'inside'"
-        />
       </div>
+      <QuizzesContainer :quizzes="quizzes"></QuizzesContainer>
     </div>
   </div>
 </template>
 
 <script>
 import { NProgress } from "naive-ui";
+import { ref } from "vue";
+import { supabase } from "../supabase/init";
+import { useStore } from "vuex";
+import { computed } from "vue";
+import TopHeader from "../components/Header.vue";
+import QuizzesContainer from "../components/QuizzesContainer.vue";
+
 export default {
   name: "StudentDashboard",
-  props: {
-    scores: Array,
-    past_quizzes: Array,
-  },
   components: {
     NProgress,
+    QuizzesContainer,
+    TopHeader,
+  },
+  setup() {
+    const store = useStore();
+    const quizzes = ref([]);
+    const scores = ref([]);
+    const question = ref([]);
+    const dataLoaded = ref(null);
+    const count = computed(() => store.state.user);
+    const getData = async () => {
+      // TODO: get user's past quizzes in an array
+      // get the user's scores
+      try {
+        let { data: score, error } = await supabase
+          .from("scores")
+          .select("*")
+          .eq("user", count.value.id);
+        if (error) throw error;
+        const completed_quizzes = score.map((x) => x.quiz);
+        scores.value = score;
+
+        let { data: quiz, error2 } = await supabase
+          .from("quiz")
+          .select("*")
+          .not("quiz_id", "in", `(${completed_quizzes})`);
+        if (error) throw error2;
+        quizzes.value = quiz;
+        dataLoaded.value = true;
+      } catch (error) {
+        console.warn(error.message);
+      }
+    };
+    getData();
+    return { count, quizzes, scores, dataLoaded, question };
   },
 };
 </script>
@@ -38,6 +81,17 @@ export default {
 .student {
   color: black;
   text-align: center;
+  background: linear-gradient(
+    172.4deg,
+    #24a3ff 5.89%,
+    #24a3ff 5.9%,
+    #0038ff 91.52%
+  );
+}
+.content {
+  background: white;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 .student__score__section {
   font-size: 1.5rem;
