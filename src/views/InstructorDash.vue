@@ -1,20 +1,11 @@
 <template>
   <div class="main">
-    <div class="top">
-      <h1>Pharmacology & Pathophysiology</h1>
-      <h3 id="subtitle">Interactive tool to help you learn</h3>
-    </div>
-    <div class="header">
-      <h4><router-link :to="{}">Sign Out </router-link></h4>
-    </div>
-
     <div class="cont">
       <div class="quiz">
         <h2>Quiz Management</h2>
         <!--TODO: add links to pages -->
         <h3><router-link :to="{}">View my quizzes</router-link></h3>
-        <h3><router-link :to="{}">Add a quiz</router-link></h3>
-        <h3><router-link :to="{}">Edit a quiz</router-link></h3>
+        <h3><router-link :to="{}">Add a quiz/question</router-link></h3>
       </div>
       <div class="right">
         <h2 class="scores">Student Scores</h2>
@@ -59,11 +50,6 @@ export default {
 .main {
   font-family: "Montserrat";
 }
-.top {
-  background-color: #0094ff;
-  padding-top: 5%;
-  padding-bottom: 3%;
-}
 .cont {
   display: flex;
   justify-content: center;
@@ -106,10 +92,7 @@ export default {
   box-shadow: 10px 10px 5px #cac9c9;
 }
 
-.header {
-  text-align: right;
-  margin-top: 3px;
-}
+
 #subtitle {
   color: white;
 }
