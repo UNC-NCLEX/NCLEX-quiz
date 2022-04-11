@@ -1,9 +1,5 @@
 <template>
-    <div class="header">
-      <h1>Pharmacoloy &amp; Pathophysiology</h1>
-      <p>Interactive tool to help you learn</p>
-    </div>
-    <br>
+  <TopHeader v-if="isNotHomePage" />
   <router-view />
 </template>
 
@@ -13,10 +9,12 @@ import { supabase } from "./supabase/init";
 import { NSelect } from "naive-ui";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import TopHeader from "./components/Header.vue"
 
 export default {
   name: "App",
   components: {
+    TopHeader
   },
   setup() {
     const store = useStore();
@@ -122,6 +120,11 @@ export default {
       ],
     };
   },
+  computed: {
+    isNotHomePage() {
+      return this.$route.name !== 'HomePage'
+    }
+  }
 };
 </script>
 
