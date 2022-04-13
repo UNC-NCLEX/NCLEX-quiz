@@ -1,68 +1,54 @@
 <template>
     <section class="header_contents">
         <div class="header_img">
-            <img src="../assets/unc_logo.png" id="unc_logo">
+            <img src="../assets/unc_logo.png" id="unc_logo" @click="loadStudentDashboard">
         </div>
         <div class="header_space"></div>
         <div class="website_title">
             <h1>NCLEX Interactive Quiz</h1>
             <h3>UNC School of Nursing</h3>
         </div>
-        <div class="button_group">
+        <div class="control_buttons">
             <n-button
-                @click="login()"
+                @click="logout"
                 type="primary"
                 color="#ff5c00"
                 text-color="white"
                 class="button"
-                >Login</n-button
+                >Log Out</n-button
             >
             <div class="space"></div>
-            <n-button
-                @click="signup()"
-                type="primary"
-                color="#ff5c00"
-                text-color="white"
-                class="button"
-                >Sign Up</n-button
-            >
-            <div class="space"></div>
-            <n-button
-                @click="login_supabase()"
-                type="primary"
-                color="#ff5c00"
-                text-color="white"
-                class="button"
-                >Test</n-button
-            >
+            <n-dropdown trigger="click" :options="options" @select="handleSelect">
+                <n-avatar
+                    round
+                    :size="48"
+                    class="profile_img"
+                    src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+                    @click="loadProfile"
+                />
+            </n-dropdown>
         </div>
     </section>
 </template>
 
 <script>
-import { NButton } from "naive-ui";
-import { supabase } from "../supabase/init";
+import { NAvatar, NButton } from "naive-ui";
 
 export default {
-    name: "HomePageHeader",
+    name: "StudentDashboardHeader",
     components: {
+        NAvatar,
         NButton
     },
     methods: {
-        login() {
-            this.$router.push("/Login");
+        loadStudentDashboard() {
+            this.$router.push("/StudentDashboard");
         },
-        signup() {
-            this.$router.push("/Signup");
+        loadProfile() {
+            this.$router.push("/profile");
         },
-        async login_supabase() {
-            const { user, session, error } = await supabase.auth.signIn({
-                email: "fokneyokna@vusra.com",
-                password: "password123",
-        });
-        this.$store.state.user = user;
-        console.log(user, session, error);
-        this.$router.push("/StudentDashboard");
+        logout() {
+            // TODO: Implement logout function
         }
     }
 }
@@ -74,6 +60,7 @@ export default {
     width: 64px;
     margin-top: 1%;
     float: left;
+    cursor: pointer;
 }
 
 .header_img {
@@ -98,7 +85,7 @@ export default {
     float: right;
 }
 
-.button_group {
+.control_buttons {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -107,12 +94,16 @@ export default {
   margin-right: 2%;
 }
 
+.profile_img {
+    cursor: pointer;
+}
+
 .header_space {
     width: 15px;
 }
 
 .space {
-  width: 5px;
+  width: 15px;
   height: auto;
   display: inline-block;
 }
