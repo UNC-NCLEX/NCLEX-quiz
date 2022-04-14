@@ -87,7 +87,7 @@ export default {
     z-index: 1;
     display: flex;
     background: linear-gradient(.25turn, #ffffff, #f1f2f6);
-    filter: drop-shadow(0px 5px 25px #2f3542);
+    filter: drop-shadow(0px 5px 10px #2f3542);
     width: 100%;
     height: 70px;
 }

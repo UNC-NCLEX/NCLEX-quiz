@@ -8,44 +8,45 @@
             <h1>NCLEX Interactive Quiz</h1>
             <h3>UNC School of Nursing</h3>
         </div>
-        <div class="control_buttons">
-            <n-button
-                @click="logout"
-                type="primary"
-                color="#ff5c00"
-                text-color="white"
-                class="button"
-                >Log Out</n-button
-            >
+        <div class="space"></div>
+        <div class="nav_bar">
+            <router-link :to="{}" class="menu_options"><b>My Quizzes</b></router-link>
             <div class="space"></div>
-            <n-dropdown trigger="click" :options="options" @select="handleSelect">
-                <n-avatar
-                    round
-                    :size="48"
-                    class="profile_img"
-                    src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
-                    @click="loadProfile"
-                />
-            </n-dropdown>
+            <router-link :to="{}" class="menu_options"><b>My Scores</b></router-link>
+        </div>
+        <div class="control_buttons">
+            <b class="menu_options" @click="logout">Log Out</b>
+            <div class="space"></div>
+            <n-avatar
+                round
+                :size="48"
+                class="profile_img"
+                :src="profile_img"
+                @click="loadProfile"
+            />
         </div>
     </section>
 </template>
 
 <script>
-import { NAvatar, NButton } from "naive-ui";
+import { NAvatar } from "naive-ui";
 
 export default {
     name: "StudentDashboardHeader",
     components: {
-        NAvatar,
-        NButton
+        NAvatar
+    },
+    data() {
+        return {
+            profile_img: "https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+        }
     },
     methods: {
         loadStudentDashboard() {
             this.$router.push("/StudentDashboard");
         },
         loadProfile() {
-            this.$router.push("/profile");
+            this.$router.push("/Profile");
         },
         logout() {
             // TODO: Implement logout function
@@ -58,7 +59,6 @@ export default {
 #unc_logo {
     height: 51px;
     width: 64px;
-    margin-top: 1%;
     float: left;
     cursor: pointer;
 }
@@ -74,9 +74,20 @@ export default {
     z-index: 1;
     display: flex;
     background: linear-gradient(.25turn, #ffffff, #f1f2f6);
-    filter: drop-shadow(0px 5px 25px #2f3542);
+    filter: drop-shadow(0px 5px 10px #2f3542);
     width: 100%;
     height: 70px;
+}
+
+.nav_bar {
+    display: flex;
+    align-items: center;
+}
+
+.menu_options {
+    color: #2f3542;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .website_title {
