@@ -48,6 +48,5 @@ export default {
 };
 </script>
 <style>
-#quiz {
-}
+
 </style>
