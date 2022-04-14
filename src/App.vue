@@ -1,5 +1,7 @@
 <template>
-  <TopHeader v-if="isNotHomePage" />
+  <HomePageHeader v-if="isHomePage" />
+  <StudentDashboardHeader v-if="!isHomePage" />
+  <br class="header_margin" v-if="!isHomePage" />
   <router-view />
 </template>
 
@@ -9,12 +11,14 @@ import { supabase } from "./supabase/init";
 import { NSelect } from "naive-ui";
 import { useStore } from "vuex";
 import { computed } from "vue";
-import TopHeader from "./components/Header.vue"
+import HomePageHeader from "./components/HomePageHeader.vue"
+import StudentDashboardHeader from "./components/StudentDashboardHeader.vue"
 
 export default {
   name: "App",
   components: {
-    TopHeader
+    HomePageHeader,
+    StudentDashboardHeader
   },
   setup() {
     const store = useStore();
@@ -121,8 +125,8 @@ export default {
     };
   },
   computed: {
-    isNotHomePage() {
-      return this.$route.name !== 'HomePage'
+    isHomePage() {
+      return this.$route.name === 'HomePage'
     }
   }
 };
@@ -134,20 +138,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  background-color: linear-gradient(
-    172.4deg,
-    #24a3ff 5.89%,
-    #24a3ff 5.9%,
-    #0038ff 91.52%
-  );
 }
-.header {
-  text-align: center;
-  padding-top: 5%;
-  padding-bottom: 5%;
-  background: rgb(36,163,255);
-  background: linear-gradient(0deg, rgba(36,163,255,1) 15%, rgba(0,56,255,1) 100%);
-  color: white;
-  width: 100%;
+
+.header_margin {
+  margin-bottom: 70px;
 }
 </style>
