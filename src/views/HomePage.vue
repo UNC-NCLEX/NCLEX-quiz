@@ -1,4 +1,5 @@
 <template>
+  <div>
   <HomePageHeader class="home_page_header" />
   <section id="homePage" class="home_page_contents">
     <div class="container">
@@ -15,7 +16,9 @@
     </div>
     <p class="copyright">© 2022 UNC School of Nursing</p>
   </section>
-</template>
+  </div>
+  </template>
+
 
 <script>
 import { NButton } from "naive-ui";

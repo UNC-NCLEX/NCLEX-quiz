@@ -1,6 +1,8 @@
 <template>
+  <div>
   <TopHeader v-if="isNotHomePage" />
   <router-view />
+  </div>
 </template>
 
 <script>
