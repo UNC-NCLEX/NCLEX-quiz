@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue";
+import ProfilePage from "../views/ProfilePage.vue";
 import StudentDashboard from "../views/StudentDashboard.vue";
 import InstructorDash from "../views/InstructorDash.vue";
 import Roster from "../views/Roster.vue";
@@ -13,11 +14,16 @@ const routes = [
     component: HomePage,
   },
   {
-    path: "/login",
+    path: "/Login",
     beforeEnter() {
       window.location.href =
         "https://shibboleth-dept-nclex-interactive-quiz.apps.cloudapps.unc.edu";
     },
+  },
+  {
+    path: "/Profile",
+    name: "Profile",
+    component: ProfilePage
   },
   {
     path: "/StudentDashboard",

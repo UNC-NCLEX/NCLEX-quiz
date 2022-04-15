@@ -2,6 +2,7 @@
   <div>
   <HomePageHeader class="home_page_header" />
   <section id="homePage" class="home_page_contents">
+    <br class="header_margin" />
     <div class="container">
       <img src="../assets/unc_school_of_nursing.jpg" id="unc_nursing">
       <div class="img_caption"><h1>Interactive quiz to help you prepare for the NCLEX exam.</h1></div>
@@ -17,18 +18,16 @@
     <p class="copyright">© 2022 UNC School of Nursing</p>
   </section>
   </div>
-  </template>
+</template>
 
 
 <script>
 import { NButton } from "naive-ui";
-import HomePageHeader from "../components/HomePageHeader.vue"
 
 export default {
   name: "HomePage",
   components: {
-    NButton,
-    HomePageHeader
+    NButton
   },
   methods: {
     signup() {
@@ -43,13 +42,12 @@ export default {
   border-radius: 30px;
 }
 
-.home_page_header {
-  margin-bottom: 50px;
+.header_margin {
+  margin-bottom: 70px;
 }
 
 .home_page_contents {
   text-align: center;
-  padding-top: 8%;
   background: linear-gradient(0deg, rgba(36,163,255,1) 15%, rgba(0,56,255,1) 100%);
   color: white;
   width: 100%;
