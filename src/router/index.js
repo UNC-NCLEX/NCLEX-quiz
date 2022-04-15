@@ -6,6 +6,7 @@ import InstructorDash from "../views/InstructorDash.vue";
 import Roster from "../views/Roster.vue";
 import NotFound from "../views/NotFound.vue";
 import QuizMain from "../views/QuizMain.vue";
+import LoginSignupPage from "../views/LoginSignupPage.vue";
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
       window.location.href =
         "https://shibboleth-dept-nclex-interactive-quiz.apps.cloudapps.unc.edu";
     },
+  },
+  {
+    path: "/LoginSignup",
+    name: "LoginSignupPage",
+    component: LoginSignupPage
   },
   {
     path: "/Profile",

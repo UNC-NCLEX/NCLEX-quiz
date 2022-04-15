@@ -1,7 +1,9 @@
 <template>
-  <HomePageHeader v-if="isHomePage" />
-  <StudentDashboardHeader v-if="!isHomePage" />
-  <br class="header_margin" v-if="!isHomePage" />
+  <div class="header" v-if="!isLoginSignupPage">
+    <HomePageHeader v-if="isHomePage" />
+    <StudentDashboardHeader v-if="!isHomePage" />
+    <br class="header_margin" v-if="!isHomePage" />
+  </div>
   <router-view />
 </template>
 
@@ -127,6 +129,9 @@ export default {
   computed: {
     isHomePage() {
       return this.$route.name === 'HomePage'
+    },
+    isLoginSignupPage() {
+      return this.$route.name === 'LoginSignupPage'
     }
   }
 };
