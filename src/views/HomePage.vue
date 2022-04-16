@@ -1,73 +1,95 @@
 <template>
-  <section id="homePage">
-    <h1>NCLEX Interactive Quiz</h1>
-    <div class="form_group">
-      <n-button
-        @click="login()"
-        type="primary"
-        color="#ff5c00"
-        text-color="white"
-        >Login</n-button
-      >
+  <div>
+  <HomePageHeader class="home_page_header" />
+  <section id="homePage" class="home_page_contents">
+    <br class="header_margin" />
+    <div class="container">
+      <img src="../assets/unc_school_of_nursing.jpg" id="unc_nursing">
+      <div class="img_caption"><h1>Interactive quiz to help you prepare for the NCLEX exam.</h1></div>
       <n-button
         @click="signup()"
         type="primary"
-        color="#ff5c00"
+        color="#0984e3"
         text-color="white"
-        >Sign Up</n-button
-      >
-      <n-button
-        @click="login_supabase()"
-        type="primary"
-        color="#ff5c00"
-        text-color="white"
-        >Test</n-button
-      >
+        class="get_started_button"
+      ><h3>Get Started</h3>
+      </n-button>
     </div>
+    <p class="copyright">© 2022 UNC School of Nursing</p>
   </section>
+  </div>
 </template>
+
 
 <script>
 import { NButton } from "naive-ui";
-import { supabase } from "../supabase/init";
 
 export default {
   name: "HomePage",
   components: {
-    NButton,
+    NButton
   },
   methods: {
-    login() {
-      this.$router.push("/login");
-    },
     signup() {
       this.$router.push("/signup");
-    },
-    async login_supabase() {
-      const { user, session, error } = await supabase.auth.signIn({
-        email: "fokneyokna@vusra.com",
-        password: "password123",
-      });
-      this.$store.state.user = user;
-      console.log(user, session, error);
-      this.$router.push("/StudentDashboard");
-    },
+    }
   },
 };
 </script>
 
 <style scoped>
-#homePage {
-  margin-left: 10%;
-  margin-right: 10%;
+#unc_nursing {
+  border-radius: 30px;
 }
 
-.form_group {
-  align-items: center;
+.header_margin {
+  margin-bottom: 70px;
 }
 
-.form_group > button {
-  display: block;
-  margin: 5px;
+.home_page_contents {
+  text-align: center;
+  background: linear-gradient(0deg, rgba(36,163,255,1) 15%, rgba(0,56,255,1) 100%);
+  color: white;
+  width: 100%;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.img_caption {
+  position: absolute;
+  bottom: 20px;
+  left: 70px;
+  font-size: 1.25rem;
+  width: 550px;
+  text-align: left;
+  word-break: break-all;
+}
+
+.get_started_button {
+  border-radius: 5px;
+  position: absolute;
+  bottom: 50px;
+  right: 70px;
+  padding: 30px;
+  filter: drop-shadow(0px 0px 5px #2f3542);
+}
+
+.button_group {
+  display: flex;
+  justify-content: center;
+}
+
+.space {
+  width: 4px;
+  height: auto;
+  display: inline-block;
+}
+
+.copyright {
+  margin: 0%;
 }
 </style>

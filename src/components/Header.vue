@@ -1,6 +1,6 @@
 <template lang="">
   <div class="header">
-    <div class="header__title">Pharmacoloy &amp; Pathophysiology</div>
+    <div class="header__title">Pharmacology &amp; Pathophysiology</div>
     <p class="header__subtitle">Interactive tool to help you learn</p>
   </div>
 </template>
@@ -13,6 +13,7 @@ export default {
 .header {
   color: white;
 }
+
 .header__title {
   font-family: "Montserrat";
   font-style: normal;
