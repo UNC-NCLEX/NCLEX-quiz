@@ -1,63 +1,83 @@
 <template>
-  <div class="container">
-    <h2>Quiz {{question.qid}} Review</h2>
-    <div class="question">
-      <h3>Question</h3>
-
-      <n-checkbox-group
-        v-model:value="choiceSel"
-        name="radiogroup"
-        v-for="(item, index) in options"
-        :key="index"
-      >
-        <n-checkbox :value="1">
-          <div class="choice-text">{{ question.a1 }}</div>
-        </n-checkbox>
-        <n-checkbox :value="2">
-          <div class="choice-text">{{ question.a2 }}</div>
-        </n-checkbox>
-        <n-checkbox :value="3">
-          <div class="choice-text">{{ question.a3 }}</div>
-        </n-checkbox>
-        <n-checkbox :value="4">
-          <div class="choice-text">{{ question.a4 }}</div>
-        </n-checkbox>
-        <n-checkbox :value="5">
-          <div class="choice-text">{{ question.a5 }}</div>
-        </n-checkbox>
-        <n-checkbox :value="6">
-          <div class="choice-text">{{ question.a6 }}</div>
-        </n-checkbox>
-      </n-checkbox-group>
+    <div class="container">
+        <div class="question">
+            <div class="information">
+                <n-tabs type="line">
+                    <n-tab-pane
+                        name="History and Physical"
+                        tab="History and Physical"
+                    >
+                        {{ mr_question.hist_and_phys }}
+                    </n-tab-pane>
+                    <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+                        {{ mr_question.nurse_notes }}
+                    </n-tab-pane>
+                    <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+                        {{ mr_question.flow_sheet }}</n-tab-pane
+                    >
+                    <n-tab-pane
+                        name="Laboratory Results"
+                        tab="Laboratory Results"
+                    >
+                        {{ mr_question.lab_results }}
+                    </n-tab-pane>
+                    <n-tab-pane name="Orders" tab="Orders">
+                        {{ mr_question.orders }}
+                    </n-tab-pane>
+                </n-tabs>
+            </div>
+            <h3>
+                {{ mr_question.text }}
+            </h3>
+            <n-checkbox-group v-model:value="choiceSel" name="radiogroup">
+                <n-checkbox
+                    v-for="(item, index) in mr_question.answer_choice"
+                    :key="item + index"
+                    :value="item"
+                    :label="item"
+                >
+                </n-checkbox>
+            </n-checkbox-group>
+        </div>
+        <n-button size="large" @click="checkAnswer">Submit</n-button>
     </div>
-    <n-button size="large">Submit</n-button>
-  </div>
 </template>
 
 <script>
-import { NButton, NCheckbox, NCheckboxGroup } from "naive-ui";
+import { NButton, NCheckbox, NCheckboxGroup, NTabPane, NTabs } from "naive-ui";
 import { ref } from "vue";
 
 export default {
-  name: "MultipleResponse",
-  props: {
-    options: Array,
-  },
-  components: {
-    NButton,
-    NCheckbox,
-    NCheckboxGroup,
-  },
-  computed: {
-    question() {
-      return this.$store.getters.questionNext;
+    name: "MultipleResponse",
+    props: {
+        mr_question: Object,
     },
-  },
-  setup() {
-    return {
-      value: ref(null),
-    };
-  },
+    components: {
+        NButton,
+        NCheckbox,
+        NCheckboxGroup,
+        NTabPane,
+        NTabs,
+    },
+    methods: {
+        checkAnswer() {
+            // TODO:
+            // check answer,
+            // show rational,
+            // and then update scores
+            this.$store.state.currentIndex = this.$store.state.currentIndex + 1; // iterate state to show next question
+        },
+    },
+    computed: {
+        question() {
+            return this.$store.getters.questionNext;
+        },
+    },
+    setup() {
+        return {
+            value: ref(null),
+        };
+    },
 };
 </script>
 
@@ -65,54 +85,54 @@ export default {
 <style scoped>
 /*****CONTAINER*****/
 .container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 /*****TITLE*****/
 h2 {
-  color: #fe4400;
+    color: #fe4400;
 }
 
 /*****TABS*****/
 .information {
-  border: 1px #808080 solid;
-  padding: 35px;
-  margin: 35px 0;
-  border-radius: 10px;
-  box-shadow: 10px 10px 5px #cac9c9;
+    border: 1px #808080 solid;
+    padding: 35px;
+    margin: 35px 0;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #cac9c9;
 }
 
 /*****QUESTION*****/
 .question {
-  width: 75vw;
-  text-align: left;
+    width: 75vw;
+    text-align: left;
 }
 
 /*****ANSWERS*****/
 .n-checkbox {
-  border: 1px #808080 solid;
-  box-shadow: 10px 10px 5px #cac9c9;
-  border-radius: 10px;
-  width: 72vw;
-  padding: 20px 1.5vw;
-  margin-top: 10px;
+    border: 1px #808080 solid;
+    box-shadow: 10px 10px 5px #cac9c9;
+    border-radius: 10px;
+    width: 72vw;
+    padding: 20px 1.5vw;
+    margin-top: 10px;
 }
 
 .choice-text {
-  padding: 0 10px;
+    padding: 0 10px;
 }
 
 /*****BUTTON*****/
 .n-button {
-  background-color: #ffc633;
-  box-shadow: 10px 10px 5px #cac9c9;
-  margin: 25px 0;
+    background-color: #ffc633;
+    box-shadow: 10px 10px 5px #cac9c9;
+    margin: 25px 0;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 </style>
