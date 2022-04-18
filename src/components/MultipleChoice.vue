@@ -29,14 +29,10 @@
             <h3>
                 {{ mc_question.text }}
             </h3>
-            <n-radio-group v-model:value="choiceSelected" name="radiogroup">
+            <n-radio-group v-model:value="checkedValue" name="radiogroup">
                 <n-radio
                     v-for="item in mc_question.answer_choice"
-                    :key="
-                        item +
-                        this.$store.state.currentIndex +
-                        this.$store.state.currentIndex
-                    "
+                    :key="item + this.$store.state.currentIndex"
                     :value="item"
                     class="choice-text"
                     :checked="checkedValue === item"

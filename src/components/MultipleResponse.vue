@@ -46,6 +46,7 @@
 <script>
 import { NButton, NCheckbox, NCheckboxGroup, NTabPane, NTabs } from "naive-ui";
 import { ref } from "vue";
+import { useStore } from "vuex";
 
 export default {
     name: "MultipleResponse",
@@ -59,23 +60,46 @@ export default {
         NTabPane,
         NTabs,
     },
-    methods: {
-        checkAnswer() {
-            // TODO:
-            // check answer,
-            // show rational,
-            // and then update scores
-            this.$store.state.currentIndex = this.$store.state.currentIndex + 1; // iterate state to show next question
-        },
-    },
     computed: {
         question() {
             return this.$store.getters.questionNext;
         },
     },
-    setup() {
+    setup(props) {
+        const choiceSelRef = ref([]);
+        const store = useStore();
+        function ifSameArray(arr1, arr2) {
+            console.log(arr1);
+            console.log(arr2);
+            if (arr1.length !== arr2.length) return false;
+            const arr1_sorted = arr1.sort();
+            const arr2_sorted = arr2.sort();
+            for (let i = 0; i < arr1.length; i++) {
+                if (arr1_sorted[i] !== arr2_sorted[i]) return false;
+            }
+            return true;
+        }
         return {
-            value: ref(null),
+            choiceSel: choiceSelRef,
+            checkAnswer() {
+                // TODO:
+                // check answer,
+                // show rational,
+                // and then update scores
+                console.log(choiceSelRef.value);
+                console.log(props.mr_question);
+                if (
+                    ifSameArray(
+                        props.mr_question.correct_answers,
+                        choiceSelRef.value
+                    )
+                ) {
+                    console.log("correct");
+                    store.state.correctAnswers = store.state.correctAnswers + 1;
+                    store.commit("UPDATE_SCORE");
+                }
+                store.commit("INC_QUESTION"); // iterate state to show next question
+            },
         };
     },
 };

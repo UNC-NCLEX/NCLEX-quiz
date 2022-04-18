@@ -3,6 +3,8 @@
         {{ this.$store.state.score }}
         {{ this.$store.state.correctAnswers }}
         <h1>Question {{ this.$store.state.currentIndex + 1 }}</h1>
+        {{ this.$store.state.score }}
+        {{ this.$store.state.correctAnswers }}
         <div id="question">
             <div
                 v-if="
