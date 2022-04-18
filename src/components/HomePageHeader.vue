@@ -10,12 +10,12 @@
         </div>
         <div class="button_group">
             <n-button
-                @click="login()"
+                @click="signin()"
                 type="primary"
                 color="#ff5c00"
                 text-color="white"
                 class="button"
-                >Login</n-button
+                >Sign In</n-button
             >
             <div class="space"></div>
             <n-button
@@ -28,7 +28,7 @@
             >
             <div class="space"></div>
             <n-button
-                @click="login_supabase()"
+                @click="signin_supabase()"
                 type="primary"
                 color="#ff5c00"
                 text-color="white"
@@ -49,13 +49,13 @@ export default {
         NButton
     },
     methods: {
-        login() {
-            this.$router.push("/Login");
+        signin() {
+            this.$router.push("/Signin");
         },
         signup() {
             this.$router.push("/Signup");
         },
-        async login_supabase() {
+        async signin_supabase() {
             const { user, session, error } = await supabase.auth.signIn({
                 email: "fokneyokna@vusra.com",
                 password: "password123",

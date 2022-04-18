@@ -1,7 +1,7 @@
 <template>
 <n-config-provider :theme-overrides="this.themeOverrides">
     <div class="img_section"></div>
-    <div class="login_signup_section">
+    <div class="signin_signup_section">
         <div class="nclex_title">
             <div class="header_img">
                 <img src="../assets/unc_logo.png" id="unc_logo" @click="loadStudentDashboard">
@@ -12,8 +12,8 @@
                 <h3>UNC School of Nursing</h3>
             </div>
         </div>
-        <n-card class="login_signup_card">
-        <n-tabs default-value="signin" size="large" justify-content="space-evenly" class="login_signup_tabs">
+        <n-card class="signin_signup_card">
+        <n-tabs default-value="signin" size="large" justify-content="space-evenly" class="signin_signup_tabs">
             <n-tab-pane name="signin" tab="Sign In">
                 <n-form>
                     <n-form-item-row label="Email Address">
@@ -70,7 +70,7 @@ import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigPr
 import { supabase } from "../supabase/init";
 
 export default {
-    name: "LoginSignupPage",
+    name: "SigninSignupPage",
     components: {
         NCard,
         NTabs,
@@ -142,7 +142,7 @@ export default {
     height: 100%;
 }
 
-.login_signup_section {
+.signin_signup_section {
     position: absolute;
     background: linear-gradient(.25turn, #ffffff, #f1f2f6);
     width: 50%;
@@ -150,10 +150,8 @@ export default {
     height: 100%;
 }
 
-.form_field:focus {
-    background-color: "#ff5c00";
-    color: "#ff5c00";
-    text-align: left;
+.form_field:hover {
+    border-color: "#ff5c00";
 }
 
 .form_button {
@@ -161,7 +159,7 @@ export default {
     justify-content: flex-end;
 }
 
-.login_signup_card {
+.signin_signup_card {
     position: relative;
     width: 80%;
     margin-top: 5%;

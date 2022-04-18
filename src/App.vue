@@ -1,5 +1,5 @@
 <template>
-  <div class="header" v-if="!isLoginSignupPage">
+  <div class="header" v-if="!isSigninSignupPage">
     <HomePageHeader v-if="isHomePage" />
     <StudentDashboardHeader v-if="!isHomePage" />
     <br class="header_margin" v-if="!isHomePage" />
@@ -130,8 +130,8 @@ export default {
     isHomePage() {
       return this.$route.name === 'HomePage'
     },
-    isLoginSignupPage() {
-      return this.$route.name === 'LoginSignupPage'
+    isSigninSignupPage() {
+      return this.$route.name === 'User Authentication'
     }
   }
 };
