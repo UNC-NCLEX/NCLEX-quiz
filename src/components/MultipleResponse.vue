@@ -39,7 +39,15 @@
                 </n-checkbox>
             </n-checkbox-group>
         </div>
-        <n-button size="large" @click="checkAnswer">Submit</n-button>
+        <div v-if="!this.$store.state.isSubmitted">
+            <n-button size="large" @click="checkAnswer">Submit</n-button>
+        </div>
+        <div v-else>
+            <RationalePopup
+                :correct="this.$store.state.correct"
+                :rationale="mr_question.rationale"
+            />
+        </div>
     </div>
 </template>
 
@@ -47,6 +55,7 @@
 import { NButton, NCheckbox, NCheckboxGroup, NTabPane, NTabs } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
+import RationalePopup from "../components/RationalePopup.vue";
 
 export default {
     name: "MultipleResponse",
@@ -59,6 +68,7 @@ export default {
         NCheckboxGroup,
         NTabPane,
         NTabs,
+        RationalePopup,
     },
     computed: {
         question() {
@@ -86,8 +96,7 @@ export default {
                 // check answer,
                 // show rational,
                 // and then update scores
-                console.log(choiceSelRef.value);
-                console.log(props.mr_question);
+                store.state.isSubmitted = true;
                 if (
                     ifSameArray(
                         props.mr_question.correct_answers,
@@ -95,10 +104,13 @@ export default {
                     )
                 ) {
                     console.log("correct");
-                    store.state.correctAnswers = store.state.correctAnswers + 1;
+                    store.state.correct = "correct";
+                    store.state.numOfCorrectAnswers =
+                        store.state.numOfCorrectAnswers + 1;
                     store.commit("UPDATE_SCORE");
+                } else {
+                    store.state.correct = "incorrect";
                 }
-                store.commit("INC_QUESTION"); // iterate state to show next question
             },
         };
     },

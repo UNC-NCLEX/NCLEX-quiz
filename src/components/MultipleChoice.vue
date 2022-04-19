@@ -42,7 +42,15 @@
                 >
             </n-radio-group>
         </div>
-        <n-button size="large" @click="checkAnswer">Submit</n-button>
+        <div v-if="!this.$store.state.isSubmitted">
+            <n-button size="large" @click="checkAnswer">Submit</n-button>
+        </div>
+        <div v-else>
+            <RationalePopup
+                :correct="this.$store.state.correct"
+                :rationale="mc_question.rationale"
+            />
+        </div>
     </div>
 </template>
 
@@ -50,6 +58,7 @@
 import { NButton, NTabPane, NTabs, NRadio, NRadioGroup } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
+import RationalePopup from "../components/RationalePopup.vue";
 
 export default {
     name: "MultipleChoice",
@@ -62,6 +71,7 @@ export default {
         NTabs,
         NRadio,
         NRadioGroup,
+        RationalePopup,
     },
     setup(props) {
         const checkedValue = ref("");
@@ -73,25 +83,22 @@ export default {
             },
             checkAnswer() {
                 console.log(checkedValue.value);
-
+                store.state.isSubmitted = true;
                 if (
                     props.mc_question.correct_answers.includes(
                         checkedValue.value
                     )
                 ) {
                     console.log("correct");
-                    store.state.correctAnswers = store.state.correctAnswers + 1;
+                    store.state.correct = "correct";
+                    store.state.numOfCorrectAnswers =
+                        store.state.numOfCorrectAnswers + 1;
                     store.commit("UPDATE_SCORE");
+                } else {
+                    store.state.correct = "incorrect";
                 }
-                store.commit("INC_QUESTION");
             },
         };
-    },
-    computed: {
-        question() {
-            console.log(typeof this.$store.getters.questionNext);
-            return this.$store.getters.questionNext;
-        },
     },
 };
 </script>

@@ -1,10 +1,10 @@
 <template lang="">
     <div id="quiz" v-if="dataLoaded" @update="clicked">
         {{ this.$store.state.score }}
-        {{ this.$store.state.correctAnswers }}
+        {{ this.$store.state.numOfCorrectAnswers }}
         <h1>Question {{ this.$store.state.currentIndex + 1 }}</h1>
         {{ this.$store.state.score }}
-        {{ this.$store.state.correctAnswers }}
+        {{ this.$store.state.numOfCorrectAnswers }}
         <div id="question">
             <div
                 v-if="

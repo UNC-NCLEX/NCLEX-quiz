@@ -1,30 +1,71 @@
 <template>
-  <div class="container">
-    <div id="rationale">
-      <div>
-        <p><b>Correct!</b></p>
-        <p>
-          <b>Rationale: </b> Sed ut perspiciatis unde omnis iste natus error sit
-          voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque
-          ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-          dicta sunt explicabo.
-        </p>
-      </div>
-      <div id="button">
-        <n-button size="large">Continue</n-button>
-      </div>
+    <div class="container">
+        <div id="rationale">
+            <div>
+                <p>
+                    That's <b>{{ correct }}!</b>
+                </p>
+                <p><b>Rationale: </b> {{ rationale }}</p>
+            </div>
+            <div id="button">
+                <n-button size="large" @click="handleContinue"
+                    >Continue</n-button
+                >
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 import { NButton } from "naive-ui";
+import { supabase } from "../supabase/init";
+
+// import { ref } from "vue";
 
 export default {
-  name: "RationalePopup",
-  components: {
-    NButton,
-  },
+    name: "RationalePopup",
+    props: {
+        correct: String,
+        rationale: String,
+    },
+    components: {
+        NButton,
+    },
+    methods: {
+        async updateScore() {
+            const { data, error } = await supabase.from("scores").insert([
+                {
+                    user: "32b776a4-8d98-4a82-a505-f1c84090fcde",
+                    quiz: this.$store.state.currentQid,
+                    score: this.$store.state.score,
+                    title: this.$store.state.currentQuizTitle,
+                },
+            ]);
+            console.log(data, error);
+        },
+        handleContinue() {
+            this.$store.state.isSubmitted = false;
+            // currindex = 7
+            // quiz length = 8
+            if (
+                this.$store.state.currentIndex <
+                this.$store.state.quizLength - 1
+            ) {
+                this.$store.commit("INC_QUESTION");
+            } else {
+                console.log("last question go to sd");
+                this.updateScore();
+                alert(
+                    `Your score for this quiz is: ${
+                        this.$store.state.score * 100
+                    }`
+                );
+
+                this.$router.push(`/StudentDashboard`);
+                // update score for user in database
+            }
+        },
+    },
 };
 </script>
 
@@ -32,30 +73,30 @@ export default {
 <style scoped>
 /*****CONTAINER*****/
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
 }
 
 /*****BODY*****/
 #rationale {
-  border: 1px #808080 solid;
-  padding: 35px;
-  margin: 35px 0;
-  border-radius: 10px;
-  box-shadow: 10px 10px 5px #cac9c9;
-  width: 50%;
+    border: 1px #808080 solid;
+    padding: 35px;
+    margin: 35px 0;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #cac9c9;
+    width: 50%;
 }
 
 /*****BUTTONS*****/
 #button {
-  text-align: right;
+    text-align: right;
 }
 
 .n-button {
-  background-color: #ffc633;
-  box-shadow: 10px 10px 5px #cac9c9;
-  margin: 25px 0 10px 0;
+    background-color: #ffc633;
+    box-shadow: 10px 10px 5px #cac9c9;
+    margin: 25px 0 10px 0;
 }
 </style>

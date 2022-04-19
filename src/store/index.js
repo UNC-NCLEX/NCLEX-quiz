@@ -3,12 +3,14 @@ import { createStore } from "vuex";
 export default createStore({
     state: {
         user: "32b776a4-8d98-4a82-a505-f1c84090fcde",
-        score: 0,
-        quizLength: 1,
-        currentXid: 1,
-        currentQid: 1,
-        correctAnswers: 0,
-        currentIndex: 0,
+        score: 0, // holds the current score as you traverse the quiz
+        isSubmitted: false, // if the submit button is clicked
+        correct: "incorrect", // text to display for rationale
+        quizLength: 1, // Length of the quiz selected
+        numOfCorrectAnswers: 0, // holds the current number of correct answers as you traverse the quiz
+        currentIndex: 0, // starts out at 0 because 0th index is 1st question
+        currentQid: 0,
+        currentQuizTitle: "", // title of the current quiz
         students: [
             {
                 onyen: "john1",
@@ -25,44 +27,6 @@ export default createStore({
             {
                 onyen: "lm23ter",
                 pid: 34567,
-            },
-        ],
-        quizzes: [
-            {
-                qid: 1,
-                name: "unit1",
-            },
-            {
-                qid: 2,
-                name: "unit2",
-            },
-            {
-                qid: 3,
-                name: "unit3",
-            },
-        ],
-        unit1: [
-            { questionNumber: 1, xid: 2, type: "selectAll" },
-            { questionNumber: 2, xid: 1, type: "multChoice" },
-            { questionNumber: 3, xid: 3, type: "dropDownSentence" },
-        ],
-        multChoice: [
-            {
-                qid: 1,
-                xid: 1,
-                histAndPhys: "ex hist + phys",
-                nurseNotes: "ex nurse notes",
-                flowSheet: "ex flow sheet",
-                labResults: "ex lab results",
-                orders: "ex orders",
-                questText: "question text for multiple choice",
-                answer: "1",
-                a1: "answer choice 1 text",
-                a2: "answer choice 2 text",
-                a3: "answer choice 3 text",
-                a4: "answer choice 4 text",
-                a5: "answer choice 5 text",
-                rationale: "this is my rationale",
             },
         ],
         selectAll: [
@@ -121,7 +85,7 @@ export default createStore({
     },
     mutations: {
         UPDATE_SCORE(state) {
-            state.score = state.correctAnswers / state.quizLength;
+            state.score = (state.numOfCorrectAnswers / state.quizLength) * 100;
         },
         DEL_STUDENT(state, index) {
             state.students.splice(index, 1);
