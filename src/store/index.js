@@ -122,6 +122,12 @@ export default createStore({
     ],
   },
   mutations: {
+    CLEAR_USER(state) {
+      state.user.uid = "";
+      state.user.jwt = "";
+      state.user.name = "";
+      state.user.email = "";
+    },
     SET_UID(state, uid) {
       state.user.uid = uid;
     },
@@ -157,6 +163,9 @@ export default createStore({
     },
   },
   actions: {
+    clearUser(store) {
+      store.commit("CLEAR_USER");
+    },
     setUID(store, uid) {
       store.commit("SET_UID", uid);
     },

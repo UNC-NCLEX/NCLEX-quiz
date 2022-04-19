@@ -15,7 +15,7 @@
             <router-link :to="{}" class="menu_options"><b>My Scores</b></router-link>
         </div>
         <div class="control_buttons">
-            <b class="menu_options" @click="logout">Log Out</b>
+            <b class="menu_options" @click="signout">Sign Out</b>
             <div class="space"></div>
             <n-avatar
                 round
@@ -30,6 +30,7 @@
 
 <script>
 import { NAvatar } from "naive-ui";
+import { supabase } from "../supabase/init";
 
 export default {
     name: "StudentDashboardHeader",
@@ -48,8 +49,17 @@ export default {
         loadProfile() {
             this.$router.push("/Profile");
         },
-        logout() {
-            // TODO: Implement logout function
+        async signout() {
+            let { error } = await supabase.auth.signOut()
+            if (error == null) {
+                this.clearUser();
+                this.$router.push("/");
+            } else {
+                console.log(error);
+            }
+        },
+        clearUser() {
+            this.$store.dispatch('clearUser');
         }
     }
 }
