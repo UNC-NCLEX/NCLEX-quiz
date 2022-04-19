@@ -16,16 +16,10 @@ const routes = [
     component: HomePage,
   },
   {
-    path: "/Signin",
-    beforeEnter() {
-      window.location.href =
-        "https://shibboleth-dept-nclex-interactive-quiz.apps.cloudapps.unc.edu";
-    },
-  },
-  {
     path: "/Auth",
     name: "User Authentication",
-    component: SigninSignupPage
+    component: SigninSignupPage,
+    props: true
   },
   {
     path: "/Auth/PasswordRecovery",

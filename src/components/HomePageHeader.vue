@@ -50,10 +50,10 @@ export default {
     },
     methods: {
         signin() {
-            this.$router.push("/Signin");
+            this.$router.push({name: "User Authentication", params: {id: "signin"}});
         },
         signup() {
-            this.$router.push("/Signup");
+            this.$router.push({name: "User Authentication", params: {id: "signup"}});
         },
         async signin_supabase() {
             const { user, session, error } = await supabase.auth.signIn({

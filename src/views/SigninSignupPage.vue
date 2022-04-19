@@ -13,7 +13,7 @@
             </div>
         </div>
         <n-card class="signin_signup_card">
-        <n-tabs default-value="signin" size="large" justify-content="space-evenly" class="signin_signup_tabs">
+        <n-tabs :default-value="id" size="large" justify-content="space-evenly" class="signin_signup_tabs">
             <n-tab-pane name="signin" tab="Sign In">
                 <n-form>
                     <n-form-item-row label="Email Address">
@@ -79,6 +79,7 @@ export default {
         NButton,
         NConfigProvider
     },
+    props: ['id'],
     data() {
         return {
             name: "",
