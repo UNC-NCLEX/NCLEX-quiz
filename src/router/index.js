@@ -7,6 +7,7 @@ import Roster from "../views/Roster.vue";
 import NotFound from "../views/NotFound.vue";
 import QuizMain from "../views/QuizMain.vue";
 import SigninSignupPage from "../views/SigninSignupPage.vue";
+import PasswordRecovery from "../views/PasswordRecovery.vue";
 
 const routes = [
   {
@@ -22,9 +23,14 @@ const routes = [
     },
   },
   {
-    path: "/auth",
+    path: "/Auth",
     name: "User Authentication",
     component: SigninSignupPage
+  },
+  {
+    path: "/Auth/PasswordRecovery",
+    name: "Password Recovery",
+    component: PasswordRecovery
   },
   {
     path: "/Profile",

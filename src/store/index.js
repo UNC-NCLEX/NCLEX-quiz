@@ -2,7 +2,12 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    user: "32b776a4-8d98-4a82-a505-f1c84090fcde",
+    user: {
+      uid: "",
+      jwt: "",
+      name: "",
+      email: ""
+    },
     currentXid: 1,
     currentQid: 1,
     currentScore: 0,
@@ -117,6 +122,18 @@ export default createStore({
     ],
   },
   mutations: {
+    SET_UID(state, uid) {
+      state.user.uid = uid;
+    },
+    SET_JWT(state, jwt) {
+      state.user.jwt = jwt;
+    },
+    SET_NAME(state, name) {
+      state.user.name = name;
+    },
+    SET_EMAIL(state, email) {
+      state.user.email = email;
+    },
     DEL_STUDENT(state, index) {
       state.students.splice(index, 1);
     },
@@ -140,6 +157,18 @@ export default createStore({
     },
   },
   actions: {
+    setUID(store, uid) {
+      store.commit("SET_UID", uid);
+    },
+    setJWT(store, jwt) {
+      store.commit("SET_JWT", jwt);
+    },
+    setName(store, name) {
+      store.commit("SET_NAME", name);
+    },
+    setEmail(store, email) {
+      store.commit("SET_EMAIL", email);
+    },
     deleteStudent(store, index) {
       store.commit("DEL_STUDENT", index);
     },

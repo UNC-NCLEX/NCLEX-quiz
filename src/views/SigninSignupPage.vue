@@ -54,9 +54,6 @@
                     <div class="form_button">
                         <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="resetPassword">Send Recovery Email</n-button>
                     </div>
-                    <div class="forgot_password_popup" v-if="this.resetPasswordSent">
-                        <p>You should receive an email soon with instructions on how to reset your password.</p>
-                    </div>
                 </n-form>
             </n-tab-pane>
         </n-tabs>
@@ -67,6 +64,7 @@
 
 <script>
 import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigProvider } from "naive-ui";
+import VueJwtDecode from 'vue-jwt-decode'
 import { supabase } from "../supabase/init";
 
 export default {
@@ -87,7 +85,6 @@ export default {
             email: "",
             password: "",
             confirmPassword: "",
-            resetPasswordSent: false,
             themeOverrides: {
                 common: {
                     primaryColor: "#FF8C00"
@@ -102,8 +99,21 @@ export default {
                 password: this.password
             })
 
-            if (resp.user.aud == "authenticated") {
-                console.log("Success!");
+            if (resp.error == null) {
+                let jwt = resp.data.access_token;
+                this.setJWT(jwt);
+                
+                try {
+                    let decoded = VueJwtDecode.decode(jwt);
+                    this.setUID(decoded.sub);
+                    this.setName(decoded.user_metadata.name);
+                    this.setEmail(decoded.email);
+                    this.$router.push("/StudentDashboard");
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                console.log(resp.error);
             }
         },
         async handleSignup() {
@@ -117,15 +127,24 @@ export default {
                 }
             })
 
-            if (resp.user.aud == "authenticated") {
-                console.log("Success!");
-            }
+            if (resp.error != null) {
+                console.log(resp.error);
+            } 
         },
         async handlePasswordReset() {
             // let { data, error } = await supabase.auth.api.resetPasswordForEmail(this.email);
         },
-        resetPassword() {
-            this.resetPasswordSent = !this.resetPasswordSent;
+        setUID(uid) {
+            this.$store.dispatch('setUID', uid);
+        },
+        setJWT(jwt) {
+            this.$store.dispatch('setJWT', jwt);
+        },
+        setName(name) {
+            this.$store.dispatch('setName', name);
+        },
+        setEmail(email) {
+            this.$store.dispatch('setEmail', email);
         }
     }
 }
