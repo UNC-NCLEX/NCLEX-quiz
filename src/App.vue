@@ -31,6 +31,10 @@ export default {
       router.push("/Auth/PasswordRecovery");
     }
 
+    if (window.location.href.indexOf("type=signup") > -1) {
+      router.push({name: "User Authentication", params: {id: "signin"}});
+    }
+
     const store = useStore();
     const quizzes = ref([]);
     const question = ref([]);
