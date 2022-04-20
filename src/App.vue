@@ -15,6 +15,7 @@ import { supabase } from "./supabase/init";
 import { NSelect, NMessageProvider } from "naive-ui";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import router from './router/index';
 import HomePageHeader from "./components/HomePageHeader.vue"
 import StudentDashboardHeader from "./components/StudentDashboardHeader.vue"
 
@@ -26,6 +27,10 @@ export default {
     NMessageProvider
   },
   setup() {
+    if (window.location.href.indexOf("type=recovery") > -1) {
+      router.push("/Auth/PasswordRecovery");
+    }
+
     const store = useStore();
     const quizzes = ref([]);
     const question = ref([]);
