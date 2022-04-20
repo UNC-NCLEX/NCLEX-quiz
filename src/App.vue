@@ -4,13 +4,15 @@
     <StudentDashboardHeader v-if="!isHomePage" />
     <br class="header_margin" v-if="!isHomePage" />
   </div>
-  <router-view />
+  <n-message-provider>
+    <router-view />
+  </n-message-provider>
 </template>
 
 <script>
 import { h, ref } from "vue";
 import { supabase } from "./supabase/init";
-import { NSelect } from "naive-ui";
+import { NSelect, NMessageProvider } from "naive-ui";
 import { useStore } from "vuex";
 import { computed } from "vue";
 import HomePageHeader from "./components/HomePageHeader.vue"
@@ -20,7 +22,8 @@ export default {
   name: "App",
   components: {
     HomePageHeader,
-    StudentDashboardHeader
+    StudentDashboardHeader,
+    NMessageProvider
   },
   setup() {
     const store = useStore();

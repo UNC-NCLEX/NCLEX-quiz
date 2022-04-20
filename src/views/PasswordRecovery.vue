@@ -62,12 +62,17 @@ export default {
     },
     methods: {
         async updateUser() {
-            const { user, error } = await supabase.auth.update({
-                password: this.password
-            })
+            const { error, data } = await supabase.auth.api.updateUser(
+                this.$store.state.user.jwt, { password: this.password }
+            )
 
-            console.log(user);
-            console.log(error);
+            console.log(data);
+
+            if (error == null) {
+                this.$router.push("/Signin");
+            } else {
+                console.log(error);
+            }
         }
     }
 }

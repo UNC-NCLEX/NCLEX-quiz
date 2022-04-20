@@ -49,10 +49,10 @@
             <n-tab-pane name="forgot_password" tab="Forgot Password?">
                 <n-form>
                     <n-form-item-row label="Email Address">
-                        <n-input v-model:value="value" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
+                        <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
                     </n-form-item-row>
                     <div class="form_button">
-                        <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="resetPassword">Send Recovery Email</n-button>
+                        <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="handlePasswordRecovery">Send Recovery Email</n-button>
                     </div>
                 </n-form>
             </n-tab-pane>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigProvider } from "naive-ui";
+import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigProvider, useMessage } from "naive-ui";
 import VueJwtDecode from 'vue-jwt-decode'
 import { supabase } from "../supabase/init";
 
@@ -80,6 +80,17 @@ export default {
         NConfigProvider
     },
     props: ['id'],
+    setup() {
+        const message = useMessage();
+        return {
+            createSuccessMessage(msg, time) {
+                message.success(msg, { duration: time });
+            },
+            createErrorMessage(msg, time) {
+                message.error(msg, { duration: time });
+            }
+        }
+    },
     data() {
         return {
             name: "",
@@ -106,14 +117,17 @@ export default {
                 
                 try {
                     let decoded = VueJwtDecode.decode(jwt);
+                    console.log(decoded);
                     this.setUID(decoded.sub);
                     this.setName(decoded.user_metadata.name);
                     this.setEmail(decoded.email);
                     this.$router.push("/StudentDashboard");
                 } catch (error) {
+                    this.createErrorMessage("There was a problem logging in. Please contact your instructor.", 10000);
                     console.log(error);
                 }
             } else {
+                this.createErrorMessage("Invalid login credentials. Please check your credentials and try again.", 10000);
                 console.log(resp.error);
             }
         },
@@ -128,12 +142,22 @@ export default {
                 }
             })
 
-            if (resp.error != null) {
+            if (resp.error == null) {
+                this.createSuccessMessage("Success! Please check your email for a verification link before logging in.", 10000);
+            } else {
                 console.log(resp.error);
-            } 
+            }
         },
-        async handlePasswordReset() {
-            // let { data, error } = await supabase.auth.api.resetPasswordForEmail(this.email);
+        async handlePasswordRecovery() {
+            let { data, error } = await supabase.auth.api.resetPasswordForEmail(this.email);
+
+            if (error == null) {
+                this.createSuccessMessage("Success! Check your email for a link to change your password.", 10000);
+            } else {
+                this.createErrorMessage("Invalid email address.", 10000);
+                console.log(error);
+                console.log(data);
+            }
         },
         setUID(uid) {
             this.$store.dispatch('setUID', uid);
