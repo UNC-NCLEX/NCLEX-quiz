@@ -3,7 +3,7 @@
         {{ quizzes }}
         <div class="content">
             <h1>
-                Welcome {{ this.$store.state.user.id }}. Here is how you have
+                Welcome {{ this.$store.state.user.name }}. Here is how you have
                 done in your past quizzes:
             </h1>
             <div class="scores">

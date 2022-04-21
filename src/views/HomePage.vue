@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     signup() {
-      this.$router.push("/signup");
+      this.$router.push({name: "User Authentication", params: {id: "signup"}});
     }
   },
 };

@@ -10,12 +10,12 @@
         </div>
         <div class="button_group">
             <n-button
-                @click="login()"
+                @click="signin()"
                 type="primary"
                 color="#ff5c00"
                 text-color="white"
                 class="button"
-                >Login</n-button
+                >Sign In</n-button
             >
             <div class="space"></div>
             <n-button
@@ -26,22 +26,12 @@
                 class="button"
                 >Sign Up</n-button
             >
-            <div class="space"></div>
-            <n-button
-                @click="login_supabase()"
-                type="primary"
-                color="#ff5c00"
-                text-color="white"
-                class="button"
-                >Test</n-button
-            >
         </div>
     </section>
 </template>
 
 <script>
 import { NButton } from "naive-ui";
-import { supabase } from "../supabase/init";
 
 export default {
     name: "HomePageHeader",
@@ -49,20 +39,11 @@ export default {
         NButton
     },
     methods: {
-        login() {
-            this.$router.push("/Login");
+        signin() {
+            this.$router.push({name: "User Authentication", params: {id: "signin"}});
         },
         signup() {
-            this.$router.push("/Signup");
-        },
-        async login_supabase() {
-            const { user, session, error } = await supabase.auth.signIn({
-                email: "fokneyokna@vusra.com",
-                password: "password123",
-        });
-        this.$store.state.user = user;
-        console.log(user, session, error);
-        this.$router.push("/StudentDashboard");
+            this.$router.push({name: "User Authentication", params: {id: "signup"}});
         }
     }
 }
