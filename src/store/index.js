@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    signedIn: false,
     user: {
       uid: "",
       jwt: "",
@@ -122,6 +123,12 @@ export default createStore({
     ],
   },
   mutations: {
+    SIGN_IN(state) {
+      state.signedIn = true;
+    },
+    SIGN_OUT(state) {
+      state.signedIn = false;
+    },
     CLEAR_USER(state) {
       state.user.uid = "";
       state.user.jwt = "";
@@ -163,6 +170,12 @@ export default createStore({
     },
   },
   actions: {
+    signIn(store) {
+      store.commit("SIGN_IN");
+    },
+    signOut(store) {
+      store.commit("SIGN_OUT");
+    },
     clearUser(store) {
       store.commit("CLEAR_USER");
     },
@@ -201,6 +214,9 @@ export default createStore({
     },
   },
   getters: {
+    isSignedIn: function (state) {
+      return `${state.signedIn}`;
+    },
     onyen: function (state, index) {
       return `${state.students[index].onyen}`;
     },

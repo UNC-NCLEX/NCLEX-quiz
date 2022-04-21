@@ -53,6 +53,7 @@ export default {
             let { error } = await supabase.auth.signOut()
             if (error == null) {
                 this.clearUser();
+                this.signOut();
                 this.$router.push("/");
             } else {
                 console.log(error);
@@ -60,6 +61,9 @@ export default {
         },
         clearUser() {
             this.$store.dispatch('clearUser');
+        },
+        signOut() {
+            this.$store.dispatch('signOut');
         }
     }
 }

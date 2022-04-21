@@ -117,10 +117,10 @@ export default {
                 
                 try {
                     let decoded = VueJwtDecode.decode(jwt);
-                    console.log(decoded);
                     this.setUID(decoded.sub);
                     this.setName(decoded.user_metadata.name);
                     this.setEmail(decoded.email);
+                    this.signIn();
                     this.$router.push("/StudentDashboard");
                 } catch (error) {
                     this.createErrorMessage("There was a problem logging in. Please contact your instructor.", 10000);
@@ -153,6 +153,10 @@ export default {
 
             if (error == null) {
                 this.createSuccessMessage("Success! Check your email for a link to change your password.", 10000);
+            } else if (error.status == 429) {
+                this.createErrorMessage("Too many requests. Please wait 60s before making another request.", 10000);
+                console.log(error);
+                console.log(data);
             } else {
                 this.createErrorMessage("Invalid email address.", 10000);
                 console.log(error);
@@ -170,6 +174,9 @@ export default {
         },
         setEmail(email) {
             this.$store.dispatch('setEmail', email);
+        },
+        signIn() {
+            this.$store.dispatch('signIn');
         }
     }
 }

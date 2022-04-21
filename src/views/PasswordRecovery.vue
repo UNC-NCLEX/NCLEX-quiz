@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigProvider } from "naive-ui";
+import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigProvider, useMessage } from "naive-ui";
 import { supabase } from "../supabase/init";
 
 export default {
@@ -49,6 +49,17 @@ export default {
         NButton,
         NConfigProvider
     },
+    setup() {
+        const message = useMessage();
+        return {
+            createSuccessMessage(msg, time) {
+                message.success(msg, { duration: time });
+            },
+            createErrorMessage(msg, time) {
+                message.error(msg, { duration: time });
+            }
+        }
+    },
     data() {
         return {
             password: "",
@@ -62,16 +73,20 @@ export default {
     },
     methods: {
         async updateUser() {
-            const { error, data } = await supabase.auth.api.updateUser(
+            const { data, error } = await supabase.auth.api.updateUser(
                 this.$store.state.user.jwt, { password: this.password }
             )
 
-            console.log(data);
-
+            this.$store.state.user.jwt = "";
             if (error == null) {
-                this.$router.push("/Signin");
+                this.createSuccessMessage("Success! Redirecting you to sign in page...", 3000);
+                setTimeout(() => {
+                    this.$router.push("/Auth");
+                }, 3000);
             } else {
+                this.createErrorMessage("There was a problem updating your password.", 10000);
                 console.log(error);
+                console.log(data);
             }
         }
     }
