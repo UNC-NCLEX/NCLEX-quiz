@@ -27,6 +27,28 @@
                 >
                 </MultipleResponse>
             </div>
+            <div
+                v-else-if="
+                    allQuestions[this.$store.state.currentIndex].type ===
+                    'dds'
+                "
+            >
+                <DropDownSentence
+                    :dds_question="allQuestions[this.$store.state.currentIndex]"
+                >
+                </DropDownSentence>
+            </div>
+            <div
+                v-else-if="
+                    allQuestions[this.$store.state.currentIndex].type ===
+                    'ddt'
+                "
+            >
+                <DropDown
+                    :ddt_question="allQuestions[this.$store.state.currentIndex]"
+                >
+                </DropDown>
+            </div>
         </div>
     </div>
 </template>
@@ -37,6 +59,8 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 import MultipleChoice from "../components/MultipleChoice.vue";
 import MultipleResponse from "../components/MultipleResponse.vue";
+import DropDownSentence from "../components/DropDownSentence.vue";
+import DropDown from "../components/DropDown.vue"
 
 export default {
     name: "QuizMain",
@@ -48,6 +72,8 @@ export default {
     components: {
         MultipleChoice,
         MultipleResponse,
+        DropDownSentence,
+        DropDown
     },
     setup() {
         const store = useStore();

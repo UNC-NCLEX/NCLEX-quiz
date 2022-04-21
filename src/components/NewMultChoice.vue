@@ -210,6 +210,7 @@
 
 <script>
 import { NButton, NTabPane, NTabs, NInput } from "naive-ui";
+import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
 export default {
@@ -222,20 +223,20 @@ export default {
     },
     setup() {
         return {
-            quiz_id: ref(null),
-            histAndPhys: ref(null),
-            nurseNotes: ref(null),
-            flowSheet: ref(null),
-            labResults: ref(null),
-            orders: ref(null),
-            questText: ref(null),
-            answer: ref(null),
-            answerText1: ref(null),
-            answerText2: ref(null),
-            answerText3: ref(null),
-            answerText4: ref(null),
-            answerText5: ref(null),
-            rationale: ref(null),
+            qid: ref(0),
+            histAndPhys: ref(""),
+            nurseNotes: ref(""),
+            flowSheet: ref(""),
+            labResults: ref(""),
+            orders: ref(""),
+            questText: ref(""),
+            answer: ref(0),
+            answerText1: ref(""),
+            answerText2: ref(""),
+            answerText3: ref(""),
+            answerText4: ref(""),
+            answerText5: ref(""),
+            rationale: ref(""),
         };
     },
     props: {
@@ -243,23 +244,53 @@ export default {
     },
     methods: {
         enterQuestion() {
+            //save answer text to corAns variable for db
+            var corAns = "";
+            if (this.answer === 1) {
+                corAns = this.answerText1;
+            } else if (this.answer === 2) {
+                this.answerText2;
+            } else if (this.answer === 3) {
+                this.answerText3;
+            } else if (this.answer === 4) {
+                this.answerText4;
+            } else {
+                this.answerText5;
+            }
+            //push new q to DB
             var newQ = {
-                histAndPhys: this.histAndPhys,
-                nurseNotes: this.nurseNotes,
-                flowSheet: this.flowSheet,
-                labResults: this.labResults,
+                quiz_id: this.qid,
+                type: "mc",
+                hist_and_phys: this.histAndPhys,
+                nurse_notes: this.nurseNotes,
+                flow_sheet: this.flowSheet,
+                lab_results: this.labResults,
                 orders: this.orders,
-                questText: this.questText,
-                correct: this.answer,
-                a1: this.answerText1,
-                a2: this.answerText2,
-                a3: this.answerText3,
-                a4: this.answerText4,
-                a5: this.answerText5,
+                text: this.questText,
+                correct: [corAns],
+                answer_choice: [
+                    this.answerText1,
+                    this.answerText2,
+                    this.answerText3,
+                    this.answerText4,
+                    this.answerText5,
+                ],
                 rationale: this.rationale,
             };
             console.log(newQ);
-            this.$store.dispatch("newMult", newQ);
+            const addQ = async () => {
+                try {
+                    let { data: successAdd, error } = await supabase
+                        .from("question")
+                        .insert([this.newQ]);
+                    if (error) throw error;
+                    successAdd = true;
+                    console.log(successAdd);
+                } catch (error) {
+                    console.warn(error.message);
+                }
+            };
+            addQ();
         },
     },
 };

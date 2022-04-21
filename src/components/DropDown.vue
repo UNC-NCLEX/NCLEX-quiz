@@ -1,56 +1,55 @@
 <template>
   <div class="container">
-    <h2>Week 1 Review</h2>
-
-    <div class="question">
-      <h3>Question 2</h3>
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
-            A patient is presented to the emergency department with unexplained
-            fever, diarrhea (6 loose stools within 4 hours) and extreme fatigue
-            at 7AM.
+            {{ddt_question.hist_and_phys}}
           </n-tab-pane>
           <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            On assessment, the patient’s temperature is 101 degree Fahrenheit.
+            {{ddt_question.nurse_notes}}
           </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet"> </n-tab-pane>
+          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+            {{ddt_question.flow_sheet}}
+          </n-tab-pane>
           <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            Hemoglobin level is 6.8mg/dL
+            {{ddt_question.lab_results}}
           </n-tab-pane>
           <n-tab-pane name="Orders" tab="Orders">
-            Tylenol 650 mg by mouth once; administer antidiarrheal medication
-            once and administer one unit of packed RBC
+            {{ddt_question.orders}}
           </n-tab-pane>
         </n-tabs>
       </div>
       <h4>
-        Which of the following assessment findings indicates the therapeutic
-        effect of blood transfusion?
+        {{ddt_question.text}}
       </h4>
       <div>
         <n-table>
           <thead>
-            <th v-for="(item, index) in categories" :key="index">
-              <b>{{ categories[index].name }}</b>
+            <th v-for="(header, index) in ddt_question.row_headers" :key="index">
+              <b>{{ header }}</b>
             </th>
           </thead>
           <tbody>
-            <th v-for="(item, index) in categories" :key="index"></th>
-
-            <tr v-for="(item, index) in medication" :key="index">
-              <td>{{ medication[index].name }}</td>
+            <tr v-for="rowIndex in ddt_question.num_rows-1" :key="rowIndex">
+              <td>{{ ddt_question.answer_choice[0]['row0'][rowIndex-1]}}</td>
               <td class="options">
                 <n-select
-                  v-model="options[index].value"
-                  :options="options"
+                  v-model="studentAnswer[rowIndex-1]"
+                  :options="ddt_question.answer_choice[0]['row1']"
                   clearable
                 />
               </td>
-              <td>
+              <td class="options">
                 <n-select
-                  v-model="options2[index].value"
-                  :options="options2"
+                  v-model="studentAnswer[rowIndex-1]"
+                  :options="ddt_question.answer_choice[0]['row2']"
+                  clearable
+                />
+              </td>
+              <td v-if="ddt_question.answer_choice[0]['row3']!== null" class="options">
+                <n-select
+                  v-model="studentAnswer[rowIndex-1]"
+                  :options="ddt_question.answer_choice[0]['row3']"
                   clearable
                 />
               </td>
@@ -60,14 +59,22 @@
       </div>
     </div>
 
-    <a href="RationalePopup.vue"><n-button size="large">Submit</n-button> </a>
-  </div>
+    <div v-if="!this.$store.state.isSubmitted">
+      <n-button size="large" @click="checkAnswer">Submit</n-button>
+    </div>
+    <div v-else>
+      <RationalePopup
+        :correct="this.$store.state.correct"
+        :rationale="ddt_question.rationale"
+      />
+    </div>
 </template>
 
 <script>
 import { NButton, NTabPane, NTabs, NSelect, NTable } from "naive-ui";
-
+import { useStore } from "vuex";
 import { ref } from "vue";
+import RationalePopup from "../components/RationalePopup.vue";
 
 export default {
   name: "DropDown",
@@ -77,9 +84,47 @@ export default {
     NTabs,
     NSelect,
     NTable,
+    RationalePopup
   },
-  setup() {
+  props: {
+    ddt_question: Object
+  },
+  methods: {
+    getRowName(idx) {
+      let rowN = "row{}"+idx;
+      return rowN;
+    }
+  },
+  data() {
     return {
+      studentAnswer: []
+    }
+  },
+  setup(props) {
+    const checkedValue = ref("");
+    const store = useStore();
+    return {
+            checkedValue: ref(null),
+            handleChange(e) {
+                checkedValue.value = e.target.value;
+            },
+            checkAnswer() {
+                console.log(checkedValue.value);
+                store.state.isSubmitted = true;
+                if (
+                    props.mc_question.correct_answers.includes(
+                        this.studentAnswer
+                    )
+                ) {
+                    console.log("correct");
+                    store.state.correct = "correct";
+                    store.state.numOfCorrectAnswers =
+                        store.state.numOfCorrectAnswers + 1;
+                    store.commit("UPDATE_SCORE");
+                } else {
+                    store.state.correct = "incorrect";
+                }
+            },
       value: ref(null),
       categories: [
         {

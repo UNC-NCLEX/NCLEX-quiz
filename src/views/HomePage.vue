@@ -23,15 +23,17 @@
 
 <script>
 import { NButton } from "naive-ui";
+import HomePageHeader from "../components/HomePageHeader.vue";
 
 export default {
   name: "HomePage",
   components: {
+    HomePageHeader,
     NButton
   },
   methods: {
     signup() {
-      this.$router.push("/signup");
+      this.$router.push({name: "User Authentication", params: {id: "signup"}});
     }
   },
 };

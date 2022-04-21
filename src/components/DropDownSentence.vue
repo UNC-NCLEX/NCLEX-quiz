@@ -1,22 +1,24 @@
 <template>
   <div class="container">
-    <h2>Week {{question.qid}} Review</h2>
+    <h2>Week {{dds_question.quiz_id}} Review</h2>
     <div class="question">
       <h3>Question</h3>
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
-            {{question.histAndPhys}}
+            {{dds_question.hist_and_phys}}
           </n-tab-pane>
           <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            {{question.nurseNotes}}
+            {{dds_question.nurse_notes}}
           </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">{{question.flowSheet}} </n-tab-pane>
+          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+            {{question.flow_sheet}} 
+          </n-tab-pane>
           <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            {{question.labResults}}
+            {{dds_question.lab_results}}
           </n-tab-pane>
           <n-tab-pane name="Orders" tab="Orders">
-            {{question.orders}}
+            {{dds_question.orders}}
           </n-tab-pane>
         </n-tabs>
       </div>
@@ -27,36 +29,36 @@
       </h4>
       <div>
         <tr>
-          <h4 class="questions">{{ question.questionp1 }}...</h4>
+          <h4 class="questions">{{ dds_question.answer_choice[0].p1Text }}...</h4>
           <td>
             <n-space vertical>
               <n-select
                 v-model="p1"
-                :options="[{label: question.p1choices[0], value: 1}, {label: question.p1choices[1], value: 2}, {label: question.p1choices[2], value: 3}]"
+                :options="[{label: dds_question.answer_choice[0].p1Choices[0], value: dds_question.answer_choice[0].p1Choices[0]}, {label: dds_question.answer_choice[0].p1Choices[1], value: dds_question.answer_choice[0].p1Choices[1]}, {label: dds_question.answer_choice[0].p1Choices[2], value: dds_question.answer_choice[0].p1Choices[2]}]"
                 clearable
               />
               </n-space>
           </td>
         </tr>
         <tr>
-          <h4 class="questions">{{ question.questionp2 }}...</h4>
+          <h4 class="questions">{{ dds_question.answer_choice[0].p2Text }}...</h4>
           <td>
             <n-space vertical>
               <n-select
                 v-model="p2"
-                :options="[{label: question.p2choices[0], value: 1}, {label: question.p2choices[1], value: 2}, {label: question.p2choices[2], value: 3}]"
+                :options="[{label: dds_question.answer_choice[0].p2Choices[0], value: dds_question.answer_choice[0].p2Choices[0]}, {label: dds_question.answer_choice[0].p2Choices[1], value: dds_question.answer_choice[0].p2Choices[1]}, {label: dds_question.answer_choice[0].p2Choices[2], value: dds_question.answer_choice[0].p2Choices[2]}]"
                 clearable
               />
               </n-space>
           </td>
         </tr>
         <tr>
-          <h4 class="questions">{{ question.questionp3 }}...</h4>
+          <h4 class="questions">{{ dds_question.answer_choice[0].p3Text }}...</h4>
           <td>
             <n-space vertical>
               <n-select
                 v-model="p3"
-                :options="[{label: question.p3choices[0], value: 1}, {label: question.p3choices[1], value: 2}, {label: question.p3choices[2], value: 3}]"
+                :options="[{label: dds_question.answer_choice[0].p3Choices[0], value: dds_question.answer_choice[0].p3Choices[0]}, {label: dds_question.answer_choice[0].p3Choices[1], value: dds_question.answer_choice[0].p3Choices[1]}, {label: dds_question.answer_choice[0].p3Choices[2], value: dds_question.answer_choice[0].p3Choices[2]}]"
                 clearable
               />
               </n-space>
@@ -64,13 +66,23 @@
         </tr>
       </div>
     </div>
-    <a href="RationalePopup.vue"><n-button size="large">Submit</n-button> </a>
+    <div v-if="!this.$store.state.isSubmitted">
+            <n-button size="large" @click="checkAnswer">Submit</n-button>
+        </div>
+        <div v-else>
+            <RationalePopup
+                :correct="this.$store.state.correct"
+                :rationale="dds_question.rationale"
+            />
+        </div>
   </div>
 </template>
 
 <script>
 import { NButton, NTabPane, NTabs, NSpace, NSelect } from "naive-ui";
 import { ref } from "vue";
+import { useStore } from "vuex";
+import RationalePopup from "../components/RationalePopup.vue";
 
 export default {
   name: "DropDownSentence",
@@ -80,49 +92,38 @@ export default {
     NTabs,
     NSpace,
     NSelect,
-  },computed: {
+    RationalePopup
+  },
+  props: {
+    dds_question: Object
+  },
+  computed: {
     question() {console.log(typeof this.$store.getters.questionNext); return this.$store.getters.questionNext
     }
   },
-  setup() {
-    return {
-      value: ref(null),
-      questions: [
-        {
-          name: "Absorption is the process of",
-        },
-        {
-          name: "Intravenous medications are directly delivered to the",
-        },
-        {
-          name: "Intravenous medications have",
-        },
-      ],
-
-      options: [
-        {
-          label: "Answer 1",
-          value: "Answer 1",
-        },
-        {
-          label: "Answer 2",
-          value: "Answer 2",
-        },
-        {
-          label: "Answer 3",
-          value: "Answer 3",
-        },
-        {
-          label: "Answer 4",
-          value: "Answer 4",
-        },
-        {
-          label: "Answer 5",
-          value: "Answer 5",
-        },
-      ],
-    };
-  },
+      setup(props) {
+        const p1 = ref("");
+        const p2 = ref("");
+        const p3 = ref("");
+        const store = useStore();
+        return {
+            checkAnswer() {
+                console.log(p1.value, p2.value, p3.value);
+                store.state.isSubmitted = true;
+                if (
+                    props.dds_question.correct_answers[0]==p1.value && props.dds_question.correct_answers[1]==p2.value && props.dds_question.correct_answers[2]==p3.value
+                ) {
+                    console.log("correct");
+                    store.state.correct = "correct";
+                    store.state.numOfCorrectAnswers =
+                        store.state.numOfCorrectAnswers + 1;
+                    store.commit("UPDATE_SCORE");
+                } else {
+                    store.state.correct = "incorrect";
+                }
+            },
+        };
+    },
 };
 </script>
 
