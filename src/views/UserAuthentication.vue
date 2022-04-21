@@ -119,9 +119,20 @@ export default {
                     let decoded = VueJwtDecode.decode(jwt);
                     this.setUID(decoded.sub);
                     this.setName(decoded.user_metadata.name);
+                    this.setUserType(decoded.user_metadata.userType);
                     this.setEmail(decoded.email);
                     this.signIn();
-                    this.$router.push("/StudentDashboard");
+                    switch (this.$store.state.user.userType) {
+                        case "student":
+                            this.$router.push("/StudentDashboard");
+                            break;
+                        case "instructor":
+                            this.$router.push("/InstructorDashboard");
+                            break;
+                        default:
+                            this.createErrorMessage("User type not valid. Please contact your instructor.", 10000);
+                            break;
+                    }
                 } catch (error) {
                     this.createErrorMessage("There was a problem logging in. Please contact your instructor.", 10000);
                     console.log(error);
@@ -138,7 +149,8 @@ export default {
             },
             {
                 data: {
-                    name: this.name
+                    name: this.name,
+                    userType: "student"
                 }
             })
 
@@ -174,6 +186,9 @@ export default {
         },
         setEmail(email) {
             this.$store.dispatch('setEmail', email);
+        },
+        setUserType(userType) {
+            this.$store.dispatch('setUserType', userType);
         },
         signIn() {
             this.$store.dispatch('signIn');

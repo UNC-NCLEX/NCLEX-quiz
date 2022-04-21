@@ -7,7 +7,8 @@ export default createStore({
       uid: "",
       jwt: "",
       name: "",
-      email: ""
+      email: "",
+      userType: ""
     },
     score: 0, // holds the current score as you traverse the quiz
     isSubmitted: false, // if the submit button is clicked
@@ -116,6 +117,9 @@ export default createStore({
     SET_EMAIL(state, email) {
       state.user.email = email;
     },
+    SET_USER_TYPE(state, userType) {
+      state.user.userType = userType;
+    },
     DEL_STUDENT(state, index) {
       state.students.splice(index, 1);
     },
@@ -150,6 +154,9 @@ export default createStore({
     },
     setEmail(store, email) {
       store.commit("SET_EMAIL", email);
+    },
+    setUserType(store, userType) {
+      store.commit("SET_USER_TYPE", userType);
     },
     deleteStudent(store, index) {
       store.commit("DEL_STUDENT", index);
