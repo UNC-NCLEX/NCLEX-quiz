@@ -111,7 +111,7 @@ export default {
                 console.log(p1.value, p2.value, p3.value);
                 store.state.isSubmitted = true;
                 if (
-                    props.dds_question.correct_answers[0]===p1.value && props.dds_question.correct_answers[1]===p2.value && props.dds_question.correct_answers[2]===p3.value
+                    props.dds_question.correct_answers[0]==p1.value && props.dds_question.correct_answers[1]==p2.value && props.dds_question.correct_answers[2]==p3.value
                 ) {
                     console.log("correct");
                     store.state.correct = "correct";
