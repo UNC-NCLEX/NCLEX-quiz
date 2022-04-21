@@ -19,20 +19,20 @@ export default createStore({
     currentQuizTitle: "", // title of the current quiz
     students: [
       {
-          onyen: "john1",
-          pid: 12345,
+        onyen: "john1",
+        pid: 12345,
       },
       {
-          onyen: "ale4man",
-          pid: 23456,
+        onyen: "ale4man",
+        pid: 23456,
       },
       {
-          onyen: "enrollstudent",
-          pid: 11111,
+        onyen: "enrollstudent",
+        pid: 11111,
       },
       {
-          onyen: "lm23ter",
-          pid: 34567,
+        onyen: "lm23ter",
+        pid: 34567,
       },
     ],
     selectAll: [
@@ -118,95 +118,6 @@ export default createStore({
     },
     DEL_STUDENT(state, index) {
       state.students.splice(index, 1);
-    },
-    mutations: {
-      UPDATE_SCORE(state) {
-          state.score = (state.numOfCorrectAnswers / state.quizLength) * 100;
-      },
-      DEL_STUDENT(state, index) {
-          state.students.splice(index, 1);
-      },
-      EN_STUDENT(state, newVal) {
-          state.students.push(newVal);
-      },
-      MULT_ADD(state, newQ) {
-          state.multChoice.push(newQ);
-      },
-      SEL_ADD(state, newQ) {
-          state.selectAll.push(newQ);
-      },
-      QUIZ_SELECT(state, qid) {
-          state.currentQid = qid;
-      },
-      INC_QUESTION(state) {
-          state.currentIndex = state.currentIndex + 1;
-      },
-      DDS_ADD(state, newQ) {
-          state.dropDownSentence.push(newQ);
-      },
-    },
-    actions: {
-      deleteStudent(store, index) {
-          store.commit("DEL_STUDENT", index);
-      },
-      enrollStudent(store, newVal) {
-          store.commit("EN_STUDENT", newVal);
-      },
-      newMult(store, newQ) {
-          store.commit("MULT_ADD", newQ);
-      },
-      newSel(store, newQ) {
-          store.commit("SEL_ADD", newQ);
-      },
-      selectQuiz(store, qid) {
-          store.commit("QUIZ_SELECT", qid);
-      },
-      nextQuestion(store) {
-          store.commit("INC_QUESTION");
-      },
-      newDDS(store, newQ) {
-          store.commit("DDS_ADD", newQ);
-      },
-    },
-    getters: {
-      onyen: function (state, index) {
-          return `${state.students[index].onyen}`;
-      },
-      pid: function (state, index) {
-          return `${state.students[index].pid}`;
-      },
-      quizTitlefromID: function (state, index) {
-          return `${state.quizzes[index - 1].name}`;
-      },
-      questionNext: function (state) {
-          var quiz = state.quizzes;
-          var quizTitle = quiz[state.currentQid - 1].name;
-          var toEx = quizTitle.concat("[", state.currentXid - 1, "].type");
-          toEx = "state.".concat(toEx);
-          var tableSearch = eval(toEx);
-          var nextQ = eval(
-              "state.".concat(quizTitle, "[", state.currentXid - 1, "].xid")
-          );
-          console.log(nextQ);
-          var toRet;
-          var exe = "for(var i=0; i<state.".concat(
-              tableSearch,
-              ".length; i++){ if(state.",
-              tableSearch,
-              "[i].xid===",
-              nextQ,
-              "){toRet=state.",
-              tableSearch,
-              "[i];} else {toRet=0;}}"
-          );
-          eval(exe);
-          const target_copy = Object.assign({}, toRet);
-          console.log(target_copy);
-          return target_copy;
-      },
-      multByXID: function (state, id) {
-          return `${state.multChoice[id - 1]}`;
-      },
     },
     QUIZ_SELECT(state, qid) {
       state.currentQid = qid;

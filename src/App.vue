@@ -23,6 +23,7 @@ export default {
   components: {
     HomePageHeader,
     StudentDashboardHeader,
+    NMessageProvider
   },
   setup() {
     const store = useStore();

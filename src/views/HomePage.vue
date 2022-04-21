@@ -23,10 +23,12 @@
 
 <script>
 import { NButton } from "naive-ui";
+import HomePageHeader from "../components/HomePageHeader.vue";
 
 export default {
   name: "HomePage",
   components: {
+    HomePageHeader,
     NButton
   },
   methods: {
