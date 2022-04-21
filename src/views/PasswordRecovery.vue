@@ -38,7 +38,7 @@ import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigPr
 import { supabase } from "../supabase/init";
 
 export default {
-    name: "SigninSignupPage",
+    name: "PasswordRecovery",
     components: {
         NCard,
         NTabs,

@@ -1,7 +1,7 @@
 <template>
 <n-config-provider :theme-overrides="this.themeOverrides">
     <div class="img_section"></div>
-    <div class="signin_signup_section">
+    <div class="user_auth_section">
         <div class="nclex_title">
             <div class="header_img">
                 <img src="../assets/unc_logo.png" id="unc_logo" @click="loadStudentDashboard">
@@ -12,8 +12,8 @@
                 <h3>UNC School of Nursing</h3>
             </div>
         </div>
-        <n-card class="signin_signup_card">
-        <n-tabs :default-value="id" size="large" justify-content="space-evenly" class="signin_signup_tabs">
+        <n-card class="user_auth_card">
+        <n-tabs :default-value="id" size="large" justify-content="space-evenly" class="user_auth_tabs">
             <n-tab-pane name="signin" tab="Sign In">
                 <n-form>
                     <n-form-item-row label="Email Address">
@@ -68,7 +68,7 @@ import VueJwtDecode from 'vue-jwt-decode'
 import { supabase } from "../supabase/init";
 
 export default {
-    name: "SigninSignupPage",
+    name: "UserAuthenticationPage",
     components: {
         NCard,
         NTabs,
@@ -193,7 +193,7 @@ export default {
     height: 100%;
 }
 
-.signin_signup_section {
+.user_auth_section {
     position: absolute;
     background: linear-gradient(.25turn, #ffffff, #f1f2f6);
     width: 50%;
@@ -210,7 +210,7 @@ export default {
     justify-content: flex-end;
 }
 
-.signin_signup_card {
+.user_auth_card {
     position: relative;
     width: 80%;
     margin-top: 5%;
