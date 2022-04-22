@@ -1,53 +1,22 @@
 <template lang="">
-    <div id="quiz" v-if="dataLoaded" @update="clicked">
+    <div id="quiz" v-if="dataLoaded">
         {{ this.$store.state.score }}
         {{ this.$store.state.numOfCorrectAnswers }}
         <h1>Question {{ this.$store.state.currentIndex + 1 }}</h1>
         {{ this.$store.state.score }}
         {{ this.$store.state.numOfCorrectAnswers }}
         <div id="question">
-            <div
-                v-if="
-                    allQuestions[this.$store.state.currentIndex].type === 'mc'
-                "
-            >
-                <MultipleChoice
-                    :mc_question="allQuestions[this.$store.state.currentIndex]"
-                >
-                </MultipleChoice>
+            <div v-if="allQuestions[this.$store.state.currentIndex].type === 'mc'">
+                <MultipleChoice :mc_question="allQuestions[this.$store.state.currentIndex]"></MultipleChoice>
             </div>
-            <div
-                v-else-if="
-                    allQuestions[this.$store.state.currentIndex].type ===
-                    'select'
-                "
-            >
-                <MultipleResponse
-                    :mr_question="allQuestions[this.$store.state.currentIndex]"
-                >
-                </MultipleResponse>
+            <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'select'">
+                <MultipleResponse :mr_question="allQuestions[this.$store.state.currentIndex]"></MultipleResponse>
             </div>
-            <div
-                v-else-if="
-                    allQuestions[this.$store.state.currentIndex].type ===
-                    'dds'
-                "
-            >
-                <DropDownSentence
-                    :dds_question="allQuestions[this.$store.state.currentIndex]"
-                >
-                </DropDownSentence>
+            <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'dds'">
+                <DropDownSentence :dds_question="allQuestions[this.$store.state.currentIndex]"></DropDownSentence>
             </div>
-            <div
-                v-else-if="
-                    allQuestions[this.$store.state.currentIndex].type ===
-                    'ddt'
-                "
-            >
-                <DropDown
-                    :ddt_question="allQuestions[this.$store.state.currentIndex]"
-                >
-                </DropDown>
+            <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'ddt'">
+                <DropDown :ddt_question="allQuestions[this.$store.state.currentIndex]"></DropDown>
             </div>
         </div>
     </div>
@@ -64,11 +33,6 @@ import DropDown from "../components/DropDown.vue"
 
 export default {
     name: "QuizMain",
-    methods: {
-        clicked() {
-            console.log("hey");
-        },
-    },
     components: {
         MultipleChoice,
         MultipleResponse,
@@ -82,6 +46,7 @@ export default {
         let dataLoaded = ref(false);
         let index = ref(0);
         const qid = computed(() => store.state.currentQid);
+        console.log(qid)
         const getAllQuestions = async () => {
             // get all Questions from a specific quiz that the user selected
             try {

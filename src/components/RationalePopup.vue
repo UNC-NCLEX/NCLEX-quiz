@@ -17,11 +17,10 @@
 </template>
 
 <script>
-import { NButton } from "naive-ui";
+import { NButton, useMessage } from "naive-ui";
 import { supabase } from "../supabase/init";
 
 // import { ref } from "vue";
-
 export default {
     name: "RationalePopup",
     props: {
@@ -31,11 +30,19 @@ export default {
     components: {
         NButton,
     },
+    setup() {
+        const message = useMessage();
+        return {
+            createSuccessMessage(msg, time) {
+                message.success(msg, { duration: time });
+            },
+        };
+    },
     methods: {
         async updateScore() {
             const { data, error } = await supabase.from("scores").insert([
                 {
-                    user: "32b776a4-8d98-4a82-a505-f1c84090fcde",
+                    user: this.$store.state.user.uid,
                     quiz: this.$store.state.currentQid,
                     score: this.$store.state.score,
                     title: this.$store.state.currentQuizTitle,
@@ -55,13 +62,12 @@ export default {
             } else {
                 console.log("last question go to sd");
                 this.updateScore();
-                alert(
-                    `Your score for this quiz is: ${
-                        this.$store.state.score * 100
-                    }`
+                this.createSuccessMessage(
+                    `Your score for ${this.$store.state.currentQuizTitle} is: ${this.$store.state.score}`,
+                    10000
                 );
-
-                this.$router.push(`/StudentDashboard`);
+                this.$store.commit("RESET_QUIZ");
+                this.$router.replace(`/StudentDashboard`);
                 // update score for user in database
             }
         },
