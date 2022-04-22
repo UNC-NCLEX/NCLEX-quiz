@@ -69,6 +69,7 @@
 import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigProvider, useMessage } from "naive-ui";
 import VueJwtDecode from 'vue-jwt-decode'
 import { supabase } from "../supabase/init";
+import { ref } from "vue";
 
 export default {
     name: "UserAuthenticationPage",
@@ -85,7 +86,22 @@ export default {
     props: ['id'],
     setup() {
         const message = useMessage();
+        const rosterArray = ref([]); // where all the onyens in the roster will be stored
+        const getRoster = async () => {
+            // get all Questions from a specific quiz that the user selected
+            try {
+                let { data: roster, error } = await supabase
+                    .from("roster")
+                    .select("onyen")
+                if (error) throw error;
+                rosterArray.value = roster;
+            } catch (error) {
+                console.warn(error.message);
+            }
+        };
+        getRoster();
         return {
+            rosterArray,
             createSuccessMessage(msg, time) {
                 message.success(msg, { duration: time });
             },
