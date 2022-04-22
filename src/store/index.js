@@ -131,7 +131,7 @@ export default createStore({
             state.currentQid = qid;
         },
         INC_QUESTION(state) {
-            state.currentQid = state.currentQid + 1;
+            state.currentIndex = state.currentIndex + 1;
         },
         DDS_ADD(state, newQ) {
             state.dropDownSentence.push(newQ);

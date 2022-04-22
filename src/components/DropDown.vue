@@ -22,8 +22,7 @@
       <h4>
         {{ddt_question.text}}
       </h4>
-      <div>
-        <n-table>
+        <table class="table">
           <thead>
             <th v-for="(header, index) in ddt_question.row_headers" :key="index">
               <b>{{ header }}</b>
@@ -32,21 +31,21 @@
           <tbody>
             <tr v-for="rowIndex in ddt_question.num_rows-1" :key="rowIndex">
               <td>{{ ddt_question.answer_choice[0]['row0'][rowIndex-1]}}</td>
-              <td class="options">
+              <td>
                 <n-select
                   v-model="studentAnswer[rowIndex-1]"
                   :options="ddt_question.answer_choice[0]['row1']"
                   clearable
                 />
               </td>
-              <td class="options">
+              <td>
                 <n-select
                   v-model="studentAnswer[rowIndex-1]"
                   :options="ddt_question.answer_choice[0]['row2']"
                   clearable
                 />
               </td>
-              <td v-if="ddt_question.answer_choice[0]['row3']!== null" class="options">
+              <td v-if="ddt_question.answer_choice[0]['row3']!== null">
                 <n-select
                   v-model="studentAnswer[rowIndex-1]"
                   :options="ddt_question.answer_choice[0]['row3']"
@@ -55,8 +54,7 @@
               </td>
             </tr>
           </tbody>
-        </n-table>
-      </div>
+        </table>
     </div>
 
     <div v-if="!this.$store.state.isSubmitted">
@@ -71,7 +69,7 @@
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSelect, NTable } from "naive-ui";
+import { NButton, NTabPane, NTabs, NSelect } from "naive-ui";
 import { useStore } from "vuex";
 import { ref } from "vue";
 import RationalePopup from "../components/RationalePopup.vue";
@@ -83,7 +81,6 @@ export default {
     NTabPane,
     NTabs,
     NSelect,
-    NTable,
     RationalePopup
   },
   props: {
@@ -180,5 +177,9 @@ h2 {
 
 a {
   text-decoration: none;
+}
+
+.table{
+  width:80%;
 }
 </style>
