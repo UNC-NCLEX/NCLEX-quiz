@@ -20,7 +20,7 @@
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
                     </n-form-item-row>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                 </n-form>
                 <div class="form_button">
@@ -35,11 +35,11 @@
                     <n-form-item-row label="Email Address">
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" />
                     </n-form-item-row>
-                    <n-form-item-row label="Password">
-                        <n-input v-model:value="password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                    <n-form-item-row label="Password (8 - 64 characters)">
+                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <n-form-item-row label="Confirm Password">
-                        <n-input v-model:value="confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <div class="form_button">
                         <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="handleSignup">Sign Up</n-button>
@@ -95,8 +95,10 @@ export default {
         return {
             name: "",
             email: "",
-            password: "",
-            confirmPassword: "",
+            password: {
+                password: "",
+                confirmPassword: ""
+            },
             themeOverrides: {
                 common: {
                     primaryColor: "#FF8C00"
@@ -143,36 +145,44 @@ export default {
             }
         },
         async handleSignup() {
-            const resp = await supabase.auth.signUp({
-                email: this.email,
-                password: this.password,
-            },
-            {
-                data: {
-                    name: this.name,
-                    userType: "student"
-                }
-            })
+            if (this.isValidSignup()) {
+                const resp = await supabase.auth.signUp({
+                    email: this.email,
+                    password: this.password.password,
+                },
+                {
+                    data: {
+                        name: this.name,
+                        userType: "student"
+                    }
+                })
 
-            if (resp.error == null) {
-                this.createSuccessMessage("Success! Please check your email for a verification link before logging in.", 10000);
+                if (resp.error == null) {
+                    this.createSuccessMessage("Success! Please check your email for a verification link before logging in.", 10000);
+                } else {
+                    console.log(resp.error);
+                }
             } else {
-                console.log(resp.error);
+                this.createErrorMessage("Input failed validation. Please check your email and password and try again.");
             }
         },
         async handlePasswordRecovery() {
-            let { data, error } = await supabase.auth.api.resetPasswordForEmail(this.email);
+            if (this.isValidPassword()) {
+                let { data, error } = await supabase.auth.api.resetPasswordForEmail(this.email);
 
-            if (error == null) {
-                this.createSuccessMessage("Success! Check your email for a link to change your password.", 10000);
-            } else if (error.status == 429) {
-                this.createErrorMessage("Too many requests. Please wait 60s before making another request.", 10000);
-                console.log(error);
-                console.log(data);
+                if (error == null) {
+                    this.createSuccessMessage("Success! Check your email for a link to change your password.", 10000);
+                } else if (error.status == 429) {
+                    this.createErrorMessage("Too many requests. Please wait 60s before making another request.", 10000);
+                    console.log(error);
+                    console.log(data);
+                } else {
+                    this.createErrorMessage("Invalid email address.", 10000);
+                    console.log(error);
+                    console.log(data);
+                }
             } else {
-                this.createErrorMessage("Invalid email address.", 10000);
-                console.log(error);
-                console.log(data);
+                this.createErrorMessage("Input failed validation. Please check your email and password and try again.")
             }
         },
         setUID(uid) {
@@ -192,6 +202,31 @@ export default {
         },
         signIn() {
             this.$store.dispatch('signIn');
+        },
+        isValidSignup() {
+            if (!this.isValidEmail()) {
+                return false;
+            }
+
+            if (!this.isValidPassword()) {
+                return false;
+            }
+
+            return true;
+        },
+        isValidEmail() {
+            let validEmailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+            if (!validEmailPattern.test(this.email)) {
+                return false;
+            }
+        },
+        isValidPassword() {
+            let validPasswordPattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+            if (!validPasswordPattern.test(this.password.password) || this.password.password !== this.password.confirmPassword) {
+                return false;
+            }
+
+            return true;
         }
     }
 }
