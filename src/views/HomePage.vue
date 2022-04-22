@@ -64,7 +64,7 @@ export default {
 .img_caption {
   position: absolute;
   bottom: 20px;
-  left: 70px;
+  left: 5%;
   font-size: 1.25rem;
   width: 550px;
   text-align: left;
@@ -75,7 +75,7 @@ export default {
   border-radius: 5px;
   position: absolute;
   bottom: 50px;
-  right: 70px;
+  right: 5%;
   padding: 30px;
   filter: drop-shadow(0px 0px 5px #2f3542);
 }
