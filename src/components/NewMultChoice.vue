@@ -245,21 +245,27 @@ export default {
     methods: {
         enterQuestion() {
             //save answer text to corAns variable for db
-            var corAns = "";
-            if (this.answer === 1) {
+            var corAns = 0;
+            console.log(this.answer)
+            if (this.answer == 1) {
                 corAns = this.answerText1;
-            } else if (this.answer === 2) {
-                this.answerText2;
-            } else if (this.answer === 3) {
-                this.answerText3;
-            } else if (this.answer === 4) {
-                this.answerText4;
+            } else if (this.answer == 2) {
+                corAns = this.answerText2;
+            } else if (this.answer == 3) {
+                corAns = this.answerText3;
+            } else if (this.answer == 4) {
+                corAns = this.answerText4;
             } else {
-                this.answerText5;
+                corAns = this.answerText5;
             }
             //push new q to DB
-            var newQ = {
-                quiz_id: this.qid,
+            console.log(corAns)
+            const addQ = async () => {
+                try {
+                    let { data: successAdd, error } = await supabase
+                        .from("question")
+                        .insert([{
+                quiz_id: 1,
                 type: "mc",
                 hist_and_phys: this.histAndPhys,
                 nurse_notes: this.nurseNotes,
@@ -267,7 +273,7 @@ export default {
                 lab_results: this.labResults,
                 orders: this.orders,
                 text: this.questText,
-                correct: [corAns],
+                correct_answers: [corAns],
                 answer_choice: [
                     this.answerText1,
                     this.answerText2,
@@ -276,15 +282,8 @@ export default {
                     this.answerText5,
                 ],
                 rationale: this.rationale,
-            };
-            console.log(newQ);
-            const addQ = async () => {
-                try {
-                    let { data: successAdd, error } = await supabase
-                        .from("question")
-                        .insert([this.newQ]);
+            }]);
                     if (error) throw error;
-                    successAdd = true;
                     console.log(successAdd);
                 } catch (error) {
                     console.warn(error.message);
