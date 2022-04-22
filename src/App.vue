@@ -136,7 +136,7 @@ export default {
       return this.$route.name === 'HomePage';
     },
     isAuthPage() {
-      return this.$route.name === 'User Authentication' || this.$route.name == "Password Recovery";
+      return this.$route.name === 'User Authentication' || this.$route.name === "Password Recovery";
     }
   }
 };
