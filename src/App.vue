@@ -15,21 +15,11 @@ import HomePageHeader from "./components/HomePageHeader.vue";
 import StudentDashboardHeader from "./components/StudentDashboardHeader.vue";
 
 export default {
-    name: "App",
-    components: {
-        HomePageHeader,
-        StudentDashboardHeader,
-        NMessageProvider,
-    },
-    computed: {
-        isHomePage() {
-            return this.$route.name === "HomePage";
-        },
-        isSigninSignupPage() {
-            return this.$route.name === "User Authentication";
-        },
-      ],
-    };
+  name: "App",
+  components: {
+      HomePageHeader,
+      StudentDashboardHeader,
+      NMessageProvider,
   },
   computed: {
     isHomePage() {
