@@ -42,11 +42,11 @@ export default {
   },
   methods: {
       createQuiz(){
-          /* TODO create quiz in DB*/
+          /* TODO create quiz and push to database*/
           console.log("new quiz")
       },
       createQuestion(){
-          /*TODO router to correct page*/
+          /*TODO router to correct page - all need :quizzes prop passed in as all current quizzes in databases when routed - pages use quiz.name and quiz.qid*/
           console.log("new question"+ this.typeSelected)
       }
   },

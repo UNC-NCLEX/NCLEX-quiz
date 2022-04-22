@@ -29,9 +29,7 @@
         </n-tabs>
       </div>
       <h4>
-        Choose the most likely options for the information missing from the
-        statements regarding absorption of intravenous medications by selecting
-        from the list of options provided.
+        <n-input v-model:value="text" type="text" class="form-field" id="text" name="text" :input-props="{ type: 'clearable' }" placeholder="Enter Overall Main Text" />
       </h4>
       <div>
         <tr>
@@ -99,12 +97,13 @@
         </tr>
       </div>
     </div>
-    <a href="RationalePopup.vue"><n-button size="large">Submit</n-button> </a>
+    <n-button @click="enterQuestion()" size="large">Add Question</n-button> 
   </div>
 </template>
 
 <script>
 import { NButton, NTabPane, NTabs, NSpace, NInput } from "naive-ui";
+import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
 export default {
@@ -125,6 +124,7 @@ export default {
       flowSheet: ref(null), 
       labResults: ref(null), 
       orders: ref(null), 
+      text: ref(null),
       questionp1: ref(null), 
       p1c1: ref(null), 
       p1c2: ref(null), 
@@ -145,11 +145,70 @@ export default {
   },
   methods: {
       enterQuestion() {
-        var newQ = {"qid":this.qid, "histAndPhys": this.histAndPhys, "nurseNotes":this.nurseNotes, "flowSheet":this.flowSheet, "labResults":this.labResults, "orders":this.orders, "questionp1": this.questionp1, "p1c1": this.p1c1, "p1c2": this.p1c2, "p1c3": this.p1c3, "p1correct": this.p1correct, 
-        "questionp2": this.questionp2, "p2c1": this.p2c1, "p2c2": this.p2c2, "p2c3": this.p2c3, "p2correct": this.p2correct, "questionp3": this.questionp3, "p3c1": this.p3c1, "p3c2": this.p3c2, "p3c3": this.p3c3, "p3correct": this.p3correct,   "rationale": this.rationale}
-        console.log(newQ)
-        this.$store.dispatch('newDDS', newQ);
-      }}
+        //save correct answer text to corAns variable for db - answer var is INT from radio buttons, save corresponding text into corAns variable
+      var corAns = [];
+      if (this.p1Correct == 1) {
+          corAns.push(this.p1c1);
+      } if (this.p1Correct == 2) {
+          corAns.push(this.p1c2);
+      } if (this.p1Correct == 3) {
+          corAns.push(this.p1c3);
+      } if (this.p2Correct == 1) {
+          corAns.push(this.p2c1);
+      } if (this.p2Correct == 2) {
+          corAns.push(this.p2c2);
+      } if (this.p2Correct == 3) {
+          corAns.push(this.p2c3);
+      } if (this.p3Correct == 1) {
+          corAns.push(this.p3c1);
+      } if (this.p3Correct == 2) {
+          corAns.push(this.p3c2);
+      } if (this.p3Correct == 3) {
+          corAns.push(this.p3c3);}
+
+      //push new question to database (unused fields as empty)
+      const addQ = async () => {
+        try {
+          let { data: successAdd, error } = await supabase
+            .from("question")
+            .insert([{
+              quiz_id: this.qid,
+              //all questions added from this page are dropdown sentence type
+              type: "dds",
+              hist_and_phys: this.histAndPhys,
+              nurse_notes: this.nurseNotes,
+              flow_sheet: this.flowSheet,
+              lab_results: this.labResults,
+              orders: this.orders,
+              text: this.text,
+              correct_answers: corAns,
+              answer_choice: [
+                  [
+                    {label: this.p1c1, value: this.p1c1},
+                    {label: this.p1c2, value: this.p1c2},
+                    {label: this.p1c3, value: this.p1c3}
+                  ],
+                  [
+                    {label: this.p2c1, value: this.p2c1},
+                    {label: this.p2c2, value: this.p2c2},
+                    {label: this.p2c3, value: this.p2c3}
+                  ],
+                  [
+                    {label: this.p3c1, value: this.p3c1},
+                    {label: this.p3c2, value: this.p3c2},
+                    {label: this.p3c3, value: this.p3c3}
+                  ]
+                ],
+              rationale: this.rationale,
+            }]);
+            if (error) throw error;
+            //console entire question if successfully added
+            console.log(successAdd);
+            } catch (error) {
+            //console error if not added
+            console.warn(error.message);}
+            };
+        addQ();}}
 };
 </script>
 

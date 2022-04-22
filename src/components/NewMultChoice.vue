@@ -214,83 +214,82 @@ import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
 export default {
-    name: "NewMultChoice",
-    components: {
-        NButton,
-        NTabPane,
-        NTabs,
-        NInput,
+  name: "NewMultChoice",
+  components: {
+    NButton,
+    NTabPane,
+    NTabs,
+    NInput,
     },
-    setup() {
-        return {
-            qid: ref(0),
-            histAndPhys: ref(""),
-            nurseNotes: ref(""),
-            flowSheet: ref(""),
-            labResults: ref(""),
-            orders: ref(""),
-            questText: ref(""),
-            answer: ref(0),
-            answerText1: ref(""),
-            answerText2: ref(""),
-            answerText3: ref(""),
-            answerText4: ref(""),
-            answerText5: ref(""),
-            rationale: ref(""),
-        };
+  setup() {
+    return {
+      //initializing question variables to be entered by instructor
+      qid: ref(null),
+      histAndPhys: ref(null),
+      nurseNotes: ref(null),
+      flowSheet: ref(null),
+      labResults: ref(null),
+      orders: ref(null),
+      questText: ref(null),
+      answer: ref(null),
+      answerText1: ref(null),
+      answerText2: ref(null),
+      answerText3: ref(null),
+      answerText4: ref(null),
+      answerText5: ref(null),
+      rationale: ref(null),};
     },
-    props: {
-        quizzes: Array,
-    },
-    methods: {
-        enterQuestion() {
-            //save answer text to corAns variable for db
-            var corAns = 0;
-            console.log(this.answer)
-            if (this.answer == 1) {
-                corAns = this.answerText1;
-            } else if (this.answer == 2) {
-                corAns = this.answerText2;
-            } else if (this.answer == 3) {
-                corAns = this.answerText3;
-            } else if (this.answer == 4) {
-                corAns = this.answerText4;
-            } else {
-                corAns = this.answerText5;
-            }
-            //push new q to DB
-            console.log(corAns)
-            const addQ = async () => {
-                try {
-                    let { data: successAdd, error } = await supabase
-                        .from("question")
-                        .insert([{
-                quiz_id: 1,
-                type: "mc",
-                hist_and_phys: this.histAndPhys,
-                nurse_notes: this.nurseNotes,
-                flow_sheet: this.flowSheet,
-                lab_results: this.labResults,
-                orders: this.orders,
-                text: this.questText,
-                correct_answers: [corAns],
-                answer_choice: [
-                    this.answerText1,
-                    this.answerText2,
-                    this.answerText3,
-                    this.answerText4,
-                    this.answerText5,
+  props: {
+    quizzes: Array,
+  },
+  methods: {
+    enterQuestion() {
+      //save correct answer text to corAns variable for db - answer var is INT from radio buttons, save corresponding text into corAns variable
+      var corAns = "";
+      if (this.answer == 1) {
+        corAns = this.answerText1;
+    } else if (this.answer == 2) {
+        corAns = this.answerText2;
+    } else if (this.answer == 3) {
+        corAns = this.answerText3;
+    } else if (this.answer == 4) {
+        corAns = this.answerText4;
+    } else {
+        corAns = this.answerText5;}
+
+      //push new question to database (unused fields as empty)
+      const addQ = async () => {
+        try {
+          let { data: successAdd, error } = await supabase
+            .from("question")
+            .insert([{
+              quiz_id: this.qid,
+              //all questions added from this page are multiple choice type
+              type: "mc",
+              hist_and_phys: this.histAndPhys,
+              nurse_notes: this.nurseNotes,
+              flow_sheet: this.flowSheet,
+              lab_results: this.labResults,
+              orders: this.orders,
+              text: this.questText,
+              correct_answers: [corAns],
+              answer_choice: [
+                this.answerText1,
+                this.answerText2,
+                this.answerText3,
+                this.answerText4,
+                this.answerText5,
                 ],
-                rationale: this.rationale,
+              rationale: this.rationale,
             }]);
-                    if (error) throw error;
-                    console.log(successAdd);
-                } catch (error) {
-                    console.warn(error.message);
-                }
+            if (error) throw error;
+            //console entire question if successfully added
+            console.log(successAdd);
+            } catch (error) {
+            //console error if not added
+            console.warn(error.message);}
             };
-            addQ();
-        },
+        addQ();},
     },
 };
 </script>

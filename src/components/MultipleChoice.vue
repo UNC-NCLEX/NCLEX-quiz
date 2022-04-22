@@ -42,6 +42,7 @@
                 >
             </n-radio-group>
         </div>
+        <!--rational popup only displays after question is submitted (if isSubmitted). if not submitted then submit button display--> 
         <div v-if="!this.$store.state.isSubmitted">
             <n-button size="large" @click="checkAnswer">Submit</n-button>
         </div>
@@ -63,6 +64,7 @@ import RationalePopup from "../components/RationalePopup.vue";
 export default {
     name: "MultipleChoice",
     props: {
+        //currect question data passed in as a prop -> immutable
         mc_question: Object,
     },
     components: {
@@ -82,8 +84,9 @@ export default {
                 checkedValue.value = e.target.value;
             },
             checkAnswer() {
-                console.log(checkedValue.value);
+                //set as true so rationale popup displays for question
                 store.state.isSubmitted = true;
+                //compare submitted answer to correct answer array
                 if (
                     props.mc_question.correct_answers.includes(
                         checkedValue.value

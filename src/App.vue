@@ -19,7 +19,7 @@ export default {
     components: {
         HomePageHeader,
         StudentDashboardHeader,
-        NMessageProvider,
+        NMessageProvider
     },
     computed: {
         isHomePage() {

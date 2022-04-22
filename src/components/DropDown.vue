@@ -125,74 +125,7 @@ export default {
                     store.state.correct = "incorrect";
                 }
             },
-      value: ref(null),
-      categories: [
-        {
-          name: "Medication",
-        },
-        {
-          name: "Drug Classification",
-        },
-        {
-          name: "Client Teaching",
-        },
-      ],
-
-      medication: [
-        {
-          name: "Medication 1",
-        },
-        {
-          name: "Medication 2",
-        },
-        {
-          name: "Medication 3",
-        },
-      ],
-      options: [
-        {
-          label: "Classification 1",
-          value: "Classification 1",
-        },
-        {
-          label: "Classification 2",
-          value: "Classification 2",
-        },
-        {
-          label: "Classification 3",
-          value: "Classification 3",
-        },
-        {
-          label: "Classification 4",
-          value: "Classification 4",
-        },
-        {
-          label: "Classification 5",
-          value: "Classification 5",
-        },
-      ],
-      options2: [
-        {
-          label: "Teaching 1",
-          value: "Teaching 1",
-        },
-        {
-          label: "Teaching 2",
-          value: "Teaching 2",
-        },
-        {
-          label: "Teaching 3",
-          value: "Teaching 3",
-        },
-        {
-          label: "Teaching 4",
-          value: "Teaching 4",
-        },
-        {
-          label: "Teaching 5",
-          value: "Teaching 5",
-        },
-      ],
+      value: ref(null)
     };
   },
 };
@@ -235,8 +168,6 @@ h2 {
 
 /*****ANSWERS******/
 .options {
-  display: flex;
-  flex-direction: row;
   justify-content: center;
 }
 
