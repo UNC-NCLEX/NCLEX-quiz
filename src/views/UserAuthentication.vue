@@ -32,6 +32,9 @@
                     <n-form-item-row label="Name">
                         <n-input v-model:value="name" type="name" class="form_field" id="name" name="name" placeholder="Name"/>
                     </n-form-item-row>
+                    <n-form-item-row label="Onyen">
+                        <n-input v-model:value="onyen" type="text" class="form_field" id="onyen" name="onyen" placeholder="Onyen"/>
+                    </n-form-item-row>
                     <n-form-item-row label="Email Address">
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" />
                     </n-form-item-row>
@@ -102,6 +105,7 @@ export default {
                 password: "",
                 confirmPassword: ""
             },
+            onyen: "",
             themeOverrides: {
                 common: {
                     primaryColor: "#FF8C00"
@@ -115,6 +119,8 @@ export default {
                 email: this.email,
                 password: this.password
             })
+    
+            // check if is in the roster
 
             if (resp.error == null) {
                 let jwt = resp.data.access_token;
@@ -126,6 +132,7 @@ export default {
                     this.setName(decoded.user_metadata.name);
                     this.setUserType(decoded.user_metadata.userType);
                     this.setEmail(decoded.email);
+                    this.setOnyen(decoded.onyen)
                     this.signIn();
                     switch (this.$store.state.user.userType) {
                         case "student":
@@ -156,7 +163,8 @@ export default {
                 {
                     data: {
                         name: this.name,
-                        userType: "student"
+                        userType: "student",
+                        onyen: this.onyen
                     }
                 })
 
@@ -198,6 +206,9 @@ export default {
         },
         setUserType(userType) {
             this.$store.dispatch('setUserType', userType);
+        },
+        setOnyen(onyen) {
+            this.$store.dispatch('setOnyen', onyen)
         },
         signIn() {
             this.$store.dispatch('signIn');
