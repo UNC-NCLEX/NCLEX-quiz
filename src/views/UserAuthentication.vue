@@ -1,5 +1,5 @@
 <template>
-<n-config-provider :theme-overrides="this.themeOverrides">
+<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
     <div class="img_section"></div>
     <div class="user_auth_section">
         <div class="nclex_title">
@@ -20,7 +20,7 @@
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
                     </n-form-item-row>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                 </n-form>
                 <div class="form_button">
@@ -39,15 +39,16 @@
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" />
                     </n-form-item-row>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <n-form-item-row label="Confirm Password">
-                        <n-input v-model:value="confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <div class="form_button">
                         <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="handleSignup">Sign Up</n-button>
                     </div>
                 </n-form>
+                <PasswordRules />
             </n-tab-pane>
             <n-tab-pane name="forgot_password" tab="Forgot Password?">
                 <n-form>
@@ -67,7 +68,8 @@
 
 <script>
 import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigProvider, useMessage } from "naive-ui";
-import VueJwtDecode from 'vue-jwt-decode'
+import PasswordRules from "../components/PasswordRules.vue";
+import VueJwtDecode from 'vue-jwt-decode';
 import { supabase } from "../supabase/init";
 
 export default {
@@ -80,7 +82,8 @@ export default {
         NFormItemRow,
         NInput,
         NButton,
-        NConfigProvider
+        NConfigProvider,
+        PasswordRules
     },
     props: ['id'],
     setup() {
@@ -98,8 +101,10 @@ export default {
         return {
             name: "",
             email: "",
-            password: "",
-            confirmPassword: "",
+            password: {
+                password: "",
+                confirmPassword: ""
+            },
             onyen: "",
             themeOverrides: {
                 common: {
@@ -150,22 +155,26 @@ export default {
             }
         },
         async handleSignup() {
-            const resp = await supabase.auth.signUp({
-                email: this.email,
-                password: this.password,
-            },
-            {
-                data: {
-                    name: this.name,
-                    userType: "student",
-                    onyen: this.onyen
-                }
-            })
+            if (this.isValidSignup()) {
+                const resp = await supabase.auth.signUp({
+                    email: this.email,
+                    password: this.password.password,
+                },
+                {
+                    data: {
+                        name: this.name,
+                        userType: "student",
+                        onyen: this.onyen
+                    }
+                })
 
-            if (resp.error == null) {
-                this.createSuccessMessage("Success! Please check your email for a verification link before logging in.", 10000);
+                if (resp.error == null) {
+                    this.createSuccessMessage("Success! Please check your email for a verification link before logging in.", 10000);
+                } else {
+                    console.log(resp.error);
+                }
             } else {
-                console.log(resp.error);
+                this.createErrorMessage("Input failed validation. Please check your email and password and try again.");
             }
         },
         async handlePasswordRecovery() {
@@ -203,12 +212,43 @@ export default {
         },
         signIn() {
             this.$store.dispatch('signIn');
+        },
+        isValidSignup() {
+            if (!this.isValidEmail()) {
+                return false;
+            }
+
+            if (!this.isValidPassword()) {
+                return false;
+            }
+
+            return true;
+        },
+        isValidEmail() {
+            let validEmailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+            if (!validEmailPattern.test(this.email)) {
+                return false;
+            }
+        },
+        isValidPassword() {
+            let validPasswordPattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+            if (!validPasswordPattern.test(this.password.password) || this.password.password !== this.password.confirmPassword) {
+                return false;
+            }
+
+            return true;
         }
     }
 }
 </script>
 
 <style scoped>
+.wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
 .img_section {
     background: url(../assets/unc_old_well.jpg);
     background-repeat: no-repeat;
@@ -220,11 +260,12 @@ export default {
 }
 
 .user_auth_section {
-    position: absolute;
+    overflow: auto;
     background: linear-gradient(.25turn, #ffffff, #f1f2f6);
     width: 50%;
     left: 50%;
     height: 100%;
+    float: right;
 }
 
 .form_field:hover {

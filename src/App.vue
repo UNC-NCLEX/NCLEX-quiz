@@ -1,12 +1,12 @@
 <template>
-    <div class="header" v-if="!isSigninSignupPage">
-        <HomePageHeader v-if="isHomePage" />
-        <StudentDashboardHeader v-if="!isHomePage" />
-        <br class="header_margin" v-if="!isHomePage" />
-    </div>
-    <n-message-provider>
-        <router-view />
-    </n-message-provider>
+  <div class="header" v-if="!isAuthPage">
+    <HomePageHeader v-if="isHomePage" />
+    <StudentDashboardHeader v-if="!isHomePage" />
+    <br class="header_margin" v-if="!isHomePage" />
+  </div>
+  <n-message-provider>
+    <router-view />
+  </n-message-provider>
 </template>
 
 <script>
@@ -15,20 +15,20 @@ import HomePageHeader from "./components/HomePageHeader.vue";
 import StudentDashboardHeader from "./components/StudentDashboardHeader.vue";
 
 export default {
-    name: "App",
-    components: {
-        HomePageHeader,
-        StudentDashboardHeader,
-        NMessageProvider,
+  name: "App",
+  components: {
+      HomePageHeader,
+      StudentDashboardHeader,
+      NMessageProvider,
+  },
+  computed: {
+    isHomePage() {
+      return this.$route.name === 'HomePage';
     },
-    computed: {
-        isHomePage() {
-            return this.$route.name === "HomePage";
-        },
-        isSigninSignupPage() {
-            return this.$route.name === "User Authentication";
-        },
-    },
+    isAuthPage() {
+      return this.$route.name === 'User Authentication' || this.$route.name === "Password Recovery";
+    }
+  }
 };
 </script>
 
