@@ -1,7 +1,7 @@
 <template>
-<n-config-provider :theme-overrides="this.themeOverrides">
+<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
     <div class="img_section"></div>
-    <div class="signin_signup_section">
+    <div class="password_recovery_section">
         <div class="nclex_title">
             <div class="header_img">
                 <img src="../assets/unc_logo.png" id="unc_logo" @click="loadStudentDashboard">
@@ -12,20 +12,21 @@
                 <h3>UNC School of Nursing</h3>
             </div>
         </div>
-        <n-card class="signin_signup_card">
-        <n-tabs default-value="signin" size="large" justify-content="space-evenly" class="signin_signup_tabs">
-            <n-tab-pane name="signin" tab="Recover Password">
+        <n-card class="password_recovery_card">
+        <n-tabs size="large" justify-content="space-evenly" class="password_recovery_tab">
+            <n-tab-pane name="password_recovery" tab="Recover Password">
                 <n-form>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <n-form-item-row label="Confirm Password">
-                        <n-input v-model:value="confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" :maxlength="64"/>
+                        <n-input v-model:value="password.confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" :maxlength="64"/>
                     </n-form-item-row>
                 </n-form>
                 <div class="form_button">
                     <n-button type="primary" color="#ff5c00" text-color="white" @click="updateUser">Submit</n-button>
                 </div>
+                <PasswordRules />
             </n-tab-pane>
         </n-tabs>
         </n-card>
@@ -35,6 +36,7 @@
 
 <script>
 import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigProvider, useMessage } from "naive-ui";
+import PasswordRules from "../components/PasswordRules.vue";
 import { supabase } from "../supabase/init";
 
 export default {
@@ -47,7 +49,8 @@ export default {
         NFormItemRow,
         NInput,
         NButton,
-        NConfigProvider
+        NConfigProvider,
+        PasswordRules
     },
     setup() {
         const message = useMessage();
@@ -62,8 +65,10 @@ export default {
     },
     data() {
         return {
-            password: "",
-            confirmPassword: "",
+            password: {
+                password: "",
+                confirmPassword: ""
+            },
             themeOverrides: {
                 common: {
                     primaryColor: "#FF8C00"
@@ -73,27 +78,45 @@ export default {
     },
     methods: {
         async updateUser() {
-            const { data, error } = await supabase.auth.api.updateUser(
-                this.$store.state.user.jwt, { password: this.password }
-            )
+            if (!this.isValidPassword()) {
+                const { data, error } = await supabase.auth.api.updateUser(
+                    this.$store.state.user.jwt, { password: this.password }
+                )
 
-            this.$store.state.user.jwt = "";
-            if (error == null) {
-                this.createSuccessMessage("Success! Redirecting you to sign in page...", 3000);
-                setTimeout(() => {
-                    this.$router.push("/Auth");
-                }, 3000);
+                this.$store.state.user.jwt = "";
+                if (error == null) {
+                    this.createSuccessMessage("Success! Redirecting you to sign in page...", 3000);
+                    setTimeout(() => {
+                        this.$router.push("/Auth");
+                    }, 3000);
+                } else {
+                    this.createErrorMessage("There was a problem updating your password.", 10000);
+                    console.log(error);
+                    console.log(data);
+                }
             } else {
-                this.createErrorMessage("There was a problem updating your password.", 10000);
-                console.log(error);
-                console.log(data);
+                this.createErrorMessage("Password failed validation. Please check your password and try again.")
             }
+        },
+        isValidPassword() {
+            let validPasswordPattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+            if (!validPasswordPattern.test(this.password.password) || this.password.password !== this.password.confirmPassword) {
+                return false;
+            }
+
+            return true;
         }
     }
 }
 </script>
 
 <style scoped>
+.wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
 .img_section {
     background: url(../assets/unc_old_well.jpg);
     background-repeat: no-repeat;
@@ -104,12 +127,13 @@ export default {
     height: 100%;
 }
 
-.signin_signup_section {
-    position: absolute;
+.password_recovery_section {
+    overflow: auto;
     background: linear-gradient(.25turn, #ffffff, #f1f2f6);
     width: 50%;
     left: 50%;
     height: 100%;
+    float: right;
 }
 
 .form_field:hover {
@@ -121,7 +145,7 @@ export default {
     justify-content: flex-end;
 }
 
-.signin_signup_card {
+.password_recovery_card {
     position: relative;
     width: 80%;
     margin-top: 5%;
