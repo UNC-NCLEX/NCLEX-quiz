@@ -1,5 +1,5 @@
 <template>
-  <div class="header" v-if="!isAuthPage">
+  <div class="header" v-if="!isAuthOr404Page">
     <HomePageHeader v-if="isHomePage" />
     <StudentDashboardHeader v-if="!isHomePage" />
     <br class="header_margin" v-if="!isHomePage" />
@@ -25,8 +25,10 @@ export default {
     isHomePage() {
       return this.$route.name === 'HomePage';
     },
-    isAuthPage() {
-      return this.$route.name === 'User Authentication' || this.$route.name === "Password Recovery";
+    isAuthOr404Page() {
+      return this.$route.name === 'User Authentication' ||
+        this.$route.name === "Password Recovery" ||
+        this.$route.name === "NotFound";
     }
   }
 };
