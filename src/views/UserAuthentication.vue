@@ -20,7 +20,7 @@
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
                     </n-form-item-row>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" @keyup.enter="handleSignin" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                 </n-form>
                 <div class="form_button">
@@ -39,10 +39,10 @@
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" />
                     </n-form-item-row>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" @keyup.enter="handleSignup" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <n-form-item-row label="Confirm Password">
-                        <n-input v-model:value="password.confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.confirmPassword" @keyup.enter="handleSignup" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <div class="form_button">
                         <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="handleSignup">Sign Up</n-button>
@@ -53,7 +53,7 @@
             <n-tab-pane name="forgot_password" tab="Forgot Password?">
                 <n-form>
                     <n-form-item-row label="Email Address">
-                        <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
+                        <n-input v-model:value="email" @keyup.enter="handlePasswordRecovery" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
                     </n-form-item-row>
                     <div class="form_button">
                         <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="handlePasswordRecovery">Send Recovery Email</n-button>
@@ -133,7 +133,7 @@ export default {
         async handleSignin() {
             const resp = await supabase.auth.signIn({
                 email: this.email,
-                password: this.password
+                password: this.password.password
             })
     
             // check if is in the roster
@@ -148,7 +148,7 @@ export default {
                     this.setName(decoded.user_metadata.name);
                     this.setUserType(decoded.user_metadata.userType);
                     this.setEmail(decoded.email);
-                    this.setOnyen(decoded.onyen)
+                    this.setOnyen(decoded.user_metadata.onyen)
                     this.signIn();
                     switch (this.$store.state.user.userType) {
                         case "student":
@@ -245,6 +245,8 @@ export default {
             if (!validEmailPattern.test(this.email)) {
                 return false;
             }
+
+            return true;
         },
         isValidPassword() {
             let validPasswordPattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
