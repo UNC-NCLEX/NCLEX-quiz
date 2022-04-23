@@ -17,10 +17,10 @@
             <n-tab-pane name="password_recovery" tab="Recover Password">
                 <n-form>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" @keyup.enter="updateUser" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <n-form-item-row label="Confirm Password">
-                        <n-input v-model:value="password.confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" :maxlength="64"/>
+                        <n-input v-model:value="password.confirmPassword" @keyup.enter="updateUser" type="password" show-password-on="mousedown" class="form_field" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" :maxlength="64"/>
                     </n-form-item-row>
                 </n-form>
                 <div class="form_button">
@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         async updateUser() {
-            if (!this.isValidPassword()) {
+            if (this.isValidPassword()) {
                 const { data, error } = await supabase.auth.api.updateUser(
                     this.$store.state.user.jwt, { password: this.password.password }
                 )

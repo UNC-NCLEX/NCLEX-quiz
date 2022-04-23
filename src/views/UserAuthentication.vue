@@ -20,7 +20,7 @@
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
                     </n-form-item-row>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" @keyup.enter="handleSignin" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                 </n-form>
                 <div class="form_button">
@@ -39,10 +39,10 @@
                         <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" />
                     </n-form-item-row>
                     <n-form-item-row label="Password">
-                        <n-input v-model:value="password.password" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.password" @keyup.enter="handleSignup" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <n-form-item-row label="Confirm Password">
-                        <n-input v-model:value="password.confirmPassword" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
+                        <n-input v-model:value="password.confirmPassword" @keyup.enter="handleSignup" type="password" show-password-on="mousedown" class="form_field" id="password" name="password" placeholder="Password" :maxlength="64"/>
                     </n-form-item-row>
                     <div class="form_button">
                         <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="handleSignup">Sign Up</n-button>
@@ -53,7 +53,7 @@
             <n-tab-pane name="forgot_password" tab="Forgot Password?">
                 <n-form>
                     <n-form-item-row label="Email Address">
-                        <n-input v-model:value="email" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
+                        <n-input v-model:value="email" @keyup.enter="handlePasswordRecovery" type="text" class="form_field" id="email" name="email" placeholder="Email Address" backrground-color="#33FF90" color="#33FF90" />
                     </n-form-item-row>
                     <div class="form_button">
                         <n-button type="primary" color="#ff5c00" text-color="white" class="form_button" @click="handlePasswordRecovery">Send Recovery Email</n-button>
