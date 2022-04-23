@@ -133,7 +133,7 @@ export default {
         async handleSignin() {
             const resp = await supabase.auth.signIn({
                 email: this.email,
-                password: this.password
+                password: this.password.password
             })
     
             // check if is in the roster
@@ -148,7 +148,7 @@ export default {
                     this.setName(decoded.user_metadata.name);
                     this.setUserType(decoded.user_metadata.userType);
                     this.setEmail(decoded.email);
-                    this.setOnyen(decoded.onyen)
+                    this.setOnyen(decoded.user_metadata.onyen)
                     this.signIn();
                     switch (this.$store.state.user.userType) {
                         case "student":
@@ -245,6 +245,8 @@ export default {
             if (!validEmailPattern.test(this.email)) {
                 return false;
             }
+
+            return true;
         },
         isValidPassword() {
             let validPasswordPattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");

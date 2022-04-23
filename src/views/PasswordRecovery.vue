@@ -80,7 +80,7 @@ export default {
         async updateUser() {
             if (!this.isValidPassword()) {
                 const { data, error } = await supabase.auth.api.updateUser(
-                    this.$store.state.user.jwt, { password: this.password }
+                    this.$store.state.user.jwt, { password: this.password.password }
                 )
 
                 this.$store.state.user.jwt = "";
