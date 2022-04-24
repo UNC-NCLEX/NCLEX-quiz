@@ -5,10 +5,6 @@
     <div class="enroll">
         <h3> Add New Student </h3>
     <div class="form-group">
-        <label for="pid" class="pid-label">Pid</label>
-        <n-input v-model:value="newPid" type="text" class="form-field" id="pid" name="pidInput" :input-props="{ type: 'clearable' }" placeholder="Student Pid" />
-    </div>
-    <div class="form-group">
         <label for="onyen" class="onyen-label">Onyen</label>
         <n-input v-model:value="newOnyen" type="text" class="form-field" id="onyen" name="onyenInput" :input-props="{ type: 'clearable' }" placeholder="Student Onyen" />
     </div>
@@ -20,14 +16,12 @@
     <table id="rosterTable">
       <thead>
         <th>Onyen</th>
-        <th>PID</th>
-        <th id="nocolor"> </th>
+        <th id="nocolor"> Remove</th>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in students" :key="index">
-          <td>{{students[index].onyen}}</td>
-          <td>{{students[index].pid}}</td>
-          <td><button @click="deleteStudent(index)">Remove</button></td>
+        <tr v-for="(item, index) in rosterRef" :key="item + index">
+          <td>{{item}}</td>
+          <td><button @click="deleteStudent(item)">Remove</button></td>
         </tr>
       </tbody>
     
@@ -36,8 +30,9 @@
 </template>
 
 <script>
-import {NButton, NInput} from 'naive-ui';
+import {NButton, NInput, useMessage} from 'naive-ui';
 import {ref} from 'vue';
+import { supabase } from "../supabase/init";
 
 export default {
   name: 'StudentRoster',
@@ -46,23 +41,50 @@ export default {
       NInput
   },
   setup(){
-    return {
-      newpid: ref(null),
-      newOnyen: ref(null)
+    const message = useMessage();
+    const rosterRef = ref([]);
+    const newOnyen = ref(null);
+
+    const getRoster = async () => {
+        // TODO: get user's past quizzes in an array
+        // get the user's scores
+        try {
+            let { data: onyen, error } = await supabase
+                .from("roster")
+                .select("onyen")
+            if (error) throw error;
+            const onyens = onyen.map((x) => x.onyen);
+            rosterRef.value = onyens;
+        } catch (error) {
+            message.error(error.message);
+        }
     };
+
+    const deleteStudent = async (onyen) => {
+      const { error } = await supabase
+            .from('roster')
+            .delete()
+            .eq('onyen', onyen)
+          if (error) message.error(error.message)
+          else {rosterRef.value.pop(newOnyen.value)}
+    };
+
+    const enrollButton = async () => {
+
+      const { error } = await supabase.from("roster").insert([
+          {
+            onyen: newOnyen.value
+          },
+        ]);
+        if (error) message.error(error.message)
+        else {rosterRef.value.push(newOnyen.value)}
+    }
+
+    getRoster();
+    return { rosterRef, newOnyen, enrollButton, deleteStudent };
+    
   },
-  props: {
-    students: Array
-  },
-  methods: {
-      deleteStudent(index) {
-          this.$store.dispatch('deleteStudent', index);
-      },
-      enrollButton(){
-          var temp = {"onyen": this.newOnyen, "pid": this.newPid};
-          this.$store.dispatch('enrollStudent', temp);
-      }
-  }
+
 }
 </script>
 

@@ -63,7 +63,7 @@ export default {
                 console.log("last question go to sd");
                 this.updateScore();
                 this.createSuccessMessage(
-                    `Your score for ${this.$store.state.currentQuizTitle} is: ${this.$store.state.score}`,
+                    `Your score for ${this.$store.state.currentQuizTitle} is: ${this.$store.state.score}. Please refresh to see the changes.`,
                     10000
                 );
                 this.$store.commit("RESET_QUIZ");
