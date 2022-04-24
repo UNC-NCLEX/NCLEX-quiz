@@ -58,7 +58,6 @@ export default {
                     label: obj.title,
                     value: obj.quiz_id,
                 }));
-                console.log(quizzes);
                 quizzesRef.value = quizzes;
             } catch (error) {
                 message.error(error.message);
