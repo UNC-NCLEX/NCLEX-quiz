@@ -97,9 +97,11 @@ export default {
                     .from("roster")
                     .select("onyen")
                 if (error) throw error;
-                rosterArray.value = roster;
+                let roster_onyens = roster.map((x => x.onyen))
+                rosterArray.value = roster_onyens;
+                console.log(roster_onyens)
             } catch (error) {
-                console.warn(error.message);
+                message.error(error.message);
             }
         };
         getRoster();
@@ -144,13 +146,18 @@ export default {
                 
                 try {
                     let decoded = VueJwtDecode.decode(jwt);
+                    console.log(decoded)
                     this.setUID(decoded.sub);
                     this.setName(decoded.user_metadata.name);
                     this.setUserType(decoded.user_metadata.userType);
                     this.setEmail(decoded.email);
                     this.setOnyen(decoded.user_metadata.onyen)
                     this.signIn();
-                    switch (this.$store.state.user.userType) {
+                    if(this.$store.state.user.userType == 'student' && !this.rosterArray.includes(this.$store.state.user.onyen) ) {
+                        console.log(this.rosterArray)
+                        this.createErrorMessage("You are not a part of the roster. Please contact your instructor.", 10000);
+                    } else {
+                        switch (this.$store.state.user.userType) {
                         case "student":
                             this.$router.push("/StudentDashboard");
                             break;
@@ -161,6 +168,8 @@ export default {
                             this.createErrorMessage("User type not valid. Please contact your instructor.", 10000);
                             break;
                     }
+                    }
+                    
                 } catch (error) {
                     this.createErrorMessage("There was a problem logging in. Please contact your instructor.", 10000);
                     console.log(error);

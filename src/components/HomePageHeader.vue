@@ -1,7 +1,7 @@
 <template>
     <section class="header_contents">
         <div class="header_img">
-            <img src="../assets/unc_logo.png" id="unc_logo">
+            <img src="../assets/unc_logo.png" id="unc_logo" />
         </div>
         <div class="header_space"></div>
         <div class="website_title">
@@ -36,17 +36,23 @@ import { NButton } from "naive-ui";
 export default {
     name: "HomePageHeader",
     components: {
-        NButton
+        NButton,
     },
     methods: {
         signin() {
-            this.$router.push({name: "User Authentication", params: {id: "signin"}});
+            this.$router.push({
+                name: "User Authentication",
+                params: { id: "signin" },
+            });
         },
         signup() {
-            this.$router.push({name: "User Authentication", params: {id: "signup"}});
-        }
-    }
-}
+            this.$router.push({
+                name: "User Authentication",
+                params: { id: "signup" },
+            });
+        },
+    },
+};
 </script>
 
 <style scoped>
@@ -67,7 +73,7 @@ export default {
     position: fixed;
     z-index: 1;
     display: flex;
-    background: linear-gradient(.25turn, #ffffff, #f1f2f6);
+    background: linear-gradient(0.25turn, #ffffff, #f1f2f6);
     filter: drop-shadow(0px 5px 10px #2f3542);
     width: 100%;
     height: 70px;
@@ -80,12 +86,12 @@ export default {
 }
 
 .button_group {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  float: right;
-  flex-grow: 1;
-  margin-right: 2%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    float: right;
+    flex-grow: 1;
+    margin-right: 2%;
 }
 
 .header_space {
@@ -93,8 +99,8 @@ export default {
 }
 
 .space {
-  width: 5px;
-  height: auto;
-  display: inline-block;
+    width: 5px;
+    height: auto;
+    display: inline-block;
 }
 </style>
