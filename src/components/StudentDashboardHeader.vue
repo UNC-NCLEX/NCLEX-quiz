@@ -12,15 +12,20 @@
         <div class="control_buttons">
             <b class="menu_options" @click="signout">Sign Out</b>
             <div class="space"></div>
-            
-            
+            <n-avatar
+                round
+                :size="48"
+                class="profile_img"
+                :src="profile_img"
+                @click="loadProfile"
+            />
         </div>
     </section>
 </template>
 
 <script>
+import { NAvatar } from "naive-ui";
 import { supabase } from "../supabase/init";
-
 export default {
     name: "StudentDashboardHeader",
     components: {
@@ -33,11 +38,7 @@ export default {
     },
     methods: {
         loadStudentDashboard() {
-            if(this.$store.state.user.userType == 'student'){
-                this.$router.push("/StudentDashboard");
-            } else {
-                this.$router.push("/InstructorDashboard");
-            }
+            this.$router.push("/StudentDashboard");
         },
         loadProfile() {
             this.$router.push("/Profile");
@@ -69,13 +70,11 @@ export default {
     float: left;
     cursor: pointer;
 }
-
 .header_img {
     display: flex;
     align-items: center;
     margin-left: 2%;
 }
-
 .header_contents {
     position: fixed;
     z-index: 1;
@@ -85,24 +84,20 @@ export default {
     width: 100%;
     height: 70px;
 }
-
 .nav_bar {
     display: flex;
     align-items: center;
 }
-
 .menu_options {
     color: #2f3542;
     text-decoration: none;
     cursor: pointer;
 }
-
 .website_title {
     display: block;
     line-height: 0.5;
     float: right;
 }
-
 .control_buttons {
   display: flex;
   justify-content: flex-end;
@@ -111,15 +106,12 @@ export default {
   flex-grow: 1;
   margin-right: 2%;
 }
-
 .profile_img {
     cursor: pointer;
 }
-
 .header_space {
     width: 15px;
 }
-
 .space {
   width: 15px;
   height: auto;
