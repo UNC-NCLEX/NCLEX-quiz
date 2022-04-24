@@ -3,7 +3,7 @@ import store from "../store/index.js";
 import HomePage from "../views/HomePage.vue";
 import ProfilePage from "../views/ProfilePage.vue";
 import StudentDashboard from "../views/StudentDashboard.vue";
-import InstructorDash from "../views/InstructorDash.vue";
+import InstructorDashboard from "../views/InstructorDashboard.vue";
 import Roster from "../views/Roster.vue";
 import NotFound from "../views/NotFound.vue";
 import QuizMain from "../views/QuizMain.vue";
@@ -56,7 +56,7 @@ const routes = [
   {
     path: "/InstructorDashboard",
     name: "Instructor Dashboard",
-    component: InstructorDash,
+    component: InstructorDashboard,
     meta: {
       requiresAuth: true,
       authType: "instructor-only"

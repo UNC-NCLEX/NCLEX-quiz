@@ -71,6 +71,7 @@ import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigPr
 import PasswordRules from "../components/PasswordRules.vue";
 import VueJwtDecode from 'vue-jwt-decode';
 import { supabase } from "../supabase/init";
+import { unsplashUrl } from "../unsplash/init.js";
 import { ref } from "vue";
 
 export default {
@@ -137,8 +138,6 @@ export default {
                 email: this.email,
                 password: this.password.password
             })
-    
-            // check if is in the roster
 
             if (resp.error == null) {
                 let jwt = resp.data.access_token;
@@ -151,7 +150,8 @@ export default {
                     this.setName(decoded.user_metadata.name);
                     this.setUserType(decoded.user_metadata.userType);
                     this.setEmail(decoded.email);
-                    this.setOnyen(decoded.user_metadata.onyen)
+                    this.setOnyen(decoded.user_metadata.onyen);
+                    this.setProfileImg(decoded.user_metadata.profileImg);
                     this.signIn();
                     if(this.$store.state.user.userType == 'student' && !this.rosterArray.includes(this.$store.state.user.onyen) ) {
                         console.log(this.rosterArray)
@@ -181,6 +181,13 @@ export default {
         },
         async handleSignup() {
             if (this.isValidSignup()) {
+                const photoResp = await fetch(unsplashUrl);
+                const photoJson = await photoResp.json();
+                
+                let photoUrl = photoJson[0].urls.regular;
+                let urlComponents = photoUrl.split("?");
+                photoUrl = urlComponents[0];
+
                 const resp = await supabase.auth.signUp({
                     email: this.email,
                     password: this.password.password,
@@ -189,7 +196,8 @@ export default {
                     data: {
                         name: this.name,
                         userType: "student",
-                        onyen: this.onyen
+                        onyen: this.onyen,
+                        profileImg: photoUrl
                     }
                 })
 
@@ -233,7 +241,10 @@ export default {
             this.$store.dispatch('setUserType', userType);
         },
         setOnyen(onyen) {
-            this.$store.dispatch('setOnyen', onyen)
+            this.$store.dispatch('setOnyen', onyen);
+        },
+        setProfileImg(profileImg) {
+            this.$store.dispatch('setProfileImg', profileImg);
         },
         signIn() {
             this.$store.dispatch('signIn');
