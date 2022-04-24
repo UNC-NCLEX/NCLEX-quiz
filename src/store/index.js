@@ -10,6 +10,7 @@ export default createStore({
             email: "",
             userType: "",
             onyen: "",
+            profileImg: ""
         },
         score: 0, // holds the current score as you traverse the quiz
         isSubmitted: false, // if the submit button is clicked
@@ -118,6 +119,9 @@ export default createStore({
         SET_EMAIL(state, email) {
             state.user.email = email;
         },
+        SET_PROFILE_IMG(state, profileImg) {
+            state.user.profileImg = profileImg;
+        },
         SET_ONYEN(state, onyen) {
             state.user.onyen = onyen;
         },
@@ -171,6 +175,9 @@ export default createStore({
         },
         setEmail(store, email) {
             store.commit("SET_EMAIL", email);
+        },
+        setProfileImg(store, profileImg) {
+            store.commit("SET_PROFILE_IMG", profileImg);
         },
         setUserType(store, userType) {
             store.commit("SET_USER_TYPE", userType);
