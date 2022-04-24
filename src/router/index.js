@@ -9,6 +9,7 @@ import NotFound from "../views/NotFound.vue";
 import QuizMain from "../views/QuizMain.vue";
 import UserAuthenticationPage from "../views/UserAuthentication.vue";
 import PasswordRecovery from "../views/PasswordRecovery.vue";
+import ViewAllQuizzes from "../views/ViewAllQuizzes.vue"
 
 const routes = [
   {
@@ -74,6 +75,11 @@ const routes = [
     path: "/Quiz/:id",
     name: "QuizMain",
     component: QuizMain,
+  },
+  {
+    path: "/ViewAllQuizzes",
+    name: "ViewAllQuizzes",
+    component: ViewAllQuizzes,
   },
   {
     path: "/:catchAll(.*)",

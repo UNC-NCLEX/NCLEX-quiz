@@ -16,7 +16,7 @@
     <table id="rosterTable">
       <thead>
         <th>Onyen</th>
-        <th id="nocolor"> Remove</th>
+        <th id="nocolor">Remove</th>
       </thead>
       <tbody>
         <tr v-for="(item, index) in rosterRef" :key="item + index">
@@ -66,7 +66,10 @@ export default {
             .delete()
             .eq('onyen', onyen)
           if (error) message.error(error.message)
-          else {rosterRef.value.pop(newOnyen.value)}
+          else {
+            const ind = rosterRef.value.indexOf(onyen)
+            rosterRef.value.splice(ind, 1)
+          }
     };
 
     const enrollButton = async () => {
