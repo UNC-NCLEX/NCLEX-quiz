@@ -1,6 +1,5 @@
 <template>
     <div class="student">
-        {{ quizzes }}
         <div class="content">
             <h1>
                 Welcome {{ this.$store.state.user.name }}. Here is how you have

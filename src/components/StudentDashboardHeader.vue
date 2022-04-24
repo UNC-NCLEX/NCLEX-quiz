@@ -12,19 +12,13 @@
         <div class="control_buttons">
             <b class="menu_options" @click="signout">Sign Out</b>
             <div class="space"></div>
-            <n-avatar
-                round
-                :size="48"
-                class="profile_img"
-                :src="profile_img"
-                @click="loadProfile"
-            />
+            
+            
         </div>
     </section>
 </template>
 
 <script>
-import { NAvatar } from "naive-ui";
 import { supabase } from "../supabase/init";
 
 export default {
@@ -39,7 +33,11 @@ export default {
     },
     methods: {
         loadStudentDashboard() {
-            this.$router.push("/StudentDashboard");
+            if(this.$store.state.user.userType == 'student'){
+                this.$router.push("/StudentDashboard");
+            } else {
+                this.$router.push("/InstructorDashboard");
+            }
         },
         loadProfile() {
             this.$router.push("/Profile");

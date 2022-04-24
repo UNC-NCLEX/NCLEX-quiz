@@ -97,7 +97,7 @@ export default {
 
 /*****BUTTONS*****/
 #button {
-    text-align: right;
+    text-align: center;
 }
 
 .n-button {
