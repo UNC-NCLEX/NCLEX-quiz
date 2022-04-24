@@ -382,6 +382,7 @@ export default {
                 lab_results: this.labResults,
                 orders: this.orders,
                 text: this.text,
+                row_headers: [this.questionp1, this.questionp2, this.questionp3],
                 correct_answers: corAns,
                 answer_choice: [
                   [

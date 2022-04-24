@@ -50,6 +50,8 @@
               </n-space>
           </td>
         </tr>
+        <!-- row only displays if 3rd row in the question -->
+        <div v-if="ifrow3">
         <tr>
           <h4 class="questions">{{dds_question.row_headers[2]}}...</h4>
           <td>
@@ -62,6 +64,7 @@
               </n-space>
           </td>
         </tr>
+        </div>
       </div>
     </div>
     <div v-if="!this.$store.state.isSubmitted">
@@ -95,6 +98,13 @@ export default {
   props: {
     //currect question data passed in as a prop -> immutable
     dds_question: Object
+  },
+  methods: {
+    ifRow3(){
+      if(this.dds_question.row_headers[2]===null){
+        return false
+      } else {return true}
+    }
   },
   computed: {
     question() {
