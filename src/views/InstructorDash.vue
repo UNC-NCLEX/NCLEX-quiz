@@ -4,7 +4,7 @@
             <div class="quiz">
                 <h2>Quiz Management</h2>
                 <!--TODO: add links to pages -->
-                <h3><router-link :to="{}">View my quizzes</router-link></h3>
+                <h3><router-link :to="{path: '/ViewAllQuizzes'}">View my quizzes</router-link></h3>
                 <h3><router-link :to="{}">Add a quiz/question</router-link></h3>
             </div>
             <div class="right">
@@ -13,35 +13,16 @@
                 <h2 id="roster">
                     <router-link to="/Roster">Manage Roster</router-link>
                 </h2>
-
-                <h2 id="roster">Manage Roster</h2>
             </div>
         </div>
         <!--TODO: maybe change to embedded form -->
-        <p><a href="mailto: unc-nclex-site@unc.edu"> Report a problem</a></p>
+        <p ><a class="help" href="mailto: unc-nclex-site@unc.edu"> Report a problem</a></p>
     </div>
 </template>
 
 <script>
 export default {
     name: "InstructorDash",
-    props: {
-        msg: String,
-    },
-    data() {
-        return {
-            fields: [
-                { key: "sid", sortable: true },
-                { key: "qid1", sortable: true },
-                { key: "qid2", sortable: true },
-            ],
-            scores: [
-                { sid: 1, qid1: 90, qid2: 75 },
-                { sid: 2, qid1: 95, qid2: 90 },
-                { sid: 3, qid1: 75, qid2: 85 },
-            ],
-        };
-    },
 };
 </script>
 
@@ -64,7 +45,7 @@ export default {
     padding: 10px;
     margin-right: 3%;
     width: 25%;
-    background-color: #e0dbd9;
+    background: linear-gradient(172.4deg, #24A3FF 5.89%, #24A3FF 5.9%, #0038FF 91.52%);
     border-radius: 5%;
     box-shadow: 10px 10px 5px #cac9c9;
 }
@@ -91,11 +72,15 @@ export default {
     box-shadow: 10px 10px 5px #cac9c9;
 }
 
+.help{
+    color:black;
+}
+
 #subtitle {
     color: white;
 }
 h2 {
-    color: #ff5c00;
+    color: white;
     font-weight: 900;
     text-align: center;
     padding: 10px;
@@ -124,10 +109,10 @@ td {
     margin-right: auto;
     padding: 5px;
 }
-
+.quiz 
 router-link,
 a {
-    color: rgb(75, 85, 97);
+    color: white;
     text-decoration: underline;
 }
 @import url(https://fonts.googleapis.com/css?family=Montserrat);

@@ -1,10 +1,6 @@
 <template lang="">
     <div id="quiz" v-if="dataLoaded">
-        {{ this.$store.state.score }}
-        {{ this.$store.state.numOfCorrectAnswers }}
         <h1>Question {{ this.$store.state.currentIndex + 1 }}</h1>
-        {{ this.$store.state.score }}
-        {{ this.$store.state.numOfCorrectAnswers }}
         <div id="question">
             <div v-if="allQuestions[this.$store.state.currentIndex].type === 'mc'">
                 <MultipleChoice :mc_question="allQuestions[this.$store.state.currentIndex]"></MultipleChoice>

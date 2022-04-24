@@ -16,7 +16,7 @@
     <table id="rosterTable">
       <thead>
         <th>Onyen</th>
-        <th id="nocolor"> Remove</th>
+        <th id="nocolor">Remove</th>
       </thead>
       <tbody>
         <tr v-for="(item, index) in rosterRef" :key="item + index">
