@@ -65,7 +65,8 @@
                 />
               </td>
             </tr>
-            <!--table row 3-->
+            <!--table row 3 only displays if row 3 question-->
+            <div v-if="isRow3">
             <tr>
               <td>{{ ddt_question.answer_choice[0]['row0'][2]}}</td>
               <td>
@@ -83,6 +84,7 @@
                 />
               </td>
             </tr>
+            </div>
           </tbody>
         </table>
     </div>
@@ -115,6 +117,13 @@ export default {
   },
   props: {
     ddt_question: Object
+  },
+  methods: {
+    ifRow3(){
+      if(this.ddt_question.answer_choice[0]["row0"][2]===null){
+        return false;
+      }else{return true;}
+    }
   },
   data() {
     return {

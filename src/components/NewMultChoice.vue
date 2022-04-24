@@ -252,7 +252,16 @@ export default {
       } else {
         corAns = this.answerText5;
       }
-
+      var ans = [this.answerText1,
+                  this.answerText2,
+                  this.answerText3,
+                  this.answerText4,
+                  this.answerText5]
+      for(let i=0; i<ans.length; i++){
+        if(ans[i]===null){
+          ans.splice(i,1);
+        }
+      }
       //push new question to database (unused fields as empty)
       const addQ = async () => {
         try {
