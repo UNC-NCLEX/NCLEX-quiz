@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>New Drop Down Sentence Question</h2>
+    <h2>New Drop Down Table Question</h2>
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
       <select v-model="qid">
@@ -83,6 +83,42 @@
       </h4>
       <div>
         <tr>
+          <th>
+            <n-input
+              v-model:value="heading1"
+              type="text"
+              class="form-field"
+              id="heading1"
+              name="heading1"
+              :input-props="{ type: 'clearable' }"
+              placeholder="Enter Column 1 Title"
+            />
+          </th>
+          <th>
+            <n-input
+              v-model:value="heading2"
+              type="text"
+              class="form-field"
+              id="heading2"
+              name="heading2"
+              :input-props="{ type: 'clearable' }"
+              placeholder="Enter Column 2 Title"
+            />
+          </th>
+          <th>
+            <n-input
+              v-model:value="heading3"
+              type="text"
+              class="form-field"
+              id="heading3"
+              name="heading3"
+              :input-props="{ type: 'clearable' }"
+              placeholder="Enter Column 3 Title"
+            />
+          </th>
+        </tr>
+        <!-- table row 1 -->
+        <tr>
           <h4 class="questions">
             <n-input
               v-model:value="questionp1"
@@ -92,7 +128,7 @@
               name="answerText1"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Question Sentence 1"
-            />...
+            />
           </h4>
           <td>
             <n-space vertical>
@@ -101,15 +137,15 @@
                   type="radio"
                   value="1"
                   v-model="p1correct"
-                  name="answerchoice1"
+                  name="r1c1"
                 /><n-input
-                  v-model:value="p1c1"
+                  v-model:value="c1a1"
                   type="text"
                   class="form-field"
                   id="answerText1"
                   name="answerText1"
                   :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 1 for Question 1"
+                  placeholder="Enter Answer Choice 1 for Column 1"
                 />
               </div>
               <div class="answer">
@@ -117,15 +153,15 @@
                   type="radio"
                   value="2"
                   v-model="p1correct"
-                  name="answerchoice1"
+                  name="r1c1"
                 /><n-input
-                  v-model:value="p1c2"
+                  v-model:value="c1a2"
                   type="text"
                   class="form-field"
                   id="answerText2"
                   name="answerText2"
                   :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 2 for Question 1"
+                  placeholder="Enter Answer Choice 2 for Column 1"
                 />
               </div>
               <div class="answer">
@@ -133,20 +169,73 @@
                   type="radio"
                   value="3"
                   v-model="p1correct"
-                  name="answerchoice1"
+                  name="r1c1"
                 /><n-input
-                  v-model:value="p1c3"
+                  v-model:value="c1a3"
                   type="text"
                   class="form-field"
                   id="answerText3"
                   name="answerText3"
                   :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 3 for Question 1"
+                  placeholder="Enter Answer Choice 3 for Column 1"
+                />
+              </div>
+            </n-space>
+          </td>
+          <td>
+            <n-space vertical>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="1"
+                  v-model="p2correct"
+                  name="r1c2"
+                /><n-input
+                  v-model:value="c2a1"
+                  type="text"
+                  class="form-field"
+                  id="answerText1"
+                  name="answerText1"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Answer Choice 1 for Column 2"
+                />
+              </div>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="2"
+                  v-model="p2correct"
+                  name="r1c2"
+                /><n-input
+                  v-model:value="c2a2"
+                  type="text"
+                  class="form-field"
+                  id="answerText2"
+                  name="answerText2"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Answer Choice 2 for Column 2"
+                />
+              </div>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="3"
+                  v-model="p2correct"
+                  name="r1c2"
+                /><n-input
+                  v-model:value="c2a3"
+                  type="text"
+                  class="form-field"
+                  id="answerText3"
+                  name="answerText3"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Answer Choice 3 for Column 2"
                 />
               </div>
             </n-space>
           </td>
         </tr>
+        <!-- table row 2 -->
         <tr>
           <h4 class="questions">
             <n-input
@@ -157,7 +246,7 @@
               name="answerText1"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Question Sentence 2"
-            />...
+            />
           </h4>
           <td>
             <n-space vertical>
@@ -165,53 +254,58 @@
                 <input
                   type="radio"
                   value="1"
-                  v-model="p2correct"
-                  name="answerchoice2"
-                /><n-input
-                  v-model:value="p2c1"
-                  type="text"
-                  class="form-field"
-                  id="answerText1"
-                  name="answerText1"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 1 for Question 2"
-                />
+                  v-model="p3correct"
+                  name="r2c1"
+                />{{ c1a1 }}
               </div>
               <div class="answer">
                 <input
                   type="radio"
                   value="2"
-                  v-model="p2correct"
-                  name="answerchoice2"
-                /><n-input
-                  v-model:value="p2c2"
-                  type="text"
-                  class="form-field"
-                  id="answerText2"
-                  name="answerText2"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 2 for Question 2"
-                />
+                  v-model="p3correct"
+                  name="r2c1"
+                />{{ c1a2 }}
               </div>
               <div class="answer">
                 <input
                   type="radio"
                   value="3"
-                  v-model="p2correct"
-                  name="answerchoice2"
-                /><n-input
-                  v-model:value="p2c3"
-                  type="text"
-                  class="form-field"
-                  id="answerText3"
-                  name="answerText3"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 3 for Question 2"
-                />
+                  v-model="p3correct"
+                  name="r2c1"
+                />{{ c1a3 }}
+              </div>
+            </n-space>
+          </td>
+          <td>
+            <n-space vertical>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="1"
+                  v-model="p4correct"
+                  name="r2c2"
+                />{{ c2a1 }}
+              </div>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="2"
+                  v-model="p4correct"
+                  name="r2c2"
+                />{{ c2a2 }}
+              </div>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="3"
+                  v-model="p4correct"
+                  name="r2c2"
+                />{{ c2a3 }}
               </div>
             </n-space>
           </td>
         </tr>
+        <!-- table row 3 -->
         <tr>
           <h4 class="questions">
             <n-input
@@ -222,7 +316,7 @@
               name="answerText1"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Question Sentence 3"
-            />...
+            />
           </h4>
           <td>
             <n-space vertical>
@@ -230,49 +324,53 @@
                 <input
                   type="radio"
                   value="1"
-                  v-model="p3correct"
-                  name="answerchoice3"
-                /><n-input
-                  v-model:value="p3c1"
-                  type="text"
-                  class="form-field"
-                  id="answerText1"
-                  name="answerText1"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 1 for Question 3"
-                />
+                  v-model="p5correct"
+                  name="r3c1"
+                />{{ c1a1 }}
               </div>
               <div class="answer">
                 <input
                   type="radio"
                   value="2"
-                  v-model="p3correct"
-                  name="answerchoice3"
-                /><n-input
-                  v-model:value="p3c2"
-                  type="text"
-                  class="form-field"
-                  id="answerText2"
-                  name="answerText2"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 2 for Question 3"
-                />
+                  v-model="p5correct"
+                  name="r3c1"
+                />{{ c1a2 }}
               </div>
               <div class="answer">
                 <input
                   type="radio"
                   value="3"
-                  v-model="p3correct"
-                  name="answerchoice3"
-                /><n-input
-                  v-model:value="p3c3"
-                  type="text"
-                  class="form-field"
-                  id="answerText3"
-                  name="answerText3"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 3 for Question 3"
-                />
+                  v-model="p5correct"
+                  name="r3c1"
+                />{{ c1a3 }}
+              </div>
+            </n-space>
+          </td>
+          <td>
+            <n-space vertical>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="1"
+                  v-model="p6correct"
+                  name="r3c2"
+                />{{ c2a1 }}
+              </div>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="2"
+                  v-model="p6correct"
+                  name="r3c2"
+                />{{ c2a2 }}
+              </div>
+              <div class="answer">
+                <input
+                  type="radio"
+                  value="3"
+                  v-model="p6correct"
+                  name="r3c2"
+                />{{ c2a3 }}
               </div>
             </n-space>
           </td>
@@ -280,14 +378,14 @@
       </div>
     </div>
     <n-input
-      v-model:value="rationale"
-      type="text"
-      class="form-field"
-      id="rationale"
-      name="rationale"
-      :input-props="{ type: 'clearable' }"
-      placeholder="Enter Rationale Text"
-    />
+                v-model:value="rationale"
+                type="text"
+                class="form-field"
+                id="rationale"
+                name="rationale"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Rationale Text"
+            />
     <n-button @click="enterQuestion()" size="large">Add Question</n-button>
   </div>
 </template>
@@ -316,56 +414,86 @@ export default {
       labResults: ref(null),
       orders: ref(null),
       text: ref(null),
+      heading1: ref(null),
+      heading2: ref(null),
+      heading3: ref(null),
       questionp1: ref(null),
-      p1c1: ref(null),
-      p1c2: ref(null),
-      p1c3: ref(null),
+      c1a1: ref(null),
+      c1a2: ref(null),
+      c1a3: ref(null),
       p1correct: ref(null),
       questionp2: ref(null),
-      p2c1: ref(null),
-      p2c2: ref(null),
-      p2c3: ref(null),
+      c2a1: ref(null),
+      c2a2: ref(null),
+      c2a3: ref(null),
       p2correct: ref(null),
       questionp3: ref(null),
-      p3c1: ref(null),
-      p3c2: ref(null),
-      p3c3: ref(null),
       p3correct: ref(null),
       rationale: ref(null),
+      p4correct: ref(null),
+      p5correct: ref(null),
+      p6correct: ref(null),
     };
   },
   methods: {
     enterQuestion() {
       //save correct answer text to corAns variable for db - answer var is INT from radio buttons, save corresponding text into corAns variable
       var corAns = [];
-      if (this.p1Correct == 1) {
-        corAns.push(this.p1c1);
+      if (this.p1correct == 1) {
+        corAns.push(this.c1a1);
       }
-      if (this.p1Correct == 2) {
-        corAns.push(this.p1c2);
+      if (this.p1correct == 2) {
+        corAns.push(this.c1a2);
       }
-      if (this.p1Correct == 3) {
-        corAns.push(this.p1c3);
+      if (this.p1correct == 3) {
+        corAns.push(this.c1a3);
       }
-      if (this.p2Correct == 1) {
-        corAns.push(this.p2c1);
+      if (this.p2correct == 1) {
+        corAns.push(this.c2a1);
       }
-      if (this.p2Correct == 2) {
-        corAns.push(this.p2c2);
+      if (this.p2correct == 2) {
+        corAns.push(this.c2a2);
       }
-      if (this.p2Correct == 3) {
-        corAns.push(this.p2c3);
+      if (this.p2correct == 3) {
+        corAns.push(this.c2a3);
       }
-      if (this.p3Correct == 1) {
-        corAns.push(this.p3c1);
+      if (this.p3correct == 1) {
+        corAns.push(this.c1a1);
       }
-      if (this.p3Correct == 2) {
-        corAns.push(this.p3c2);
+      if (this.p3correct == 2) {
+        corAns.push(this.c1a2);
       }
-      if (this.p3Correct == 3) {
-        corAns.push(this.p3c3);
+      if (this.p3correct == 3) {
+        corAns.push(this.c1a3);
       }
-
+      if (this.p4correct == 1) {
+        corAns.push(this.c2a1);
+      }
+      if (this.p4correct == 2) {
+        corAns.push(this.c2a2);
+      }
+      if (this.p4correct == 3) {
+        corAns.push(this.c2a3);
+      }
+      if (this.p5correct == 1) {
+        corAns.push(this.c1a1);
+      }
+      if (this.p5correct == 2) {
+        corAns.push(this.c1a2);
+      }
+      if (this.p5correct == 3) {
+        corAns.push(this.c1a3);
+      }
+      if (this.p6correct == 1) {
+        corAns.push(this.c2a1);
+      }
+      if (this.p6correct == 2) {
+        corAns.push(this.c2a2);
+      }
+      if (this.p6correct == 3) {
+        corAns.push(this.c2a3);
+      }
+      let rowH = [this.heading1, this.heading2, this.heading3];
       //push new question to database (unused fields as empty)
       const addQ = async () => {
         try {
@@ -375,30 +503,47 @@ export default {
               {
                 quiz_id: this.qid,
                 //all questions added from this page are dropdown sentence type
-                type: "dds",
+                type: "ddt",
                 hist_and_phys: this.histAndPhys,
                 nurse_notes: this.nurseNotes,
                 flow_sheet: this.flowSheet,
                 lab_results: this.labResults,
                 orders: this.orders,
                 text: this.text,
+                row_headers: rowH,
                 correct_answers: corAns,
                 answer_choice: [
-                  [
-                    { label: this.p1c1, value: this.p1c1 },
-                    { label: this.p1c2, value: this.p1c2 },
-                    { label: this.p1c3, value: this.p1c3 },
-                  ],
-                  [
-                    { label: this.p2c1, value: this.p2c1 },
-                    { label: this.p2c2, value: this.p2c2 },
-                    { label: this.p2c3, value: this.p2c3 },
-                  ],
-                  [
-                    { label: this.p3c1, value: this.p3c1 },
-                    { label: this.p3c2, value: this.p3c2 },
-                    { label: this.p3c3, value: this.p3c3 },
-                  ],
+                  {
+                    row0: [this.questionp1, this.questionp2, this.questionp3],
+                    row1: [
+                      {
+                        label: this.c1a1,
+                        value: this.c1a1,
+                      },
+                      {
+                        label: this.c1a2,
+                        value: this.c1a2,
+                      },
+                      {
+                        label: this.c1a3,
+                        value: this.c1a3,
+                      },
+                    ],
+                    row2: [
+                      {
+                        label: this.c2a1,
+                        value: this.c2a1,
+                      },
+                      {
+                        label: this.c2a2,
+                        value: this.c2a2,
+                      },
+                      {
+                        label: this.c2a3,
+                        value: this.c2a3,
+                      },
+                    ],
+                  },
                 ],
                 rationale: this.rationale,
               },

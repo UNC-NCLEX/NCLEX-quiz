@@ -1,5 +1,6 @@
 <template>
   <div class="header" v-if="!isAuthOr404Page">
+    <NewDDT />
     <HomePageHeader v-if="isHomePage" />
     <StudentDashboardHeader v-if="!isHomePage" />
     <br class="header_margin" v-if="!isHomePage" />
@@ -13,6 +14,7 @@
 import { NMessageProvider } from "naive-ui";
 import HomePageHeader from "./components/HomePageHeader.vue";
 import StudentDashboardHeader from "./components/StudentDashboardHeader.vue";
+import NewDDT from "./components/NewDDT.vue"
 
 export default {
   name: "App",
@@ -20,6 +22,7 @@ export default {
       HomePageHeader,
       StudentDashboardHeader,
       NMessageProvider,
+      NewDDT
   },
   computed: {
     isHomePage() {

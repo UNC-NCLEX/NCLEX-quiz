@@ -28,7 +28,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { NButton, NInput, NRadio, NRadioGroup } from "naive-ui";
 

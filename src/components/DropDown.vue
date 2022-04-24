@@ -29,26 +29,56 @@
             </th>
           </thead>
           <tbody>
-            <tr v-for="rowIndex in ddt_question.num_rows-1" :key="rowIndex">
-              <td>{{ ddt_question.answer_choice[0]['row0'][rowIndex-1]}}</td>
+            <!--table row 1-->
+            <tr>
+              <td>{{ ddt_question.answer_choice[0]['row0'][0]}}</td>
               <td>
                 <n-select
-                  v-model="studentAnswer[rowIndex-1]"
+                  v-model="p1c1"
                   :options="ddt_question.answer_choice[0]['row1']"
                   clearable
                 />
               </td>
               <td>
                 <n-select
-                  v-model="studentAnswer[rowIndex-1]"
+                  v-model="p1c2"
                   :options="ddt_question.answer_choice[0]['row2']"
                   clearable
                 />
               </td>
-              <td v-if="ddt_question.answer_choice[0]['row3']!== null">
+            </tr>
+            <!--table row 2-->
+            <tr>
+              <td>{{ ddt_question.answer_choice[0]['row0'][1]}}</td>
+              <td>
                 <n-select
-                  v-model="studentAnswer[rowIndex-1]"
-                  :options="ddt_question.answer_choice[0]['row3']"
+                  v-model="p2c1"
+                  :options="ddt_question.answer_choice[0]['row1']"
+                  clearable
+                />
+              </td>
+              <td>
+                <n-select
+                  v-model="p2c2"
+                  :options="ddt_question.answer_choice[0]['row2']"
+                  clearable
+                />
+              </td>
+            </tr>
+            <!--table row 3-->
+            <tr>
+              <td>{{ ddt_question.answer_choice[0]['row0'][2]}}</td>
+              <td>
+                <n-select
+                  v-model="p3c1"
+                  :options="ddt_question.answer_choice[0]['row1']"
+                  clearable
+                />
+              </td>
+              <td>
+                <n-select
+                  v-model="p3c2"
+                  :options="ddt_question.answer_choice[0]['row2']"
                   clearable
                 />
               </td>
@@ -86,19 +116,20 @@ export default {
   props: {
     ddt_question: Object
   },
-  methods: {
-    getRowName(idx) {
-      let rowN = "row{}"+idx;
-      return rowN;
-    }
-  },
   data() {
     return {
       studentAnswer: []
     }
   },
   setup(props) {
+    //initialze store and student answer variables
     const checkedValue = ref("");
+    const p1c1 = ref("");
+    const p1c2 = ref("");
+    const p2c1 = ref("");
+    const p2c2 = ref("");
+    const p3c1 = ref("");
+    const p3c2 = ref("");
     const store = useStore();
     return {
             checkedValue: ref(null),
@@ -106,13 +137,16 @@ export default {
                 checkedValue.value = e.target.value;
             },
             checkAnswer() {
-                console.log(checkedValue.value);
+                let studentAnswer = [p1c1, p1c2, p2c1, p2c2, p3c1, p3c2]
+                let correct = true;
                 store.state.isSubmitted = true;
-                if (
-                    props.mc_question.correct_answers.includes(
-                        this.studentAnswer
-                    )
-                ) {
+                //check if student answers match correct
+                for(let i = 0; i < props.ddt_question.correct_answers.length; i++) {
+                    if(studentAnswer[i]!==props.ddt_question.correct_answers[i]){
+                      correct = false;
+                    }}
+                if (correct)
+                {
                     console.log("correct");
                     store.state.correct = "correct";
                     store.state.numOfCorrectAnswers =

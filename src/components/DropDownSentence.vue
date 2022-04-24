@@ -26,14 +26,37 @@
         {{dds_question.text}}
       </h4>
       <div>
-        <tr v-for="(index) in dds_question.num_rows" :key=index>
-          <h4 class="questions">{{dds_question.row_headers[index-1]}}...</h4>
+        <tr>
+          <h4 class="questions">{{dds_question.row_headers[0]}}...</h4>
           <td>
             <n-space vertical>
               <n-select
-                v-model:value="selectedAns"
-                :value = "value"
-                :options="dds_question.answer_choice[index-1]"
+                v-model="p1"
+                :options="dds_question.answer_choice[0]"
+                clearable
+              />
+              </n-space>
+          </td>
+        </tr>
+        <tr>
+          <h4 class="questions">{{dds_question.row_headers[1]}}...</h4>
+          <td>
+            <n-space vertical>
+              <n-select
+                v-model="p2"
+                :options="dds_question.answer_choice[1]"
+                clearable
+              />
+              </n-space>
+          </td>
+        </tr>
+        <tr>
+          <h4 class="questions">{{dds_question.row_headers[2]}}...</h4>
+          <td>
+            <n-space vertical>
+              <n-select
+                v-model="p3"
+                :options="dds_question.answer_choice[2]"
                 clearable
               />
               </n-space>
@@ -79,7 +102,10 @@ export default {
     }
   },
   setup(props) {
-    const selectedAns = ref([]);
+    //initialize store and student answer variables
+    const p1 = ref("");
+    const p2 = ref("");
+    const p3 =  ref("");
     const store = useStore();
     //compare if all chosen answers are correct return true else false - no partial credit
     function ifSameArray(arr1, arr2) {
@@ -95,12 +121,14 @@ export default {
         }
     return {
       checkAnswer() {
+        console.log(p1)
+        let selectedAns = [p1, p2, p3]
         console.log(selectedAns);
         store.state.isSubmitted = true;
         if (
           ifSameArray(
             props.dds_question.correct_answers,
-            selectedAns.value
+            selectedAns
           ) ){
           console.log("correct");
           store.state.correct = "correct";
