@@ -71,7 +71,7 @@ import { NCard, NTabs, NTabPane, NForm, NFormItemRow, NInput, NButton, NConfigPr
 import PasswordRules from "../components/PasswordRules.vue";
 import VueJwtDecode from 'vue-jwt-decode';
 import { supabase } from "../supabase/init";
-import { unsplashUrl } from "../unsplash/init";
+import { unsplashUrl } from "../unsplash/init.js";
 import { ref } from "vue";
 
 export default {
