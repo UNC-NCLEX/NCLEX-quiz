@@ -1,14 +1,13 @@
 <template>
     <section class="header_contents">
         <div class="header_img">
-            <img src="../assets/unc_logo.png" id="unc_logo" @click="loadStudentDashboard">
+            <img src="../assets/unc_logo.png" id="unc_logo" @click="loadInstructorDashboard">
         </div>
         <div class="header_space"></div>
         <div class="website_title">
             <h1>NCLEX Interactive Quiz</h1>
             <h3>UNC School of Nursing</h3>
         </div>
-        <div class="space"></div>
         <div class="control_buttons">
             <b class="menu_options" @click="signout">Sign Out</b>
             <div class="space"></div>
@@ -17,7 +16,6 @@
                 :size="48"
                 class="profile_img"
                 :src="profile_img"
-                @click="loadProfile"
             />
         </div>
     </section>
@@ -28,21 +26,18 @@ import { NAvatar } from "naive-ui";
 import { supabase } from "../supabase/init";
 
 export default {
-    name: "StudentDashboardHeader",
+    name: "InstructorDashboardHeader",
     components: {
         NAvatar
     },
     data() {
         return {
-            profile_img: this.$store.state.user.profileImg
+            profile_img: "https://i.pinimg.com/originals/6d/f7/75/6df7758b0e5902ed8bf63b90a8c12971.gif"
         }
     },
     methods: {
-        loadStudentDashboard() {
-            this.$router.push("/StudentDashboard");
-        },
-        loadProfile() {
-            this.$router.push("/Profile");
+        loadInstructorDashboard() {
+            this.$router.push("/InstructorDashboard");
         },
         async signout() {
             let { error } = await supabase.auth.signOut()
@@ -76,6 +71,12 @@ export default {
     display: flex;
     align-items: center;
     margin-left: 2%;
+}
+
+.n-avatar img {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.95);
 }
 
 .header_contents {
