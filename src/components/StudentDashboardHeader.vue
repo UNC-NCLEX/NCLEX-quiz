@@ -39,7 +39,7 @@ export default {
     },
     data() {
         return {
-            profile_img: "https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+            profile_img: this.$store.state.user.profileImg
         }
     },
     methods: {
