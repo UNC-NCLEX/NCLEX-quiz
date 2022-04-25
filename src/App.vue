@@ -2,8 +2,13 @@
     <div>
         <HomePageHeader v-if="isHomePage" />
         <StudentDashboardHeader v-if="!isHomePage" />
+        <!-- <NewMultChoice/>
+        <NewHighlight/>
+        <NewMatrix/> -->
+        <!-- <MatrixTable/> -->
         <br class="header_margin" v-if="!isHomePage" />
         <router-view />
+
     </div>
 </template>
 
@@ -15,12 +20,23 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 import HomePageHeader from "./components/HomePageHeader.vue";
 import StudentDashboardHeader from "./components/StudentDashboardHeader.vue";
+// import NewMultChoice from './components/NewMultChoice.vue';
+// import NewHighlight from './components/NewHighlight.vue';
+// import HighlightTable from './components/HighlightTable.vue';
+// import NewMatrix from './components/NewMatrix.vue';
+// import MatrixTable from './components/MatrixTable.vue';
+
 
 export default {
     name: "App",
     components: {
         HomePageHeader,
-        StudentDashboardHeader,
+        StudentDashboardHeader
+        // NewMultChoice,
+        // NewHighlight,
+        // HighlightTable,
+        // NewMatrix,
+        // MatrixTable
     },
     setup() {
         const store = useStore();

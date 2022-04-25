@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>New Matrix Table Question</h2>
+    <h2>New Highlight Table Question</h2>
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
       <select v-model="qid">
@@ -15,7 +15,7 @@
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
             <n-input
-              v-model:value="histAndPhys"
+              v-model:value="hist_and_phys"
               type="text"
               class="form-field"
               id="histAndPhys"
@@ -26,33 +26,33 @@
           </n-tab-pane>
           <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
             <n-input
-              v-model:value="nurseNotes"
+              v-model:value="nurse_notes"
               type="text"
               class="form-field"
-              id="nurseNotes"
-              name="nurseNotes"
+              id="nurse_notes"
+              name="nurse_notes"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Nurse's Notes"
             />
           </n-tab-pane>
           <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
             <n-input
-              v-model:value="flowSheet"
+              v-model:value="flow_sheet"
               type="text"
               class="form-field"
-              id="flowSheet"
-              name="flowSheet"
+              id="flow_sheet"
+              name="flow_sheet"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Flow Sheet"
             />
           </n-tab-pane>
           <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
             <n-input
-              v-model:value="labResults"
+              v-model:value="lab_results"
               type="text"
               class="form-field"
-              id="labResults"
-              name="labResults"
+              id="lab_results"
+              name="lab_results"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Labratory Results"
             />
@@ -80,9 +80,8 @@
         :input-props="{ type: 'clearable' }"
         placeholder="Enter Question Text"
       />
-      <br />
-      <br />
       <div>
+        <br />
         <n-table>
           <thead>
             <th>
@@ -90,41 +89,19 @@
                 v-model:value="rowText"
                 type="text"
                 class="form-field"
-                id="questText"
-                name="questText"
+                id="answerText1"
+                name="answerText1"
                 :input-props="{ type: 'clearable' }"
                 placeholder="Enter Heading Text"
               />
             </th>
-            <th>
+            <th colspan="2">
               <n-input
                 v-model:value="rowText"
                 type="text"
                 class="form-field"
-                id="questText"
-                name="questText"
-                :input-props="{ type: 'clearable' }"
-                placeholder="Enter Heading Text"
-              />
-            </th>
-            <th>
-              <n-input
-                v-model:value="rowText"
-                type="text"
-                class="form-field"
-                id="questText"
-                name="questText"
-                :input-props="{ type: 'clearable' }"
-                placeholder="Enter Heading Text"
-              />
-            </th>
-            <th>
-              <n-input
-                v-model:value="rowText"
-                type="text"
-                class="form-field"
-                id="questText"
-                name="questText"
+                id="answerText1"
+                name="answerText1"
                 :input-props="{ type: 'clearable' }"
                 placeholder="Enter Heading Text"
               />
@@ -137,20 +114,33 @@
                   v-model:value="rowText"
                   type="text"
                   class="form-field"
-                  id="questText"
-                  name="questText"
+                  id="answerText2"
+                  name="answerText2"
                   :input-props="{ type: 'clearable' }"
                   placeholder="Enter Question Text"
                 />
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="answerText3"
+                  name="answerText3"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Question Text"
+                />
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="answerText4"
+                  name="answerText4"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Question Text"
+                />
               </td>
             </tr>
             <tr>
@@ -159,20 +149,33 @@
                   v-model:value="rowText"
                   type="text"
                   class="form-field"
-                  id="questText"
-                  name="questText"
+                  id="answerText2"
+                  name="answerText2"
                   :input-props="{ type: 'clearable' }"
                   placeholder="Enter Question Text"
                 />
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="answerText3"
+                  name="answerText3"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Question Text"
+                />
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="answerText4"
+                  name="answerText4"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Question Text"
+                />
               </td>
             </tr>
             <tr>
@@ -181,20 +184,33 @@
                   v-model:value="rowText"
                   type="text"
                   class="form-field"
-                  id="questText"
-                  name="questText"
+                  id="answerText2"
+                  name="answerText2"
                   :input-props="{ type: 'clearable' }"
                   placeholder="Enter Question Text"
                 />
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="answerText3"
+                  name="answerText3"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Question Text"
+                />
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="answerText4"
+                  name="answerText4"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Question Text"
+                />
               </td>
             </tr>
             <tr>
@@ -203,20 +219,33 @@
                   v-model:value="rowText"
                   type="text"
                   class="form-field"
-                  id="questText"
-                  name="questText"
+                  id="answerText2"
+                  name="answerText2"
                   :input-props="{ type: 'clearable' }"
                   placeholder="Enter Question Text"
                 />
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="answerText3"
+                  name="answerText3"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Question Text"
+                />
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="answerText4"
+                  name="answerText4"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Question Text"
+                />
               </td>
             </tr>
           </tbody>
@@ -250,7 +279,6 @@
           answerText2,
           answerText3,
           answerText4,
-          answerText5,
           rationale
         )
       "
@@ -260,75 +288,62 @@
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NTable, NCheckbox, NInput } from "naive-ui";
+import { NButton, NTabPane, NTabs, NTable, NInput } from "naive-ui";
 
 import { ref } from "vue";
 
 export default {
-  name: "MatrixTable",
+  name: "NewHighlight",
   components: {
     NButton,
     NTabPane,
     NTabs,
     NTable,
-    NCheckbox,
     NInput,
   },
   setup() {
     return {
-      value: ref(null),
-      methods: {
-        enterQuestion() {
-          var newQ = {
-            qid: this.qid,
-            histAndPhys: this.histAndPhys,
-            nurseNotes: this.nurseNotes,
-            flowSheet: this.flowSheet,
-            labResults: this.labResults,
-            orders: this.orders,
-            questText: this.questText,
-            rowText: this.rowText,
-            a1: this.answerText1,
-            a2: this.answerText2,
-            a3: this.answerText3,
-            a4: this.answerText4,
-            a5: this.answerText5,
-            rationale: this.rationale,
-          };
-          console.log(newQ);
-          this.$store.dispatch("newMatrix", newQ);
-        },
-      },
-      categories: [
-        {
-          name: "Nursing student’s statements",
-        },
-        {
-          name: "Drug A",
-        },
-        {
-          name: "Drug B",
-        },
-        {
-          name: "Not applicable for both Drug A & B",
-        },
-      ],
-
-      options: [
-        {
-          name: "The medication requires close monitoring",
-        },
-        {
-          name: "The medication needs less frequent dosing",
-        },
-        {
-          name: "The medication needs less frequent dosing",
-        },
-        {
-          name: "The medication needs more frequent dosing",
-        },
-      ],
+      qid: ref(null),
+      histAndPhys: ref(null),
+      nurseNotes: ref(null),
+      flowSheet: ref(null),
+      labResults: ref(null),
+      orders: ref(null),
+      questText: ref(null),
+      answer: ref(null),
+      answerText1: ref(null),
+      answerText2: ref(null),
+      answerText3: ref(null),
+      answerText4: ref(null),
+      answerText5: ref(null),
+      rationale: ref(null),
     };
+  },
+  props: {
+    quizzes: Array,
+  },
+
+  methods: {
+    enterQuestion() {
+      var newQ = {
+        qid: this.qid,
+        histAndPhys: this.histAndPhys,
+        nurseNotes: this.nurseNotes,
+        flowSheet: this.flowSheet,
+        labResults: this.labResults,
+        orders: this.orders,
+        questText: this.questText,
+        correct: this.answer,
+        a1: this.answerText1,
+        a2: this.answerText2,
+        a3: this.answerText3,
+        a4: this.answerText4,
+        a5: this.answerText5,
+        rationale: this.rationale,
+      };
+      console.log(newQ);
+      this.$store.dispatch("newHighlight", newQ);
+    },
   },
 };
 </script>
