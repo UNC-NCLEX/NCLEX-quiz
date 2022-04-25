@@ -30,17 +30,23 @@
         >
         </DropDownSentence>
       </div>
-      <div v-if="allQuestions[this.$store.state.currentIndex].type === 'ht'">
+      <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'ht'">
         <HighlightTable
           :ht_question="allQuestions[this.$store.state.currentIndex]"
         >
         </HighlightTable>
       </div>
-      <div v-if="allQuestions[this.$store.state.currentIndex].type === 'mt'">
+      <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'mt'">
         <MatrixTable
           :mt_question="allQuestions[this.$store.state.currentIndex]"
         >
         </MatrixTable>
+      </div>
+      <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'ddt'">
+        <DropDown
+          :ddt_question="allQuestions[this.$store.state.currentIndex]"
+        >
+        </DropDown>
       </div>
     </div>
   </div>
@@ -68,7 +74,7 @@ export default {
     DropDownSentence,
     DropDown,
     HighlightTable,
-    MatrixTable,
+    MatrixTable
   },
   setup() {
     const store = useStore();

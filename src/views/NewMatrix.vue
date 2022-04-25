@@ -314,35 +314,6 @@ export default {
           this.$store.dispatch("newMatrix", newQ);
         },
       },
-      categories: [
-        {
-          name: "Nursing student’s statements",
-        },
-        {
-          name: "Drug A",
-        },
-        {
-          name: "Drug B",
-        },
-        {
-          name: "Not applicable for both Drug A & B",
-        },
-      ],
-
-      options: [
-        {
-          name: "The medication requires close monitoring",
-        },
-        {
-          name: "The medication needs less frequent dosing",
-        },
-        {
-          name: "The medication needs less frequent dosing",
-        },
-        {
-          name: "The medication needs more frequent dosing",
-        },
-      ],
     };
   },
   data() {
