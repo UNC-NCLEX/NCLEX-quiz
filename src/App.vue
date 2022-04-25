@@ -1,154 +1,46 @@
 <template>
-    <div>
-        <HomePageHeader v-if="isHomePage" />
-        <StudentDashboardHeader v-if="!isHomePage" />
-        <!-- <NewMultChoice/>
-        <NewHighlight/>
-        <NewMatrix/> -->
-        <!-- <MatrixTable/> -->
-        <br class="header_margin" v-if="!isHomePage" />
-        <router-view />
-
-    </div>
+  <div class="header" v-if="!isAuthOr404Page">
+    <HomePageHeader v-if="isHomePage" />
+    <StudentDashboardHeader v-if="isStudent" />
+    <InstructorDashboardHeader v-if="isInstructor" />
+    <br class="header_margin" v-if="!isHomePage" />
+  </div>
+  <n-message-provider>
+    <router-view />
+  </n-message-provider>
 </template>
 
 <script>
-import { h, ref } from "vue";
-import { supabase } from "./supabase/init";
-import { NSelect } from "naive-ui";
-import { useStore } from "vuex";
-import { computed } from "vue";
+import { NMessageProvider } from "naive-ui";
 import HomePageHeader from "./components/HomePageHeader.vue";
 import StudentDashboardHeader from "./components/StudentDashboardHeader.vue";
-// import NewMultChoice from './components/NewMultChoice.vue';
-// import NewHighlight from './components/NewHighlight.vue';
-// import HighlightTable from './components/HighlightTable.vue';
-// import NewMatrix from './components/NewMatrix.vue';
-// import MatrixTable from './components/MatrixTable.vue';
 
+import InstructorDashboardHeader from "./components/InstructorDashboardHeader.vue";
 
 export default {
-    name: "App",
-    components: {
-        HomePageHeader,
-        StudentDashboardHeader
-        // NewMultChoice,
-        // NewHighlight,
-        // HighlightTable,
-        // NewMatrix,
-        // MatrixTable
+  name: "App",
+  components: {
+      HomePageHeader,
+      StudentDashboardHeader,
+      InstructorDashboardHeader,
+      NMessageProvider,
+  },
+  computed: {
+    isHomePage() {
+      return this.$route.name === 'HomePage';
     },
-    setup() {
-        const store = useStore();
-        const quizzes = ref([]);
-        const question = ref([]);
-        const dataLoaded = ref(null);
-        const count = computed(() => store.state.user);
-        const getData = async () => {
-            // TODO: get user's past quizzes in an array
-            try {
-                // TODO: SQL statement that selects all quizzes from DB and filters out the ones that are in the past quizzes array  .not('id','in',`(${arr})`)
-                let { data: quiz, error } = await supabase
-                    .from("quiz")
-                    .select("*");
-                if (error) throw error;
-                quizzes.value = quiz;
-                dataLoaded.value = true;
-            } catch (error) {
-                console.warn(error.message);
-            }
-            // get the user's scores
-            try {
-                let { data: question, error } = await supabase
-                    .from("question")
-                    .select("*");
-                if (error) throw error;
-                question.value = question;
-                dataLoaded.value = true;
-            } catch (error) {
-                console.warn(error.message);
-            }
-        };
-        getData();
-        return { count, quizzes, dataLoaded, question };
+    isStudent() {
+      return this.$store.state.user.userType === "student";
     },
-    data() {
-        return {
-            drugs: [
-                {
-                    name: "Tylenol",
-                },
-                {
-                    name: "Advil",
-                },
-                {
-                    name: "Aceptaminophen",
-                },
-            ],
-            options: [
-                {
-                    label: "Marina Bay Sands",
-                    key: "marina bay sands",
-                    // disabled: true,
-                },
-                {
-                    label: "Brown's Hotel, London",
-                    key: "brown's hotel, london",
-                },
-                {
-                    label: "Atlantis Bahamas, Nassau",
-                    key: "atlantis nahamas, nassau",
-                },
-                {
-                    label: "The Beverly Hills Hotel, Los Angeles",
-                    key: "the beverly hills hotel, los angeles",
-                },
-            ],
-            columns: [
-                {
-                    key: "medication",
-                    title: "Medication",
-                },
-                {
-                    key: "DrugClassification",
-                    title: "Drug Classification",
-                    render() {
-                        return h(
-                            NSelect,
-                            {
-                                options: [
-                                    {
-                                        value: "option1",
-                                        label: "This is an example Medication",
-                                    },
-                                    {
-                                        value: "option2",
-                                        label: "This is an example Medicatioweqaen",
-                                    },
-                                    {
-                                        value: "option2",
-                                        label: "This is an example Medicatwearawrion",
-                                    },
-                                ],
-                            },
-                            {
-                                default: () => "her",
-                            }
-                        );
-                    },
-                },
-                {
-                    key: "ClientTeaching",
-                    title: "Client Teaching",
-                },
-            ],
-        };
+    isInstructor() {
+      return this.$store.state.user.userType === "instructor";
     },
-    computed: {
-        isHomePage() {
-            return this.$route.name === "HomePage";
-        },
-    },
+    isAuthOr404Page() {
+      return this.$route.name === 'User Authentication' ||
+        this.$route.name === "Password Recovery" ||
+        this.$route.name === "NotFound";
+    }
+  }
 };
 </script>
 

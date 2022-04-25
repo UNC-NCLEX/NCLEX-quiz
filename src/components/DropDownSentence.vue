@@ -23,47 +23,48 @@
         </n-tabs>
       </div>
       <h4>
-        Choose the most likely options for the information missing from the
-        statements regarding absorption of intravenous medications by selecting
-        from the list of options provided.
+        {{dds_question.text}}
       </h4>
       <div>
         <tr>
-          <h4 class="questions">{{ dds_question.answer_choice[0].p1Text }}...</h4>
+          <h4 class="questions">{{dds_question.row_headers[0]}}...</h4>
           <td>
             <n-space vertical>
               <n-select
                 v-model="p1"
-                :options="[{label: dds_question.answer_choice[0].p1Choices[0], value: dds_question.answer_choice[0].p1Choices[0]}, {label: dds_question.answer_choice[0].p1Choices[1], value: dds_question.answer_choice[0].p1Choices[1]}, {label: dds_question.answer_choice[0].p1Choices[2], value: dds_question.answer_choice[0].p1Choices[2]}]"
+                :options="dds_question.answer_choice[0]"
                 clearable
               />
               </n-space>
           </td>
         </tr>
         <tr>
-          <h4 class="questions">{{ dds_question.answer_choice[0].p2Text }}...</h4>
+          <h4 class="questions">{{dds_question.row_headers[1]}}...</h4>
           <td>
             <n-space vertical>
               <n-select
                 v-model="p2"
-                :options="[{label: dds_question.answer_choice[0].p2Choices[0], value: dds_question.answer_choice[0].p2Choices[0]}, {label: dds_question.answer_choice[0].p2Choices[1], value: dds_question.answer_choice[0].p2Choices[1]}, {label: dds_question.answer_choice[0].p2Choices[2], value: dds_question.answer_choice[0].p2Choices[2]}]"
+                :options="dds_question.answer_choice[1]"
                 clearable
               />
               </n-space>
           </td>
         </tr>
+        <!-- row only displays if 3rd row in the question -->
+        <div v-if="ifrow3">
         <tr>
-          <h4 class="questions">{{ dds_question.answer_choice[0].p3Text }}...</h4>
+          <h4 class="questions">{{dds_question.row_headers[2]}}...</h4>
           <td>
             <n-space vertical>
               <n-select
                 v-model="p3"
-                :options="[{label: dds_question.answer_choice[0].p3Choices[0], value: dds_question.answer_choice[0].p3Choices[0]}, {label: dds_question.answer_choice[0].p3Choices[1], value: dds_question.answer_choice[0].p3Choices[1]}, {label: dds_question.answer_choice[0].p3Choices[2], value: dds_question.answer_choice[0].p3Choices[2]}]"
+                :options="dds_question.answer_choice[2]"
                 clearable
               />
               </n-space>
           </td>
         </tr>
+        </div>
       </div>
     </div>
     <div v-if="!this.$store.state.isSubmitted">
@@ -95,32 +96,58 @@ export default {
     RationalePopup
   },
   props: {
+    //currect question data passed in as a prop -> immutable
     dds_question: Object
   },
-  computed: {
-    question() {console.log(typeof this.$store.getters.questionNext); return this.$store.getters.questionNext
+  methods: {
+    ifRow3(){
+      if(this.dds_question.row_headers[2]===null){
+        return false
+      } else {return true}
     }
   },
-      setup(props) {
-        const p1 = ref("");
-        const p2 = ref("");
-        const p3 = ref("");
-        const store = useStore();
-        return {
-            checkAnswer() {
-                console.log(p1.value, p2.value, p3.value);
-                store.state.isSubmitted = true;
-                if (
-                    props.dds_question.correct_answers[0]===p1.value && props.dds_question.correct_answers[1]===p2.value && props.dds_question.correct_answers[2]===p3.value
-                ) {
-                    console.log("correct");
-                    store.state.correct = "correct";
-                    store.state.numOfCorrectAnswers =
-                        store.state.numOfCorrectAnswers + 1;
-                    store.commit("UPDATE_SCORE");
-                } else {
-                    store.state.correct = "incorrect";
-                }
+  computed: {
+    question() {
+      return this.$store.getters.questionNext
+    }
+  },
+  setup(props) {
+    //initialize store and student answer variables
+    const p1 = ref("");
+    const p2 = ref("");
+    const p3 =  ref("");
+    const store = useStore();
+    //compare if all chosen answers are correct return true else false - no partial credit
+    function ifSameArray(arr1, arr2) {
+      console.log(arr1);
+      console.log(arr2);
+      if (arr1.length !== arr2.length) return false;
+        const arr1_sorted = arr1.sort();
+        const arr2_sorted = arr2.sort();
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1_sorted[i] !== arr2_sorted[i]) return false;
+            }
+          return true;
+        }
+    return {
+      checkAnswer() {
+        console.log(p1)
+        let selectedAns = [p1, p2, p3]
+        console.log(selectedAns);
+        store.state.isSubmitted = true;
+        if (
+          ifSameArray(
+            props.dds_question.correct_answers,
+            selectedAns
+          ) ){
+          console.log("correct");
+          store.state.correct = "correct";
+          store.state.numOfCorrectAnswers =
+          store.state.numOfCorrectAnswers + 1;
+          store.commit("UPDATE_SCORE");
+          } else {
+           store.state.correct = "incorrect";
+          }
             },
         };
     },

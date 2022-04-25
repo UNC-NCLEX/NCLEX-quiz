@@ -1,4 +1,5 @@
 <template>
+<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
   <div class="main">
     <h2>New Select All That Apply Question</h2>
     <div class="quizTitle">
@@ -155,16 +156,21 @@
       >Add Question</n-button
     >
   </div>
+</n-config-provider>
 </template>
 
 <script>
-import { NButton, NInput } from "naive-ui";
-import { ref } from "vue";
+
+import { NButton, NInput, NConfigProvider } from "naive-ui";
+import { supabase } from "../supabase/init";
+import {ref} from 'vue';
+
 export default {
   name: "NewSelectAll",
   components: {
     NButton,
     NInput,
+    NConfigProvider
   },
   setup() {
     return {
@@ -189,30 +195,70 @@ export default {
   props: {
     quizzes: Array,
   },
-  methods: {
-    enterQuestion() {
-      var newQ = {
-        qid: this.qid,
-        questText: this.questText,
-        a1Correct: this.a1Correct,
-        a1: this.a1,
-        a2Correct: this.a2Correct,
-        a2: this.a2,
-        a3Correct: this.a3Correct,
-        a3: this.a3,
-        a4Correct: this.a4Correct,
-        a4: this.a4,
-        a5Correct: this.a5Correct,
-        a5: this.a5,
-        a6Correct: this.a6Correct,
-        a6: this.a6,
-        rationale: this.rationale,
-      };
-      console.log(newQ);
-      this.$store.dispatch("newSel", newQ);
-    },
+  data() {
+    return {
+          themeOverrides: {
+            common: {
+                primaryColor: "#FF8C00"
+            }
+        }
+      }
   },
-};
+  methods: {
+      enterQuestion() {
+        //save correct answer text to corAns array variable for db - a1Correct, a2Correct, etc. vars are BOOLEAN, save corresponding text into corAns variable
+        var corAns = [];
+        if (this.a1Correct === true) {
+          corAns.push(this.a1);
+      } if (this.a2Correct === true) {
+          corAns.push(this.a2);
+      } if (this.a3Correct === true) {
+          corAns.push(this.a3);
+      } if (this.a4Correct === true) {
+          corAns.push(this.a4);
+      } if (this.a5Correct === true) {
+          corAns.push(this.a5);
+      } if (this.a6Correct === true) {
+          corAns.push(this.a6);}
+
+      //push new question to database (unused fields as empty)
+        const addQ = async () => {
+          try {
+            let { data: successAdd, error } = await supabase
+            .from("question")
+            .insert([{
+              quiz_id: this.qid,
+              //all questions added from this page are multiple choice type
+              type: "select",
+              hist_and_phys: this.histAndPhys,
+              nurse_notes: this.nurseNotes,
+              flow_sheet: this.flowSheet,
+              lab_results: this.labResults,
+              orders: this.orders,
+              text: this.questText,
+              correct_answers: corAns,
+              answer_choice: [
+                this.a1,
+                this.a2,
+                this.a3,
+                this.a4,
+                this.a5,
+                this.a6
+                ],
+              rationale: this.rationale,
+            }]);
+            if (error) throw error;
+            //console entire question if successfully added
+            console.log(successAdd);
+            } catch (error) {
+            //console error if not added
+            console.warn(error.message);}
+            };
+        addQ();
+      }
+      
+      }
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

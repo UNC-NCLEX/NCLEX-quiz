@@ -55,18 +55,18 @@ import MultipleResponse from "../components/MultipleResponse.vue";
 import DropDownSentence from "../components/DropDownSentence.vue";
 import HighlightTable from "../components/HighlightTable.vue";
 import MatrixTable from "../components/MatrixTable.vue";
+import DropDown from "../components/DropDown.vue"
+
+
 
 export default {
-  name: "QuizMain",
-  methods: {
-    clicked() {
-      console.log("hey");
-    },
-  },
+    name: "QuizMain",
+  
   components: {
     MultipleChoice,
     MultipleResponse,
     DropDownSentence,
+    DropDown,
     HighlightTable,
     MatrixTable,
   },

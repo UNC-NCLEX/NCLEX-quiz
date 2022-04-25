@@ -1,73 +1,110 @@
 <template>
   <div class="container">
-    <h2>Week 1 Review</h2>
-
-    <div class="question">
-      <h3>Question 2</h3>
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
-            A patient is presented to the emergency department with unexplained
-            fever, diarrhea (6 loose stools within 4 hours) and extreme fatigue
-            at 7AM.
+            {{ddt_question.hist_and_phys}}
           </n-tab-pane>
           <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            On assessment, the patient’s temperature is 101 degree Fahrenheit.
+            {{ddt_question.nurse_notes}}
           </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet"> </n-tab-pane>
+          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+            {{ddt_question.flow_sheet}}
+          </n-tab-pane>
           <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            Hemoglobin level is 6.8mg/dL
+            {{ddt_question.lab_results}}
           </n-tab-pane>
           <n-tab-pane name="Orders" tab="Orders">
-            Tylenol 650 mg by mouth once; administer antidiarrheal medication
-            once and administer one unit of packed RBC
+            {{ddt_question.orders}}
           </n-tab-pane>
         </n-tabs>
       </div>
       <h4>
-        Which of the following assessment findings indicates the therapeutic
-        effect of blood transfusion?
+        {{ddt_question.text}}
       </h4>
-      <div>
-        <n-table>
+        <table class="table">
           <thead>
-            <th v-for="(item, index) in categories" :key="index">
-              <b>{{ categories[index].name }}</b>
+            <th v-for="(header, index) in ddt_question.row_headers" :key="index">
+              <b>{{ header }}</b>
             </th>
           </thead>
           <tbody>
-            <th v-for="(item, index) in categories" :key="index"></th>
-
-            <tr v-for="(item, index) in medication" :key="index">
-              <td>{{ medication[index].name }}</td>
-              <td class="options">
+            <!--table row 1-->
+            <tr>
+              <td>{{ ddt_question.answer_choice[0]['row0'][0]}}</td>
+              <td>
                 <n-select
-                  v-model="options[index].value"
-                  :options="options"
+                  v-model="p1c1"
+                  :options="ddt_question.answer_choice[0]['row1']"
                   clearable
                 />
               </td>
               <td>
                 <n-select
-                  v-model="options2[index].value"
-                  :options="options2"
+                  v-model="p1c2"
+                  :options="ddt_question.answer_choice[0]['row2']"
                   clearable
                 />
               </td>
             </tr>
+            <!--table row 2-->
+            <tr>
+              <td>{{ ddt_question.answer_choice[0]['row0'][1]}}</td>
+              <td>
+                <n-select
+                  v-model="p2c1"
+                  :options="ddt_question.answer_choice[0]['row1']"
+                  clearable
+                />
+              </td>
+              <td>
+                <n-select
+                  v-model="p2c2"
+                  :options="ddt_question.answer_choice[0]['row2']"
+                  clearable
+                />
+              </td>
+            </tr>
+            <!--table row 3 only displays if row 3 question-->
+            <div v-if="isRow3">
+            <tr>
+              <td>{{ ddt_question.answer_choice[0]['row0'][2]}}</td>
+              <td>
+                <n-select
+                  v-model="p3c1"
+                  :options="ddt_question.answer_choice[0]['row1']"
+                  clearable
+                />
+              </td>
+              <td>
+                <n-select
+                  v-model="p3c2"
+                  :options="ddt_question.answer_choice[0]['row2']"
+                  clearable
+                />
+              </td>
+            </tr>
+            </div>
           </tbody>
-        </n-table>
-      </div>
+        </table>
     </div>
 
-    <a href="RationalePopup.vue"><n-button size="large">Submit</n-button> </a>
-  </div>
+    <div v-if="!this.$store.state.isSubmitted">
+      <n-button size="large" @click="checkAnswer">Submit</n-button>
+    </div>
+    <div v-else>
+      <RationalePopup
+        :correct="this.$store.state.correct"
+        :rationale="ddt_question.rationale"
+      />
+    </div>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSelect, NTable } from "naive-ui";
-
+import { NButton, NTabPane, NTabs, NSelect } from "naive-ui";
+import { useStore } from "vuex";
 import { ref } from "vue";
+import RationalePopup from "../components/RationalePopup.vue";
 
 export default {
   name: "DropDown",
@@ -76,78 +113,59 @@ export default {
     NTabPane,
     NTabs,
     NSelect,
-    NTable,
+    RationalePopup
   },
-  setup() {
+  props: {
+    ddt_question: Object
+  },
+  methods: {
+    ifRow3(){
+      if(this.ddt_question.answer_choice[0]["row0"][2]===null){
+        return false;
+      }else{return true;}
+    }
+  },
+  data() {
     return {
-      value: ref(null),
-      categories: [
-        {
-          name: "Medication",
-        },
-        {
-          name: "Drug Classification",
-        },
-        {
-          name: "Client Teaching",
-        },
-      ],
-
-      medication: [
-        {
-          name: "Medication 1",
-        },
-        {
-          name: "Medication 2",
-        },
-        {
-          name: "Medication 3",
-        },
-      ],
-      options: [
-        {
-          label: "Classification 1",
-          value: "Classification 1",
-        },
-        {
-          label: "Classification 2",
-          value: "Classification 2",
-        },
-        {
-          label: "Classification 3",
-          value: "Classification 3",
-        },
-        {
-          label: "Classification 4",
-          value: "Classification 4",
-        },
-        {
-          label: "Classification 5",
-          value: "Classification 5",
-        },
-      ],
-      options2: [
-        {
-          label: "Teaching 1",
-          value: "Teaching 1",
-        },
-        {
-          label: "Teaching 2",
-          value: "Teaching 2",
-        },
-        {
-          label: "Teaching 3",
-          value: "Teaching 3",
-        },
-        {
-          label: "Teaching 4",
-          value: "Teaching 4",
-        },
-        {
-          label: "Teaching 5",
-          value: "Teaching 5",
-        },
-      ],
+      studentAnswer: []
+    }
+  },
+  setup(props) {
+    //initialze store and student answer variables
+    const checkedValue = ref("");
+    const p1c1 = ref("");
+    const p1c2 = ref("");
+    const p2c1 = ref("");
+    const p2c2 = ref("");
+    const p3c1 = ref("");
+    const p3c2 = ref("");
+    const store = useStore();
+    return {
+            checkedValue: ref(null),
+            handleChange(e) {
+                checkedValue.value = e.target.value;
+            },
+            checkAnswer() {
+                let studentAnswer = [p1c1, p1c2, p2c1, p2c2, p3c1, p3c2]
+                let correct = true;
+                store.state.isSubmitted = true;
+                //check if student answers match correct
+                for(let i = 0; i < props.ddt_question.correct_answers.length; i++) {
+                    if(studentAnswer[i]!==props.ddt_question.correct_answers[i]){
+                      correct = false;
+                    }}
+                if (correct)
+                {
+                    console.log("correct");
+                    store.state.correct = "correct";
+                    store.state.numOfCorrectAnswers =
+                        store.state.numOfCorrectAnswers + 1;
+                    store.commit("UPDATE_SCORE");
+                } else {
+                    store.state.correct = "incorrect";
+                }
+            },
+      value: ref(null)
     };
   },
 };
@@ -190,9 +208,6 @@ h2 {
 
 /*****ANSWERS******/
 .options {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -205,5 +220,9 @@ h2 {
 
 a {
   text-decoration: none;
+}
+
+.table{
+  width:80%;
 }
 </style>
