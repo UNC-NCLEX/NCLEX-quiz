@@ -1,12 +1,13 @@
 <template>
+<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
     <div class="main">
         <h2>New Multiple Choice Question</h2>
         <div class="quizTitle">
             <label for="quizT">Select Quiz Group for Question </label>
-            <select v-model="quiz_id">
+            <select v-model="qid">
                 <option
-                    v-for="quiz in quizzes"
-                    v-bind:value="quiz.quiz_id"
+                    v-for="quiz in quizzesSupabase"
+                    :value="quiz.quiz_id"
                     :key="quiz.quiz_id"
                 >
                     {{ quiz.title }}
@@ -206,10 +207,11 @@
             >Add Question</n-button
         >
     </div>
+</n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NInput } from "naive-ui";
+import { NButton, NTabPane, NTabs, NInput, NConfigProvider } from "naive-ui";
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
@@ -220,27 +222,54 @@ export default {
     NTabPane,
     NTabs,
     NInput,
+    NConfigProvider
     },
   setup() {
+    const quizzesSupabase = ref([]);
+    const getData = async () => {
+        try {
+            let { data: quiz, error } = await supabase
+                .from("quiz")
+                .select("*")
+            if (error) throw error;
+            quizzesSupabase.value = quiz;
+        } catch (error) {
+            console.warn(error.message);
+        }
+    }
+
+    getData();
     return {
-      //initializing question variables to be entered by instructor
-      qid: ref(null),
-      histAndPhys: ref(null),
-      nurseNotes: ref(null),
-      flowSheet: ref(null),
-      labResults: ref(null),
-      orders: ref(null),
-      questText: ref(null),
-      answer: ref(null),
-      answerText1: ref(null),
-      answerText2: ref(null),
-      answerText3: ref(null),
-      answerText4: ref(null),
-      answerText5: ref(null),
-      rationale: ref(null),};
-    },
+        //initializing question variables to be entered by instructor
+        qid: ref(null),
+        histAndPhys: ref(null),
+        nurseNotes: ref(null),
+        flowSheet: ref(null),
+        labResults: ref(null),
+        orders: ref(null),
+        questText: ref(null),
+        answer: ref(null),
+        answerText1: ref(null),
+        answerText2: ref(null),
+        answerText3: ref(null),
+        answerText4: ref(null),
+        answerText5: ref(null),
+        rationale: ref(null),
+        quizzesSupabase
+    };
+
+  },
   props: {
     quizzes: Array,
+  },
+  data() {
+      return {
+          themeOverrides: {
+            common: {
+                primaryColor: "#FF8C00"
+            }
+        }
+      }
   },
   methods: {
     enterQuestion() {

@@ -1,4 +1,5 @@
 <template>
+<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
   <div class="main">
     <h2> New Select All That Apply Question</h2>
     <div class="quizTitle">
@@ -58,10 +59,11 @@
     <n-button size="large" @click="enterQuestion(qid, questText, a1Correct, a1, a2Correct, a2, a3Correct, a3, a4Correct, a4, a5Correct, a5, a6Correct, a6, rationale)">Add Question</n-button>
 
   </div>
+</n-config-provider>
 </template>
 
 <script>
-import { NButton, NInput } from "naive-ui";
+import { NButton, NInput, NConfigProvider } from "naive-ui";
 import { supabase } from "../supabase/init";
 import {ref} from 'vue';
 
@@ -70,6 +72,7 @@ export default {
   components: {
     NButton,
     NInput,
+    NConfigProvider
   },
     setup() {
     return {
@@ -93,6 +96,15 @@ export default {
   },
   props: {
     quizzes: Array
+  },
+  data() {
+    return {
+          themeOverrides: {
+            common: {
+                primaryColor: "#FF8C00"
+            }
+        }
+      }
   },
   methods: {
       enterQuestion() {

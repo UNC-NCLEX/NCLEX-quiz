@@ -1,19 +1,20 @@
 <template>
+<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
   <div class="main">
-
-    <div class="cont">
+    <div class="content">
       <div class="quiz">
         <h2>Quiz Management</h2>
       </div>
       <br>
       <div class="newQ">
-            <h3> Creating a new quiz?  Enter quiz name here: </h3>
+            <h3> Creating a new quiz? Enter quiz name here: </h3>
             <n-input v-model:value="newQuizName" type="text" class="form-field" id="newQuizName" name="newQuizName" :input-props="{ type: 'clearable' }" placeholder="Enter New Quiz Name" />
+            <div class="space"></div>
             <n-button size="large" @click="createQuiz">Add Quiz</n-button>
       </div>
       <br>
       <div class="qType">
-        <h3> Creating a new question?  Select question type here: </h3>
+        <h3> Creating a new question? Select question type here: </h3>
         <n-radio-group v-model:value="typeSelected" name="radiogroup">
             <!-- if typeSelected===1, multChoice; if typeSelected===2, selAll; etc... -->
             <n-radio :value=1 class="choice-text">Multiple Choice</n-radio>
@@ -23,14 +24,17 @@
             <n-radio :value=5 class="choice-text">Matrix Table</n-radio>
             <n-radio :value=6 class="choice-text">Highlight</n-radio>
         </n-radio-group>
+        <div class="space"></div>
         <n-button size="large" @click="createQuestion">Create Question</n-button>   
       </div>      
     </div>
   </div>
+</n-config-provider>
 </template>
 
 <script>
-import { NButton, NInput, NRadio, NRadioGroup } from "naive-ui";
+import { NButton, NInput, NRadio, NRadioGroup, NConfigProvider, useMessage } from "naive-ui";
+import { supabase } from "../supabase/init";
 
 export default {
   name: "QuestionSelect",
@@ -38,20 +42,22 @@ export default {
       NButton,
       NInput,
       NRadio,
-      NRadioGroup
-  },
-  methods: {
-      createQuiz(){
-          /* TODO create quiz and push to database*/
-          console.log("new quiz")
-      },
-      createQuestion(){
-          /*TODO router to correct page - all need :quizzes prop passed in as all current quizzes in databases when routed - pages use quiz.name and quiz.qid*/
-          console.log("new question"+ this.typeSelected)
-      }
+      NRadioGroup,
+      NConfigProvider
   },
   props: {
     msg: String,
+  },
+  setup() {
+    const message = useMessage();
+    return {
+      createSuccessMessage(msg, time) {
+          message.success(msg, { duration: time });
+      },
+      createErrorMessage(msg, time) {
+          message.error(msg, { duration: time });
+      }
+    }
   },
   data() {
     return {
@@ -65,8 +71,72 @@ export default {
         { sid: 2, qid1: 95, qid2: 90 },
         { sid: 3, qid1: 75, qid2: 85 },
       ],
+      newQuizName: "",
+      typeSelected: 0,
+      themeOverrides: {
+          common: {
+              primaryColor: "#FF8C00"
+          }
+      }
     };
   },
+  methods: {
+      async createQuiz(){
+          const data = await supabase
+          .from('quiz')
+          .select('quiz_id');
+
+          // TODO: Change the way in which the next ID is chosen.
+          // This implementation can create problems if a quiz
+          // is deleted.
+          let next_id = Math.max(data.data.length) + 1;
+
+          await supabase
+          .from('quiz')
+          .insert([
+            { quiz_id: next_id, title: this.newQuizName }
+          ]);
+
+          this.createSuccessMessage("Success! New quiz was created!", 10000);
+      },
+      async createQuestion(){
+        const data = await supabase
+          .from('quiz')
+          .select('*');
+
+        console.log(data);
+
+        /*TODO router to correct page - all need :quizzes prop passed in as all current quizzes in databases when routed - pages use quiz.name and quiz.qid*/
+        switch (this.typeSelected) {
+          case 0:
+            this.createErrorMessage("Please select a question type.");
+            break;
+          case 1:
+            // Multiple Choice
+            this.$router.push({name: "NewMultChoice", params: { quizzes: data.data }});
+            break;
+          case 2:
+            // Select All
+            this.$router.push({name: "NewSelectAll", params: { quizzes: data.data }});
+            break;
+          case 3:
+            // DropDown Sentence
+            this.$router.push({name: "NewDDS", params: { quizzes: data.data }});
+            break;
+          case 4:
+            // DropDown Table
+            break;
+          case 5:
+            // Matrix Table
+            this.$router.push({name: "NewMatrix", params: { quizzes: data.data }});
+            break;
+          case 6:
+            // Highlight
+            break;
+          }
+          console.log("new question"+ this.typeSelected)
+      }
+  }
 };
 </script>
 
@@ -79,14 +149,18 @@ export default {
   padding-top: 5%;
   padding-bottom: 3%;
 }
-.cont {
+.content {
+  background: white;
   justify-content: center;
   padding: 10px;
   padding-top: 3%;
+  padding-left: 10%;
+  padding-right: 10%;
   width: auto;
   margin: auto;
   margin-bottom: 15px;
   align-content: center;
+  text-align: center;
 }
 .quiz {
   text-align: center;
@@ -144,6 +218,10 @@ router-link,
 a {
   color: rgb(75, 85, 97);
   text-decoration: underline;
+}
+
+.space {
+  margin-bottom: 20px;
 }
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 </style>

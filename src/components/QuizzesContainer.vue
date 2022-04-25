@@ -4,7 +4,7 @@
         <div v-for="item in quizzes" :key="'Quiz' + item.quiz_id">
             <button
                 @click="navToQuiz"
-                class="quizzes__card"
+                class="quizzes_card"
                 :id="item.quiz_id"
                 :data-id="item.title"
             >
@@ -35,7 +35,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.quizzes__card {
+.quizzes_card {
     width: 100%;
     min-height: 100px;
     margin-bottom: 20px;
@@ -50,5 +50,6 @@ export default {
     font-weight: 400;
     font-size: 25px;
     line-height: 49px;
+    cursor: pointer;
 }
 </style>

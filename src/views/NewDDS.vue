@@ -1,4 +1,5 @@
 <template>
+<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
   <div class="container">
     <h2>New Drop Down Sentence Question</h2>
         <div class="quizTitle">
@@ -99,21 +100,23 @@
     </div>
     <n-button @click="enterQuestion()" size="large">Add Question</n-button> 
   </div>
+</n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSpace, NInput } from "naive-ui";
+import { NButton, NTabPane, NTabs, NSpace, NInput, NConfigProvider } from "naive-ui";
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
 export default {
-  name: "DropDownSentence",
+  name: "NewDDS",
   components: {
     NButton,
     NTabPane,
     NTabs,
     NSpace,
-    NInput
+    NInput,
+    NConfigProvider
   },
   setup() {
     return {
@@ -142,6 +145,15 @@ export default {
       p3correct: ref(null), 
       rationale: ref(null)
     };
+  },
+  data() {
+    return {
+      themeOverrides: {
+            common: {
+                primaryColor: "#FF8C00"
+            }
+        }
+    }
   },
   methods: {
       enterQuestion() {
