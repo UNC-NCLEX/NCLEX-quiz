@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "../store/index.js";
 import HomePage from "../views/HomePage.vue";
-import ProfilePage from "../views/ProfilePage.vue";
 import StudentDashboard from "../views/StudentDashboard.vue";
 import InstructorDashboard from "../views/InstructorDashboard.vue";
 import Roster from "../views/Roster.vue";
@@ -10,6 +9,11 @@ import QuizMain from "../views/QuizMain.vue";
 import UserAuthenticationPage from "../views/UserAuthentication.vue";
 import PasswordRecovery from "../views/PasswordRecovery.vue";
 import ViewAllQuizzes from "../views/ViewAllQuizzes.vue"
+import QuestionSelect from "../views/QuestionSelect.vue";
+import NewDDS from "../views/NewDDS.vue";
+import NewMatrix from "../views/NewMatrix.vue";
+import NewMultChoice from "../views/NewMultChoice.vue";
+import NewSelectAll from "../views/NewSelectAll.vue";
 
 const routes = [
   {
@@ -40,11 +44,6 @@ const routes = [
     }
   },
   {
-    path: "/Profile",
-    name: "Profile",
-    component: ProfilePage
-  },
-  {
     path: "/StudentDashboard",
     name: "Student Dashboard",
     component: StudentDashboard,
@@ -66,6 +65,55 @@ const routes = [
     path: "/Roster",
     name: "Roster",
     component: Roster,
+    meta: {
+      requiresAuth: true,
+      authType: "instructor-only"
+    }
+  },
+  {
+    path: "/QuestionSelect",
+    name: "Question Select",
+    component: QuestionSelect,
+    meta: {
+      requiresAuth: true,
+      authType: "instructor-only"
+    }
+  },
+  {
+    path: "/NewDDS",
+    name: "NewDDS",
+    component: NewDDS,
+    props: true,
+    meta: {
+      requiresAuth: true,
+      authType: "instructor-only"
+    }
+  },
+  {
+    path: "/NewMatrix",
+    name: "NewMatrix",
+    component: NewMatrix,
+    props: true,
+    meta: {
+      requiresAuth: true,
+      authType: "instructor-only"
+    }
+  },
+  {
+    path: "/NewMultChoice",
+    name: "NewMultChoice",
+    component: NewMultChoice,
+    props: true,
+    meta: {
+      requiresAuth: true,
+      authType: "instructor-only"
+    }
+  },
+  {
+    path: "/NewSelectAll",
+    name: "NewSelectAll",
+    component: NewSelectAll,
+    props: true,
     meta: {
       requiresAuth: true,
       authType: "instructor-only"

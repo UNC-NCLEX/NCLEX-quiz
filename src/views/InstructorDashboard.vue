@@ -5,7 +5,7 @@
                 <h2>Quiz Management</h2>
                 <!--TODO: add links to pages -->
                 <h3><router-link :to="{path: '/ViewAllQuizzes'}">View my quizzes</router-link></h3>
-                <h3><router-link :to="{}">Add a quiz/question</router-link></h3>
+                <h3><router-link :to="{ name: 'Question Select' }">Add a quiz/question</router-link></h3>
             </div>
             <div class="right">
                 <h2 class="scores">Student Scores</h2>

@@ -1,4 +1,5 @@
 <template>
+<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
   <div class="container">
     <h2> New Matrix Table Question</h2>
     <div class="quizTitle">
@@ -62,22 +63,24 @@
 
     <a href=""><n-button @click = "createQuestion" size="large">Submit</n-button> </a>
   </div>
+</n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NTable, NCheckbox, NInput } from "naive-ui";
+import { NButton, NTabPane, NTabs, NTable, NCheckbox, NInput, NConfigProvider } from "naive-ui";
 
 import { ref } from "vue";
 
 export default {
-  name: "MatrixTable",
+  name: "NewMatrix",
   components: {
     NButton,
     NTabPane,
     NTabs,
     NTable,
     NCheckbox,
-    NInput
+    NInput,
+    NConfigProvider
   },
   setup() {
     return {
@@ -119,6 +122,15 @@ export default {
       ],
     };
   },
+  data() {
+    return {
+      themeOverrides: {
+          common: {
+              primaryColor: "#FF8C00"
+          }
+      }
+    }
+  }
 };
 </script>
 
