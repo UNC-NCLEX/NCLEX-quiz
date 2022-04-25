@@ -168,7 +168,7 @@ export default {
   margin-right: auto;
   margin-left: auto;
   width: 50%;
-  background-color: #e0dbd9;
+  background: linear-gradient(172.4deg, #24A3FF 5.89%, #24A3FF 5.9%, #0038FF 91.52%);
   border-radius: 5%;
   box-shadow: 10px 10px 5px #cac9c9;
 }
@@ -181,7 +181,7 @@ export default {
   margin-top: 10px;
 }
 h2 {
-  color: #ff5c00;
+  color: white;
   font-weight: 900;
   text-align: center;
   padding: 10px;
