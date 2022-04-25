@@ -132,7 +132,7 @@ export default createStore({
         },
         newDDS(store, newQ) {
             store.commit("DDS_ADD", newQ);
-        },
+        }
     },
     getters: {
         isSignedIn: function (state) {

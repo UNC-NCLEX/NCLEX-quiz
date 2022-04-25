@@ -22,7 +22,7 @@
             <n-radio :value=3 class="choice-text">DropDown Sentence</n-radio>
             <n-radio :value=4 class="choice-text">DropDown Table</n-radio>
             <n-radio :value=5 class="choice-text">Matrix Table</n-radio>
-            <n-radio :value=6 class="choice-text">Highlight</n-radio>
+            <n-radio :value=6 class="choice-text">Highlight Table</n-radio>
         </n-radio-group>
         <div class="space"></div>
         <n-button size="large" @click="createQuestion">Create Question</n-button>   
@@ -131,6 +131,7 @@ export default {
             break;
           case 6:
             // Highlight
+            this.$router.push({name: "NewHighlight", params: { quizzes: data.data }});
             break;
           }
           console.log("new question"+ this.typeSelected)

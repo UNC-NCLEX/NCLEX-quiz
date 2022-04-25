@@ -1,16 +1,11 @@
 <template lang="">
-  <div id="quiz" v-if="dataLoaded" @update="clicked">
-    {{ this.$store.state.score }}
-    {{ this.$store.state.numOfCorrectAnswers }}
+  <div id="quiz" v-if="dataLoaded">
     <h1>Question {{ this.$store.state.currentIndex + 1 }}</h1>
-    {{ this.$store.state.score }}
-    {{ this.$store.state.numOfCorrectAnswers }}
     <div id="question">
       <div v-if="allQuestions[this.$store.state.currentIndex].type === 'mc'">
         <MultipleChoice
           :mc_question="allQuestions[this.$store.state.currentIndex]"
-        >
-        </MultipleChoice>
+        ></MultipleChoice>
       </div>
       <div
         v-else-if="
@@ -19,34 +14,35 @@
       >
         <MultipleResponse
           :mr_question="allQuestions[this.$store.state.currentIndex]"
-        >
-        </MultipleResponse>
+        ></MultipleResponse>
       </div>
       <div
         v-else-if="allQuestions[this.$store.state.currentIndex].type === 'dds'"
       >
         <DropDownSentence
           :dds_question="allQuestions[this.$store.state.currentIndex]"
-        >
-        </DropDownSentence>
+        ></DropDownSentence>
       </div>
-      <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'ht'">
-        <HighlightTable
-          :ht_question="allQuestions[this.$store.state.currentIndex]"
-        >
-        </HighlightTable>
-      </div>
-      <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'mt'">
-        <MatrixTable
-          :mt_question="allQuestions[this.$store.state.currentIndex]"
-        >
-        </MatrixTable>
-      </div>
-      <div v-else-if="allQuestions[this.$store.state.currentIndex].type === 'ddt'">
+      <div
+        v-else-if="allQuestions[this.$store.state.currentIndex].type === 'ddt'"
+      >
         <DropDown
           :ddt_question="allQuestions[this.$store.state.currentIndex]"
-        >
-        </DropDown>
+        ></DropDown>
+      </div>
+      <div
+        v-else-if="allQuestions[this.$store.state.currentIndex].type === 'ht'"
+      >
+        <HighlightTable
+          :ht_question="allQuestions[this.$store.state.currentIndex]"
+        ></HighlightTable>
+      </div>
+      <div
+        v-else-if="allQuestions[this.$store.state.currentIndex].type === 'mt'"
+      >
+        <MatrixTable
+          :mt_question="allQuestions[this.$store.state.currentIndex]"
+        ></MatrixTable>
       </div>
     </div>
   </div>
@@ -59,22 +55,19 @@ import { computed } from "vue";
 import MultipleChoice from "../components/MultipleChoice.vue";
 import MultipleResponse from "../components/MultipleResponse.vue";
 import DropDownSentence from "../components/DropDownSentence.vue";
+import DropDown from "../components/DropDown.vue";
 import HighlightTable from "../components/HighlightTable.vue";
 import MatrixTable from "../components/MatrixTable.vue";
-import DropDown from "../components/DropDown.vue"
-
-
 
 export default {
-    name: "QuizMain",
-  
+  name: "QuizMain",
   components: {
     MultipleChoice,
     MultipleResponse,
     DropDownSentence,
     DropDown,
     HighlightTable,
-    MatrixTable
+    MatrixTable,
   },
   setup() {
     const store = useStore();
@@ -83,6 +76,7 @@ export default {
     let dataLoaded = ref(false);
     let index = ref(0);
     const qid = computed(() => store.state.currentQid);
+    console.log(qid);
     const getAllQuestions = async () => {
       // get all Questions from a specific quiz that the user selected
       try {
