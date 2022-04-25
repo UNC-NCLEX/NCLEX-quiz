@@ -1,7 +1,7 @@
 <template>
     <section class="header_contents">
         <div class="header_img">
-            <img src="../assets/unc_logo.png" id="unc_logo">
+            <img src="../assets/unc_logo.png" id="unc_logo" />
         </div>
         <div class="header_space"></div>
         <div class="website_title">
@@ -10,12 +10,12 @@
         </div>
         <div class="button_group">
             <n-button
-                @click="login()"
+                @click="signin()"
                 type="primary"
                 color="#ff5c00"
                 text-color="white"
                 class="button"
-                >Login</n-button
+                >Sign In</n-button
             >
             <div class="space"></div>
             <n-button
@@ -26,46 +26,33 @@
                 class="button"
                 >Sign Up</n-button
             >
-            <div class="space"></div>
-            <n-button
-                @click="login_supabase()"
-                type="primary"
-                color="#ff5c00"
-                text-color="white"
-                class="button"
-                >Test</n-button
-            >
         </div>
     </section>
 </template>
 
 <script>
 import { NButton } from "naive-ui";
-import { supabase } from "../supabase/init";
 
 export default {
     name: "HomePageHeader",
     components: {
-        NButton
+        NButton,
     },
     methods: {
-        login() {
-            this.$router.push("/Login");
+        signin() {
+            this.$router.push({
+                name: "User Authentication",
+                params: { id: "signin" },
+            });
         },
         signup() {
-            this.$router.push("/Signup");
+            this.$router.push({
+                name: "User Authentication",
+                params: { id: "signup" },
+            });
         },
-        async login_supabase() {
-            const { user, session, error } = await supabase.auth.signIn({
-                email: "fokneyokna@vusra.com",
-                password: "password123",
-        });
-        this.$store.state.user = user;
-        console.log(user, session, error);
-        this.$router.push("/StudentDashboard");
-        }
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
@@ -86,7 +73,7 @@ export default {
     position: fixed;
     z-index: 1;
     display: flex;
-    background: linear-gradient(.25turn, #ffffff, #f1f2f6);
+    background: linear-gradient(0.25turn, #ffffff, #f1f2f6);
     filter: drop-shadow(0px 5px 10px #2f3542);
     width: 100%;
     height: 70px;
@@ -99,12 +86,12 @@ export default {
 }
 
 .button_group {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  float: right;
-  flex-grow: 1;
-  margin-right: 2%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    float: right;
+    flex-grow: 1;
+    margin-right: 2%;
 }
 
 .header_space {
@@ -112,8 +99,8 @@ export default {
 }
 
 .space {
-  width: 5px;
-  height: auto;
-  display: inline-block;
+    width: 5px;
+    height: auto;
+    display: inline-block;
 }
 </style>

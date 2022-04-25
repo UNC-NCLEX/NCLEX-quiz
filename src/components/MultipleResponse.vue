@@ -39,10 +39,11 @@
                 </n-checkbox>
             </n-checkbox-group>
         </div>
-        <div v-if="!this.$store.state.isSubmitted">
+        <!--rational popup component only displays after question is submitted (if isSubmitted). if not submitted then submit button displays--> 
+        <div v-if="!this.$store.state.isSubmitted && !view_only">
             <n-button size="large" @click="checkAnswer">Submit</n-button>
         </div>
-        <div v-else>
+        <div v-else-if="this.$store.state.isSubmitted && !view_only">
             <RationalePopup
                 :correct="this.$store.state.correct"
                 :rationale="mr_question.rationale"
@@ -60,7 +61,12 @@ import RationalePopup from "../components/RationalePopup.vue";
 export default {
     name: "MultipleResponse",
     props: {
+        //currect question data passed in as a prop -> immutable
         mr_question: Object,
+        view_only: {
+            default: false,
+            type: Boolean,
+        },
     },
     components: {
         NButton,
@@ -78,9 +84,8 @@ export default {
     setup(props) {
         const choiceSelRef = ref([]);
         const store = useStore();
+        //compare if all chosen answers are correct return true else false - no partial credit
         function ifSameArray(arr1, arr2) {
-            console.log(arr1);
-            console.log(arr2);
             if (arr1.length !== arr2.length) return false;
             const arr1_sorted = arr1.sort();
             const arr2_sorted = arr2.sort();
@@ -92,10 +97,7 @@ export default {
         return {
             choiceSel: choiceSelRef,
             checkAnswer() {
-                // TODO:
-                // check answer,
-                // show rational,
-                // and then update scores
+                //set as true so rationale popup displays for question
                 store.state.isSubmitted = true;
                 if (
                     ifSameArray(

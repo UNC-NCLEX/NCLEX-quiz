@@ -1,12 +1,11 @@
 <template>
     <div class="student">
-        {{ quizzes }}
         <div class="content">
             <h1>
-                Welcome {{ this.$store.state.user.id }}. Here is how you have
+                Welcome {{ this.$store.state.user.name }}. Here is how you have
                 done in your past quizzes:
             </h1>
-            <div class="scores">
+            <div class="scores" v-if="scores.length !== 0">
                 <div class="centered" v-for="item in scores" :key="item.id">
                     <p class="student__score__section">
                         {{ item.title }}
@@ -16,6 +15,11 @@
                         :percentage="item.score"
                         :indicator-placement="'inside'"
                     />
+                </div>
+            </div>
+            <div v-else>
+                <div class="centered">
+                    <p class="empty">You haven't taken any quizzes yet!</p>
                 </div>
             </div>
             <QuizzesContainer :quizzes="quizzes"></QuizzesContainer>
@@ -51,7 +55,7 @@ export default {
                 let { data: score, error } = await supabase
                     .from("scores")
                     .select("*")
-                    .eq("user", count.value.id);
+                    .eq("user", count.value.uid);
                 if (error) throw error;
                 const completed_quizzes = score.map((x) => x.quiz);
                 scores.value = score;
@@ -89,6 +93,9 @@ export default {
 }
 .student__score {
     font-weight: 700;
+}
+.empty {
+    text-align: center;
 }
 .centered {
     justify-content: center;
