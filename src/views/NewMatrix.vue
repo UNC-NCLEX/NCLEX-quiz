@@ -1,73 +1,280 @@
 <template>
-<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
-  <div class="container">
-    <h2> New Matrix Table Question</h2>
-    <div class="quizTitle">
-      <label for="quizT">Select Quiz Group for Question </label>
-      <select v-model="qid" >
-        <option v-for="quiz in quizzes" v-bind:value="quiz.qid" :key="quiz.qid">{{quiz.name}}</option>
-      </select>
-    </div>
-    <div class="question">
-      <h3>Question 5</h3>
-      <h3>Question Info</h3>
-      <div class="information">
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            <n-input v-model:value="histAndPhys" type="text" class="form-field" id="histAndPhys" name="histAndPhys" :input-props="{ type: 'clearable' }" placeholder="Enter History &amp; Physical Information" />
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            <n-input v-model:value="nurseNotes" type="text" class="form-field" id="nurseNotes" name="nurseNotes" :input-props="{ type: 'clearable' }" placeholder="Enter Nurse's Notes" />
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet"> 
-            <n-input v-model:value="flowSheet" type="text" class="form-field" id="flowSheet" name="flowSheet" :input-props="{ type: 'clearable' }" placeholder="Enter Flow Sheet" />
-          </n-tab-pane>
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            <n-input v-model:value="labResults" type="text" class="form-field" id="labResults" name="labResults" :input-props="{ type: 'clearable' }" placeholder="Enter Labratory Results" />
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            <n-input v-model:value="orders" type="text" class="form-field" id="orders" name="orders" :input-props="{ type: 'clearable' }" placeholder="Enter Orders" />
-          </n-tab-pane>
-        </n-tabs>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <h2>New Matrix Table Question</h2>
+      <div class="quizTitle">
+        <label for="quizT">Select Quiz Group for Question </label>
+        <select v-model="qid">
+          <option
+            v-for="quiz in quizzes"
+            v-bind:value="quiz.qid"
+            :key="quiz.qid"
+          >
+            {{ quiz.name }}
+          </option>
+        </select>
       </div>
-      <h4>
-        Question Text
-      </h4>
-      <n-input v-model:value="questText" type="text" class="form-field" id="questText" name="questText" :input-props="{ type: 'clearable' }" placeholder="Enter Question Text" />
-      <div>
-        <n-table>
-          <thead>
-            <th v-for="(item, index) in categories" :key="index">
-              <b>{{ categories[index].name }}</b>
-            </th>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in options" :key="index">
-              <td>
-                <n-input v-model:value="rowText" type="text" class="form-field" id="questText" name="questText" :input-props="{ type: 'clearable' }" placeholder="Enter Question Text" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-            </tr>
-          </tbody>
-        </n-table>
+      <div class="question">
+        <h3>Question Information</h3>
+        <div class="information">
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              <n-input
+                v-model:value="histAndPhys"
+                type="text"
+                class="form-field"
+                id="histAndPhys"
+                name="histAndPhys"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter History &amp; Physical Information"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              <n-input
+                v-model:value="nurseNotes"
+                type="text"
+                class="form-field"
+                id="nurseNotes"
+                name="nurseNotes"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Nurse's Notes"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              <n-input
+                v-model:value="flowSheet"
+                type="text"
+                class="form-field"
+                id="flowSheet"
+                name="flowSheet"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Flow Sheet"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              <n-input
+                v-model:value="labResults"
+                type="text"
+                class="form-field"
+                id="labResults"
+                name="labResults"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Labratory Results"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              <n-input
+                v-model:value="orders"
+                type="text"
+                class="form-field"
+                id="orders"
+                name="orders"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Orders"
+              />
+            </n-tab-pane>
+          </n-tabs>
+        </div>
+        <h4>Question Text</h4>
+        <n-input
+          v-model:value="questText"
+          type="text"
+          class="form-field"
+          id="questText"
+          name="questText"
+          :input-props="{ type: 'clearable' }"
+          placeholder="Enter Question Text"
+        />
+        <br />
+        <br />
+        <div>
+          <n-table>
+            <thead>
+              <th>
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="questText"
+                  name="questText"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Heading Text"
+                />
+              </th>
+              <th>
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="questText"
+                  name="questText"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Heading Text"
+                />
+              </th>
+              <th>
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="questText"
+                  name="questText"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Heading Text"
+                />
+              </th>
+              <th>
+                <n-input
+                  v-model:value="rowText"
+                  type="text"
+                  class="form-field"
+                  id="questText"
+                  name="questText"
+                  :input-props="{ type: 'clearable' }"
+                  placeholder="Enter Heading Text"
+                />
+              </th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <n-input
+                    v-model:value="rowText"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Question Text"
+                  />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <n-input
+                    v-model:value="rowText"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Question Text"
+                  />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <n-input
+                    v-model:value="rowText"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Question Text"
+                  />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <n-input
+                    v-model:value="rowText"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Question Text"
+                  />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+              </tr>
+            </tbody>
+          </n-table>
+          <br />
+          <n-input
+            v-model:value="rationale"
+            type="text"
+            class="form-field"
+            id="rationale"
+            name="rationale"
+            :input-props="{ type: 'clearable' }"
+            placeholder="Enter Rationale Text"
+          />
+        </div>
       </div>
-    </div>
 
-    <a href=""><n-button @click = "createQuestion" size="large">Submit</n-button> </a>
-  </div>
-</n-config-provider>
+      <n-button
+        size="large"
+        @click="
+          enterQuestion(
+            qid,
+            histAndPhys,
+            nurseNotes,
+            flowSheet,
+            labResults,
+            orders,
+            questText,
+            answer,
+            answerText1,
+            answerText2,
+            answerText3,
+            answerText4,
+            answerText5,
+            rationale
+          )
+        "
+        >Add Question</n-button
+      >
+    </div>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NTable, NCheckbox, NInput, NConfigProvider } from "naive-ui";
+import {
+  NButton,
+  NTabPane,
+  NTabs,
+  NTable,
+  NCheckbox,
+  NInput,
+  NConfigProvider,
+} from "naive-ui";
 
 import { ref } from "vue";
 
@@ -80,57 +287,44 @@ export default {
     NTable,
     NCheckbox,
     NInput,
-    NConfigProvider
+    NConfigProvider,
   },
   setup() {
     return {
       value: ref(null),
       methods: {
-      enterQuestion() {
-        var newQ = {"qid":this.qid, "histAndPhys": this.histAndPhys, "nurseNotes":this.nurseNotes, "flowSheet":this.flowSheet, "labResults":this.labResults, "orders":this.orders, "questText": this.questText, "rowText":this.rowText, "a1": this.answerText1, "a2": this.answerText2, "a3": this.answerText3, "a4": this.answerText4, "a5":this.answerText5, "rationale": this.rationale}
-        console.log(newQ)
-        this.$store.dispatch('newMatrix', newQ);
-      }},
-      categories: [
-        {
-          name: "Nursing student’s statements",
+        enterQuestion() {
+          var newQ = {
+            qid: this.qid,
+            histAndPhys: this.histAndPhys,
+            nurseNotes: this.nurseNotes,
+            flowSheet: this.flowSheet,
+            labResults: this.labResults,
+            orders: this.orders,
+            questText: this.questText,
+            rowText: this.rowText,
+            a1: this.answerText1,
+            a2: this.answerText2,
+            a3: this.answerText3,
+            a4: this.answerText4,
+            a5: this.answerText5,
+            rationale: this.rationale,
+          };
+          console.log(newQ);
+          this.$store.dispatch("newMatrix", newQ);
         },
-        {
-          name: "Drug A",
-        },
-        {
-          name: "Drug B",
-        },
-        {
-          name: "Not applicable for both Drug A & B",
-        },
-      ],
-
-      options: [
-        {
-          name: "The medication requires close monitoring",
-        },
-        {
-          name: "The medication needs less frequent dosing",
-        },
-        {
-          name: "The medication needs less frequent dosing",
-        },
-        {
-          name: "The medication needs more frequent dosing",
-        },
-      ],
+      },
     };
   },
   data() {
     return {
       themeOverrides: {
-          common: {
-              primaryColor: "#FF8C00"
-          }
-      }
-    }
-  }
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      },
+    };
+  },
 };
 </script>
 
@@ -155,7 +349,7 @@ h2 {
   padding: 35px;
   margin: 35px 0;
   border-radius: 10px;
-  box-shadow: 10px 10px 5px #cac9c9;
+  /* box-shadow: 10px 10px 5px #cac9c9; */
 }
 
 /*****QUESTION*****/
@@ -165,17 +359,17 @@ h2 {
 }
 
 /*****TABLE*****/
-.n-table {
+/* .n-table {
   box-shadow: 10px 10px 5px #cac9c9;
-}
+} */
 
 th:not(:first-child) {
-    text-align: center;
+  text-align: center;
 }
 
 /*****ANSWERS******/
 .n-checkbox {
-  display:flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
@@ -185,12 +379,10 @@ th:not(:first-child) {
 /*****BUTTON*****/
 .n-button {
   background-color: #ffc633;
-  box-shadow: 10px 10px 5px #cac9c9;
+  /* box-shadow: 10px 10px 5px #cac9c9; */
   margin: 25px 0;
-  
 }
 a {
   text-decoration: none;
 }
-
 </style>
