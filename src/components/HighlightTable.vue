@@ -4,43 +4,52 @@
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
-            {{ mt_question.hist_and_phys }}
+            {{ ht_question.hist_and_phys }}
           </n-tab-pane>
           <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            {{ mt_question.nurse_notes }}
+            {{ ht_question.nurse_notes }}
           </n-tab-pane>
           <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            {{ mt_question.flow_sheet }}
+            {{ ht_question.flow_sheet }}
           </n-tab-pane>
           <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            {{ mt_question.lab_results }}
+            {{ ht_question.lab_results }}
           </n-tab-pane>
           <n-tab-pane name="Orders" tab="Orders">
-            {{ mt_question.orders }}
+            {{ ht_question.orders }}
           </n-tab-pane>
         </n-tabs>
       </div>
-      <h3>
-        {{ mt_question.text }}
-      </h3>
+      <h3>{{ ht_question.text }}</h3>
+
       <div>
         <n-table>
-          <thead>
-            <th v-for="(item, index) in mt_question.row_headers" :key="index">
-              <b>{{ mt_question.row_headers[index] }}</b>
-            </th>
-          </thead>
+          <tr>
+            <th>{{ ht_question.row_headers[0] }}</th>
+            <th colspan="2">{{ ht_question.row_headers[1] }}</th>
+          </tr>
+
+          <!-- <thead>
+            <th v-for="(item, index) in ht_question.row_headers" :key="index">
+                      
+                        <b>{{ ht_question.row_headers[index]}}</b>
+                      </th>
+          </thead> -->
           <tbody>
-            <tr v-for="(item, index) in mt_question.answer_choice" :key="index">
-              <td>{{ mt_question.answer_choice[index].row }}</td>
+            <tr v-for="(item, index) in ht_question.answer_choice" :key="index">
+              <td>{{ ht_question.answer_choice[index].row }}</td>
+              <!-- <tr v-for="(item, index) in ht_question.answer_choice." :key="index"> -->
+
+              <!-- </tr>   -->
               <td>
-                <n-checkbox v-model="value" size="large" />
+                <div class="choice" @click="highlight">
+                  {{ ht_question.answer_choice[index].options[0].label }}
+                </div>
               </td>
               <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
+                <div class="choice" @click="highlight">
+                  {{ ht_question.answer_choice[index].options[1].label }}
+                </div>
               </td>
             </tr>
           </tbody>
@@ -53,31 +62,31 @@
     <div v-else>
       <RationalePopup
         :correct="this.$store.state.correct"
-        :rationale="mt_question.rationale"
+        :rationale="ht_question.rationale"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NTable, NCheckbox } from "naive-ui";
+import { NButton, NTabPane, NTabs, NTable } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import RationalePopup from "../components/RationalePopup.vue";
 
 export default {
-  name: "MatrixTable",
+  name: "HighlightTable",
   props: {
-    mt_question: Object,
+    ht_question: Object,
   },
   components: {
     NButton,
     NTabPane,
     NTabs,
     NTable,
-    NCheckbox,
     RationalePopup,
   },
+
   computed: {
     question() {
       return this.$store.getters.questionNext;
@@ -118,6 +127,24 @@ export default {
       },
     };
   },
+
+  mounted() {
+    this.highlight();
+  },
+  methods: {
+    highlight() {
+      let choice = document.getElementsByClassName("choice");
+      for (let i = 0; i < choice.length; i++) {
+        choice[i].addEventListener("click", function () {
+          if (choice[i].style.background == "") {
+            choice[i].style.background = "yellow";
+          } else {
+            choice[i].style.background = "";
+          }
+        });
+      }
+    },
+  },
 };
 </script>
 
@@ -154,19 +181,7 @@ h2 {
 /*****TABLE*****/
 .n-table {
   box-shadow: 10px 10px 5px #cac9c9;
-}
-
-th:not(:first-child) {
-  text-align: center;
-}
-
-/*****ANSWERS******/
-.n-checkbox {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  border: none;
 }
 
 /*****BUTTON*****/
@@ -177,5 +192,14 @@ th:not(:first-child) {
 }
 a {
   text-decoration: none;
+}
+
+.choice {
+  text-align: center;
+  padding: 5px 0;
+}
+
+th:nth-child(2) {
+  text-align: center;
 }
 </style>
