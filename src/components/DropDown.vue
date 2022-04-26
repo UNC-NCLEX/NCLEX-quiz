@@ -150,12 +150,21 @@ export default {
                 checkedValue.value = e.target.value;
             },
             checkAnswer() {
-                let studentAnswer = [p1c1, p1c2, p2c1, p2c2, p3c1, p3c2]
+              console.log(props.ddt_question.correct_answers)
+                //array of student answers by row and column (p1c2 is row 1 column 2)
+                let studentAnswer = [p1c1.value, p1c2.value, p2c1.value, p2c2.value]
+                if(props.ddt_question.correct_answers.length>4){
+                  studentAnswer.push(p3c1.value);
+                  studentAnswer.push(p3c2.value)
+                }
                 let correct = true;
                 store.state.isSubmitted = true;
+                //convert Proxy correct answer array from props to parsable array
+                let correctAns = { ...props.ddt_question.correct_answers}
                 //check if student answers match correct
-                for(let i = 0; i < props.ddt_question.correct_answers.length; i++) {
-                    if(studentAnswer[i]!==props.ddt_question.correct_answers[i]){
+                for(let i = 0; i < correctAns.length; i++) {
+                    if(studentAnswer[i]!=correctAns[i]){
+                      console.log(studentAnswer[i], correctAns[i])
                       correct = false;
                     }}
                 if (correct)

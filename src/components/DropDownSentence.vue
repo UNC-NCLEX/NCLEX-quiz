@@ -116,8 +116,6 @@ export default {
     const store = useStore();
     //compare if all chosen answers are correct return true else false - no partial credit
     function ifSameArray(arr1, arr2) {
-      console.log(arr1);
-      console.log(arr2);
       if (arr1.length !== arr2.length) return false;
         const arr1_sorted = arr1.sort();
         const arr2_sorted = arr2.sort();
@@ -133,8 +131,8 @@ export default {
       } else {return true}
     },
       checkAnswer() {
-        console.log(p1)
-        let selectedAns = [p1, p2, p3]
+        console.log(p1, p2, p3)
+        let selectedAns = [p1.value, p2.value, p3.value]
         console.log(selectedAns);
         store.state.isSubmitted = true;
         if (
