@@ -19,19 +19,19 @@
       <div v-if="item.type === 'mc'">
         <MultipleChoice :mc_question="item" :view_only="true"></MultipleChoice>
       </div>
-      <div v-else-if="item.type === 'select'">
+      <div v-if="item.type === 'select'">
         <MultipleResponse
           :mr_question="item"
           :view_only="true"
         ></MultipleResponse>
       </div>
-      <div v-else-if="item.type === 'ht'">
+      <div v-if="item.type === 'ht'">
         <HighlightTable 
         :ht_question="item" 
         :view_only="true"
         ></HighlightTable>
       </div>
-         <div v-else-if="item.type === 'mt'">
+         <div v-if="item.type === 'mt'">
         <MatrixTable 
         :mt_question="item" 
         :view_only="true"
