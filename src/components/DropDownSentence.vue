@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <h2>Week {{dds_question.quiz_id}} Review</h2>
     <div class="question">
       <h3>Question</h3>
       <div class="information">
@@ -67,10 +66,10 @@
         </div>
       </div>
     </div>
-    <div v-if="!this.$store.state.isSubmitted">
+    <div v-if="!this.$store.state.isSubmitted && !view_only">
             <n-button size="large" @click="checkAnswer">Submit</n-button>
         </div>
-        <div v-else>
+        <div v-else-if="this.$store.state.isSubmitted && !view_only">
             <RationalePopup
                 :correct="this.$store.state.correct"
                 :rationale="dds_question.rationale"
@@ -97,14 +96,11 @@ export default {
   },
   props: {
     //currect question data passed in as a prop -> immutable
-    dds_question: Object
-  },
-  methods: {
-    ifRow3(){
-      if(this.dds_question.row_headers[2]===null){
-        return false
-      } else {return true}
-    }
+    dds_question: Object,
+    view_only: {
+            default: false,
+            type: Boolean,
+        },
   },
   computed: {
     question() {
@@ -116,6 +112,7 @@ export default {
     const p1 = ref("");
     const p2 = ref("");
     const p3 =  ref("");
+
     const store = useStore();
     //compare if all chosen answers are correct return true else false - no partial credit
     function ifSameArray(arr1, arr2) {
@@ -130,6 +127,11 @@ export default {
           return true;
         }
     return {
+      ifRow3() {
+      if(props.dds_question.row_headers[2]===null){
+        return false
+      } else {return true}
+    },
       checkAnswer() {
         console.log(p1)
         let selectedAns = [p1, p2, p3]
