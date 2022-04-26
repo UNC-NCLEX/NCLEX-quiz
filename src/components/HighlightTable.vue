@@ -25,8 +25,8 @@
       <div>
         <n-table>
           <tr>
-            <th>{{ ht_question.row_headers[0] }}</th>
-            <th colspan="2">{{ ht_question.row_headers[1] }}</th>
+            <th><b>{{ ht_question.row_headers[0] }}</b></th>
+            <th colspan="2"><b>{{ ht_question.row_headers[1] }}</b></th>
           </tr>
 
           <!-- <thead>
@@ -56,10 +56,10 @@
         </n-table>
       </div>
     </div>
-    <div v-if="!this.$store.state.isSubmitted">
+    <div v-if="!this.$store.state.isSubmitted && !view_only">
       <n-button size="large" @click="checkAnswer">Submit</n-button>
     </div>
-    <div v-else>
+    <div v-else-if="this.$store.state.isSubmitted && !view_only">
       <RationalePopup
         :correct="this.$store.state.correct"
         :rationale="ht_question.rationale"
@@ -78,6 +78,10 @@ export default {
   name: "HighlightTable",
   props: {
     ht_question: Object,
+    view_only: {
+      default: false,
+      type: Boolean,
+    },
   },
   components: {
     NButton,

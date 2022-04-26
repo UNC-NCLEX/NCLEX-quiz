@@ -47,15 +47,15 @@
         </n-table>
       </div>
     </div>
-    <div v-if="!this.$store.state.isSubmitted">
-      <n-button size="large" @click="checkAnswer">Submit</n-button>
-    </div>
-    <div v-else>
-      <RationalePopup
-        :correct="this.$store.state.correct"
-        :rationale="mt_question.rationale"
-      />
-    </div>
+    <div v-if="!this.$store.state.isSubmitted && !view_only">
+            <n-button size="large" @click="checkAnswer">Submit</n-button>
+        </div>
+        <div v-else-if="this.$store.state.isSubmitted && !view_only">
+            <RationalePopup
+                :correct="this.$store.state.correct"
+                :rationale="mr_question.rationale"
+            />
+        </div>
   </div>
 </template>
 
@@ -69,6 +69,10 @@ export default {
   name: "MatrixTable",
   props: {
     mt_question: Object,
+     view_only: {
+            default: false,
+            type: Boolean,
+        },
   },
   components: {
     NButton,
