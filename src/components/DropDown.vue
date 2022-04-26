@@ -89,10 +89,10 @@
         </table>
     </div>
 
-    <div v-if="!this.$store.state.isSubmitted">
+    <div v-if="!this.$store.state.isSubmitted && !view_only">
       <n-button size="large" @click="checkAnswer">Submit</n-button>
     </div>
-    <div v-else>
+    <div v-else-if="this.$store.state.isSubmitted && !view_only">
       <RationalePopup
         :correct="this.$store.state.correct"
         :rationale="ddt_question.rationale"
@@ -116,7 +116,11 @@ export default {
     RationalePopup
   },
   props: {
-    ddt_question: Object
+    ddt_question: Object,
+    view_only: {
+            default: false,
+            type: Boolean,
+    },
   },
   methods: {
     ifRow3(){

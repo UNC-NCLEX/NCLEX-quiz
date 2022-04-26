@@ -24,6 +24,12 @@
             <div v-else-if="item.type === 'select'">
                 <MultipleResponse :mr_question="item" :view_only="true"></MultipleResponse>
             </div>
+            <div v-else-if="item.type === 'dds'">
+                 <DropDownSentence :dds_question="item" :view_only="true"></DropDownSentence>
+            </div>
+            <div v-else-if="item.type === 'ddt'">
+                <DropDown :ddt_question="item" :view_only="true"></DropDown>
+            </div>
         </div>
     </div>
 </template>
@@ -33,6 +39,8 @@ import { ref } from "vue";
 import { supabase } from "../supabase/init";
 import MultipleChoice from "../components/MultipleChoice.vue";
 import MultipleResponse from "../components/MultipleResponse.vue";
+import DropDownSentence from "../components/DropDownSentence.vue";
+import DropDown from "../components/DropDown.vue"
 
 export default {
     name: "ViewAllQuizzes",
@@ -40,6 +48,8 @@ export default {
         NSelect,
         MultipleChoice,
         MultipleResponse,
+        DropDownSentence,
+        DropDown
     },
     setup() {
         const message = useMessage();
@@ -93,6 +103,7 @@ export default {
     justify-content: center;
     align-items: center;
     color: black;
+    padding-bottom: 2%;
 }
 
 .question__number {
