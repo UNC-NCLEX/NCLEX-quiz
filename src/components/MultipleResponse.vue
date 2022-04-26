@@ -123,54 +123,54 @@ export default {
 <style scoped>
 /*****CONTAINER*****/
 .container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 /*****TITLE*****/
 h2 {
-    color: #fe4400;
+  color: #fe4400;
 }
 
 /*****TABS*****/
 .information {
-    border: 1px #808080 solid;
-    padding: 35px;
-    margin: 35px 0;
-    border-radius: 10px;
-    box-shadow: 10px 10px 5px #cac9c9;
+  border: 1px #808080 solid;
+  padding: 35px;
+  margin: 35px 0;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px #cac9c9;
 }
 
 /*****QUESTION*****/
 .question {
-    width: 75vw;
-    text-align: left;
+  width: 75vw;
+  text-align: left;
 }
 
 /*****ANSWERS*****/
 .n-checkbox {
-    border: 1px #808080 solid;
-    box-shadow: 10px 10px 5px #cac9c9;
-    border-radius: 10px;
-    width: 72vw;
-    padding: 20px 1.5vw;
-    margin-top: 10px;
+  border: 1px #808080 solid;
+  box-shadow: 10px 10px 5px #cac9c9;
+  border-radius: 10px;
+  width: 72vw;
+  padding: 20px 1.5vw;
+  margin-top: 10px;
 }
 
 .choice-text {
-    padding: 0 10px;
+  padding: 0 10px;
 }
 
 /*****BUTTON*****/
 .n-button {
-    background-color: #ffc633;
-    box-shadow: 10px 10px 5px #cac9c9;
-    margin: 25px 0;
+  background-color: #ffc633;
+  box-shadow: 10px 10px 5px #cac9c9;
+  margin: 25px 0;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 </style>

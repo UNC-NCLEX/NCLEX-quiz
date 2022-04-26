@@ -30,8 +30,14 @@
             <div v-else-if="item.type === 'ddt'">
                 <DropDown :ddt_question="item" :view_only="true"></DropDown>
             </div>
+            <div v-if="item.type === 'ht'">
+                <HighlightTable :ht_question="item" :view_only="true"></HighlightTable>
+            </div>
+            <div v-if="item.type === 'mt'">
+                <MatrixTable :mt_question="item" :view_only="true"></MatrixTable>
+            </div>
         </div>
-    </div>
+  </div>
 </template>
 <script>
 import { useMessage, NSelect } from "naive-ui";
@@ -41,6 +47,8 @@ import MultipleChoice from "../components/MultipleChoice.vue";
 import MultipleResponse from "../components/MultipleResponse.vue";
 import DropDownSentence from "../components/DropDownSentence.vue";
 import DropDown from "../components/DropDown.vue"
+import HighlightTable from "../components/HighlightTable.vue"
+import MatrixTable from "../components/MatrixTable.vue"
 
 export default {
     name: "ViewAllQuizzes",
@@ -49,7 +57,9 @@ export default {
         MultipleChoice,
         MultipleResponse,
         DropDownSentence,
-        DropDown
+        DropDown,
+        HighlightTable,
+        MatrixTable
     },
     setup() {
         const message = useMessage();
@@ -107,10 +117,10 @@ export default {
 }
 
 .question__number {
-    text-align: center;
+  text-align: center;
 }
 
 .question__select {
-    width: 50%;
+  width: 50%;
 }
 </style>
