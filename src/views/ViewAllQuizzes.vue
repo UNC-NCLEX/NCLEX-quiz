@@ -123,4 +123,12 @@ export default {
 .question__select {
   width: 50%;
 }
+
+#question {
+    margin-top: 80px;
+}
+
+#question:last-child {
+    margin-bottom: 80px;
+}
 </style>

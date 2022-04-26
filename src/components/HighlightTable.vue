@@ -25,8 +25,8 @@
       <div>
         <n-table>
           <tr>
-            <th>{{ ht_question.row_headers[0] }}</th>
-            <th colspan="2">{{ ht_question.row_headers[1] }}</th>
+            <th><b>{{ ht_question.row_headers[0] }}</b></th>
+            <th colspan="2"><b>{{ ht_question.row_headers[1] }}</b></th>
           </tr>
 
           <!-- <thead>
@@ -79,9 +79,9 @@ export default {
   props: {
     ht_question: Object,
     view_only: {
-            default: false,
-            type: Boolean,
-        },
+      default: false,
+      type: Boolean,
+    },
   },
   components: {
     NButton,
