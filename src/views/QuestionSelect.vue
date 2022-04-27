@@ -124,6 +124,8 @@ export default {
             break;
           case 4:
             // DropDown Table
+            console.log("Routing...");
+            this.$router.push("/NewDDT");
             break;
           case 5:
             // Matrix Table

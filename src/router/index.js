@@ -11,9 +11,11 @@ import PasswordRecovery from "../views/PasswordRecovery.vue";
 import ViewAllQuizzes from "../views/ViewAllQuizzes.vue"
 import QuestionSelect from "../views/QuestionSelect.vue";
 import NewDDS from "../views/NewDDS.vue";
+import NewDDT from "../views/NewDDT.vue";
 import NewMatrix from "../views/NewMatrix.vue";
 import NewMultChoice from "../views/NewMultChoice.vue";
 import NewSelectAll from "../views/NewSelectAll.vue";
+import NewHighlight from "../views/NewHighlight.vue";
 
 const routes = [
   {
@@ -90,6 +92,16 @@ const routes = [
     }
   },
   {
+    path: "/NewDDT",
+    name: "NewDDT",
+    component: NewDDT,
+    props: true,
+    meta: {
+      requiresAuth: true,
+      authType: "instructor-only"
+    }
+  },
+  {
     path: "/NewMatrix",
     name: "NewMatrix",
     component: NewMatrix,
@@ -113,6 +125,16 @@ const routes = [
     path: "/NewSelectAll",
     name: "NewSelectAll",
     component: NewSelectAll,
+    props: true,
+    meta: {
+      requiresAuth: true,
+      authType: "instructor-only"
+    }
+  },
+  {
+    path: "/NewHighlight",
+    name: "NewHighlight",
+    component: NewHighlight,
     props: true,
     meta: {
       requiresAuth: true,
