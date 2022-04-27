@@ -40,7 +40,7 @@ export default {
     min-height: 100px;
     margin-bottom: 20px;
     background: linear-gradient(180deg, #ff5c00 0%, #ff5c00 100%);
-    box-shadow: -10px 10px 6px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 6px rgba(0, 0, 0, 0.7);
     border-radius: 22px;
     display: flex;
     align-items: center;

@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div class="wrapper">
         <div class="cont">
             <div class="quiz">
                 <h2>Quiz Management</h2>
@@ -15,8 +15,6 @@
                 </h2>
             </div>
         </div>
-        <!--TODO: maybe change to embedded form -->
-        <p ><a class="help" href="mailto: unc-nclex-site@unc.edu"> Report a problem</a></p>
     </div>
 </template>
 
@@ -27,8 +25,12 @@ export default {
 </script>
 
 <style scoped>
-.main {
+.wrapper {
     font-family: "Montserrat";
+    overflow: auto;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 .cont {
     display: flex;
@@ -70,10 +72,6 @@ export default {
     border-radius: 5%;
     margin-top: 15%;
     box-shadow: 10px 10px 5px #cac9c9;
-}
-
-.help{
-    color:black;
 }
 
 #subtitle {
