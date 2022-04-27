@@ -214,6 +214,10 @@ td {
   padding: 5px;
 }
 
+.form-field {
+  width: 75%;
+}
+
 router-link,
 a {
   color: rgb(75, 85, 97);

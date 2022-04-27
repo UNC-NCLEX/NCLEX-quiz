@@ -125,7 +125,7 @@ export default {
 }
 
 #question {
-    margin-top: 80px;
+    margin-top: 20px;
 }
 
 #question:last-child {

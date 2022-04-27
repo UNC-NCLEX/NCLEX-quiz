@@ -105,7 +105,8 @@ export default {
 }
 .scores {
     padding: 5%;
-    box-shadow: -10px 4px 6px rgba(0, 0, 0, 0.25);
-    margin-bottom: 5%;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
+    margin-top: 3%;
+    margin-bottom: 3%;
 }
 </style>
