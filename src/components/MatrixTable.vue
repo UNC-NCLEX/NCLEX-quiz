@@ -53,7 +53,7 @@
     <div v-else-if="this.$store.state.isSubmitted && !view_only">
       <RationalePopup
         :correct="this.$store.state.correct"
-        :rationale="mr_question.rationale"
+        :rationale="mt_question.rationale"
       />
     </div>
   </div>
