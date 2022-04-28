@@ -145,6 +145,12 @@ export default {
     const p3c2 = ref("");
     const store = useStore();
     return {
+            p1c1: p1c1,
+            p1c2: p1c2,
+            p2c1: p2c1,
+            p2c2: p2c2,
+            p3c1: p3c1,
+            p3c2: p3c2,
             checkedValue: ref(null),
             handleChange(e) {
                 checkedValue.value = e.target.value;

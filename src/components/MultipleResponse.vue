@@ -76,11 +76,6 @@ export default {
         NTabs,
         RationalePopup,
     },
-    computed: {
-        question() {
-            return this.$store.getters.questionNext;
-        },
-    },
     setup(props) {
         const choiceSelRef = ref([]);
         const store = useStore();
