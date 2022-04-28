@@ -42,12 +42,12 @@
 
               <!-- </tr>   -->
               <td>
-                <div class="choice" @click="highlight">
+                <div class="choice" @click="highlight" :data-id="ht_question.answer_choice[index].options[0].label">
                   {{ ht_question.answer_choice[index].options[0].label }}
                 </div>
               </td>
               <td>
-                <div class="choice" @click="highlight">
+                <div class="choice" @click="highlight" :data-id="ht_question.answer_choice[index].options[1].label">
                   {{ ht_question.answer_choice[index].options[1].label }}
                 </div>
               </td>
@@ -90,12 +90,6 @@ export default {
     NTable,
     RationalePopup,
   },
-
-  computed: {
-    question() {
-      return this.$store.getters.questionNext;
-    },
-  },
   setup(props) {
     const choiceSelRef = ref([]);
     const store = useStore();
@@ -129,28 +123,18 @@ export default {
           store.state.correct = "incorrect";
         }
       },
+      highlight(e) {
+        if (e.target.style.backgroundColor == "") {
+          e.target.style.backgroundColor = "yellow"
+          choiceSelRef.value.push(e.target.getAttribute("data-id"));
+        } else {
+          e.target.style.backgroundColor = "";
+          choiceSelRef.value.splice(choiceSelRef.value.indexOf(e.target.getAttribute("data-id")), 1);
+        }
+        }
     };
   },
 
-  mounted() {
-    this.highlight();
-  },
-  methods: {
-    highlight() {
-      let choice = document.getElementsByClassName("choice");
-      for (let i = 0; i < choice.length; i++) {
-        choice[i].addEventListener("click", function () {
-          if (choice[i].style.background == "") {
-            choice[i].style.background = "yellow";
-            this.choiceSelRef.push(choice[i]);
-          } else {
-            choice[i].style.background = "";
-            this.choiceSelRef.splice(this.choiceSelRef.indexOf(choice[i]), 1);
-          }
-        });
-      }
-    },
-  },
 };
 </script>
 
