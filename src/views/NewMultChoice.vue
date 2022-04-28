@@ -6,7 +6,7 @@
             <label for="quizT">Select Quiz Group for Question </label>
             <select v-model="qid">
                 <option
-                    v-for="quiz in quizzesSupabase"
+                    v-for="quiz in this.$store.state.quizzes"
                     :value="quiz.quiz_id"
                     :key="quiz.quiz_id"
                 >
@@ -225,20 +225,6 @@ export default {
     NConfigProvider
     },
   setup() {
-    const quizzesSupabase = ref([]);
-    const getData = async () => {
-        try {
-            let { data: quiz, error } = await supabase
-                .from("quiz")
-                .select("*")
-            if (error) throw error;
-            quizzesSupabase.value = quiz;
-        } catch (error) {
-            console.warn(error.message);
-        }
-    }
-
-    getData();
     return {
         //initializing question variables to be entered by instructor
         qid: ref(null),
@@ -255,12 +241,8 @@ export default {
         answerText4: ref(null),
         answerText5: ref(null),
         rationale: ref(null),
-        quizzesSupabase
     };
 
-  },
-  props: {
-    quizzes: Array,
   },
   data() {
       return {

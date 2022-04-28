@@ -5,8 +5,8 @@
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
       <select v-model="qid">
-        <option v-for="quiz in quizzes" v-bind:value="quiz.qid" :key="quiz.qid">
-          {{ quiz.name }}
+        <option v-for="quiz in this.$store.state.quizzes" v-bind:value="quiz.quiz_id" :key="quiz.quiz_id">
+          {{ quiz.title }}
         </option>
       </select>
     </div>
@@ -167,9 +167,6 @@ import {ref} from 'vue';
 
 export default {
   name: "NewSelectAll",
-  props: {
-    quizzes: Array,
-  },
   components: {
     NButton,
     NInput,

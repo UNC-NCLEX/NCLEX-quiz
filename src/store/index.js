@@ -20,6 +20,7 @@ export default createStore({
         currentIndex: 0, // starts out at 0 because 0th index is 1st question
         currentQid: 0,
         currentQuizTitle: "", // title of the current quiz
+        quizzes: []
     },
     mutations: {
         SIGN_IN(state) {
@@ -60,6 +61,9 @@ export default createStore({
         },
         QUIZ_SELECT(state, qid) {
             state.currentQid = qid;
+        },
+        SET_QUIZ(state, quizzes) {
+            state.quizzes = quizzes;
         },
         INC_QUESTION(state) {
             state.currentIndex = state.currentIndex + 1;

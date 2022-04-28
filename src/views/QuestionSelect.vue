@@ -117,11 +117,11 @@ export default {
             }
       
 
-        const data = await supabase
+        let { data: qids, error } = await supabase
           .from('quiz')
           .select('*');
-
-        console.log(data);
+        if (error) {this.createErrorMessage(error.message, 10000)}
+        this.$store.commit("SET_QUIZ", qids);
 
         /*TODO router to correct page - all need :quizzes prop passed in as all current quizzes in databases when routed - pages use quiz.name and quiz.qid*/
         switch (this.typeSelected) {
@@ -130,27 +130,29 @@ export default {
             break;
           case 1:
             // Multiple Choice
-            this.$router.push({name: "NewMultChoice", params: { quizzes: data.data }});
+            console.log(qids)
+            this.$router.push({name: "NewMultChoice"});
             break;
           case 2:
             // Select All
-            this.$router.push({name: "NewSelectAll", params: { quizzes:  data.data }});
+            console.log(qids)
+            this.$router.push({name: "NewSelectAll" });
             break;
           case 3:
             // DropDown Sentence
-            this.$router.push({name: "NewDDS", params: { quizzes: data.data }});
+            this.$router.push({name: "NewDDS"});
             break;
           case 4:
             // DropDown Table
-            this.$router.push({name: "NewMatrix", params: { quizzes: data.data }});
+            this.$router.push({name: "NewMatrix"});
             break;
           case 5:
             // Matrix Table
-            this.$router.push({name: "NewMatrix", params: { quizzes: data.data }});
+            this.$router.push({name: "NewMatrix"});
             break;
           case 6:
             // Highlight
-            this.$router.push({name: "NewHighlight", params: { quizzes: data.data}});
+            this.$router.push({name: "NewHighlight"});
             break;
           }
           console.log("new question"+ this.typeSelected)

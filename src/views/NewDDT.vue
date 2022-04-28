@@ -4,8 +4,8 @@
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
       <select v-model="qid">
-        <option v-for="quiz in quizzes" v-bind:value="quiz.qid" :key="quiz.qid">
-          {{ quiz.name }}
+        <option v-for="quiz in quizzes" v-bind:value="quiz.quiz_id" :key="quiz.quiz_id">
+          {{ quiz.title }}
         </option>
       </select>
     </div>
@@ -396,7 +396,7 @@ import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
 export default {
-  name: "DropDownSentence",
+  name: "NewDDT",
   props: {
     quizzes: Array,
   },

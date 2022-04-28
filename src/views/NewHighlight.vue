@@ -6,11 +6,11 @@
         <label for="quizT">Select Quiz Group for Question </label>
         <select v-model="qid">
           <option
-            v-for="quiz in quizzes"
-            v-bind:value="quiz.qid"
-            :key="quiz.qid"
+            v-for="quiz in this.$store.state.quizzes"
+            v-bind:value="quiz.quiz_id"
+            :key="quiz.quiz_id"
           >
-            {{ quiz.name }}
+            {{ quiz.title }}
           </option>
         </select>
       </div>
@@ -307,9 +307,6 @@ import { ref } from "vue";
 
 export default {
   name: "NewHighlight",
-  props: {
-    quizzes: Array,
-  },
   components: {
     NButton,
     NTabPane,
