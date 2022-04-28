@@ -30,53 +30,20 @@
             <h4>
                 {{ dds_question.text }}
             </h4>
-            <div>
-                <tr>
+                <tr v-for="(item, index) in dds_question.row_headers" :key="'DDS' + index + item">
                     <h4 class="questions">
-                        {{ dds_question.row_headers[0] }}...
+                        {{ item }}
                     </h4>
                     <td>
                         <n-space vertical>
                             <n-select
                                 @update:value="handleUpdateValue"
-                                :options="dds_question.answer_choice[0]"
+                                :options="dds_question.answer_choice[index]"
                                 clearable
                             />
                         </n-space>
                     </td>
                 </tr>
-                <tr>
-                    <h4 class="questions">
-                        {{ dds_question.row_headers[1] }}...
-                    </h4>
-                    <td>
-                        <n-space vertical>
-                            <n-select
-                                @update:value="handleUpdateValue"
-                                :options="dds_question.answer_choice[1]"
-                                clearable
-                            />
-                        </n-space>
-                    </td>
-                </tr>
-                <!-- row only displays if 3rd row in the question -->
-                <div v-if="ifrow3">
-                    <tr>
-                        <h4 class="questions">
-                            {{ dds_question.row_headers[2] }}...
-                        </h4>
-                        <td>
-                            <n-space vertical>
-                                <n-select
-                                    @update:value="handleUpdateValue"
-                                    :options="dds_question.answer_choice[2]"
-                                    clearable
-                                />
-                            </n-space>
-                        </td>
-                    </tr>
-                </div>
-            </div>
         </div>
         <div v-if="!this.$store.state.isSubmitted && !view_only">
             <n-button size="large" @click="checkAnswer">Submit</n-button>
@@ -120,8 +87,6 @@ export default {
         const store = useStore();
 
         function ifSameArray(arr1, arr2) {
-            console.log(arr1);
-            console.log(arr2);
             if (arr1.length !== arr2.length) return false;
             const arr1_sorted = arr1.sort();
             const arr2_sorted = arr2.sort();
@@ -132,13 +97,6 @@ export default {
         }
         return {
             choiceSel: choiceSelRef,
-            ifRow3() {
-                if (props.dds_question.row_headers[2] === null) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
             handleUpdateValue(value) {
                 choiceSelRef.value.push(value);
             },
