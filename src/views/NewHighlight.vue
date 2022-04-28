@@ -307,6 +307,9 @@ import { ref } from "vue";
 
 export default {
   name: "NewHighlight",
+  props: {
+    quizzes: Array,
+  },
   components: {
     NButton,
     NTabPane,

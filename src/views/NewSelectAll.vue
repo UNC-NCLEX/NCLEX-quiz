@@ -167,6 +167,9 @@ import {ref} from 'vue';
 
 export default {
   name: "NewSelectAll",
+  props: {
+    quizzes: Array,
+  },
   components: {
     NButton,
     NInput,
@@ -191,9 +194,6 @@ export default {
       a6: ref(null),
       rationale: ref(null),
     };
-  },
-  props: {
-    quizzes: Array,
   },
   data() {
     return {

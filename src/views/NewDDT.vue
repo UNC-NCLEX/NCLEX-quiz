@@ -397,6 +397,9 @@ import { ref } from "vue";
 
 export default {
   name: "DropDownSentence",
+  props: {
+    quizzes: Array,
+  },
   components: {
     NButton,
     NTabPane,

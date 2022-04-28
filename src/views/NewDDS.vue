@@ -301,6 +301,9 @@ import { ref } from "vue";
 
 export default {
   name: "NewDDS",
+  props: {
+    quizzes: Array,
+  },
   components: {
     NButton,
     NTabPane,

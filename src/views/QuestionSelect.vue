@@ -1,35 +1,45 @@
 <template>
-<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
-  <div class="main">
-    <div class="content">
-      <div class="quiz">
-        <h2>Quiz Management</h2>
-      </div>
-      <br>
-      <div class="newQ">
-            <h3> Creating a new quiz? Enter quiz name here: </h3>
-            <n-input v-model:value="newQuizName" type="text" class="form-field" id="newQuizName" name="newQuizName" :input-props="{ type: 'clearable' }" placeholder="Enter New Quiz Name" />
-            <div class="space"></div>
-            <n-button size="large" @click="createQuiz">Add Quiz</n-button>
-      </div>
-      <br>
-      <div class="qType">
-        <h3> Creating a new question? Select question type here: </h3>
-        <n-radio-group v-model:value="typeSelected" name="radiogroup">
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="main">
+      <div class="content">
+        <div class="quiz">
+          <h2>Quiz Management</h2>
+        </div>
+        <br />
+        <div class="newQ">
+          <h3>Creating a new quiz? Enter quiz name here:</h3>
+          <n-input
+            v-model:value="newQuizName"
+            type="text"
+            class="form-field"
+            id="newQuizName"
+            name="newQuizName"
+            :input-props="{ type: 'clearable' }"
+            placeholder="Enter New Quiz Name"
+          />
+          <div class="space"></div>
+          <n-button size="large" @click="createQuiz">Add Quiz</n-button>
+        </div>
+        <br />
+        <div class="qType">
+          <h3>Creating a new question? Select question type here:</h3>
+          <n-radio-group v-model:value="typeSelected" name="radiogroup">
             <!-- if typeSelected===1, multChoice; if typeSelected===2, selAll; etc... -->
-            <n-radio :value=1 class="choice-text">Multiple Choice</n-radio>
-            <n-radio :value=2 class="choice-text">Select All</n-radio>
-            <n-radio :value=3 class="choice-text">DropDown Sentence</n-radio>
-            <n-radio :value=4 class="choice-text">DropDown Table</n-radio>
-            <n-radio :value=5 class="choice-text">Matrix Table</n-radio>
-            <n-radio :value=6 class="choice-text">Highlight Table</n-radio>
-        </n-radio-group>
-        <div class="space"></div>
-        <n-button size="large" @click="createQuestion">Create Question</n-button>   
-      </div>      
+            <n-radio :value="1" class="choice-text">Multiple Choice</n-radio>
+            <n-radio :value="2" class="choice-text">Select All</n-radio>
+            <n-radio :value="3" class="choice-text">DropDown Sentence</n-radio>
+            <n-radio :value="4" class="choice-text">DropDown Table</n-radio>
+            <n-radio :value="5" class="choice-text">Matrix Table</n-radio>
+            <n-radio :value="6" class="choice-text">Highlight Table</n-radio>
+          </n-radio-group>
+          <div class="space"></div>
+          <n-button size="large" @click="createQuestion"
+            >Create Question</n-button
+          >
+        </div>
+      </div>
     </div>
-  </div>
-</n-config-provider>
+  </n-config-provider>
 </template>
 <script>
 import { NButton, NInput, NRadio, NRadioGroup, NConfigProvider, useMessage } from "naive-ui";
@@ -62,6 +72,7 @@ export default {
     return {
       newQuizName: "",
       typeSelected: 0,
+      quizList: {},
       themeOverrides: {
           common: {
               primaryColor: "#FF8C00"
@@ -89,7 +100,23 @@ export default {
 
           this.createSuccessMessage("Success! New quiz was created!", 10000);
       },
+      
       async createQuestion(){
+        try {
+                let { data: quiz, error } = await supabase
+                    .from("quiz")
+                    .select("*");
+                if (error) throw error;
+                this.quizList = quiz.map((obj) => ({
+                    label: obj.title,
+                    value: obj.quiz_id,
+                }));
+                
+            } catch (error) {
+                console.log(error.message);
+            }
+      
+
         const data = await supabase
           .from('quiz')
           .select('*');
@@ -107,7 +134,7 @@ export default {
             break;
           case 2:
             // Select All
-            this.$router.push({name: "NewSelectAll", params: { quizzes: data.data }});
+            this.$router.push({name: "NewSelectAll", params: { quizzes:  data.data }});
             break;
           case 3:
             // DropDown Sentence
@@ -123,7 +150,7 @@ export default {
             break;
           case 6:
             // Highlight
-            this.$router.push({name: "NewHighlight", params: { quizzes: data.data }});
+            this.$router.push({name: "NewHighlight", params: { quizzes: data.data}});
             break;
           }
           console.log("new question"+ this.typeSelected)
@@ -160,7 +187,12 @@ export default {
   margin-right: auto;
   margin-left: auto;
   width: 50%;
-  background: linear-gradient(172.4deg, #24A3FF 5.89%, #24A3FF 5.9%, #0038FF 91.52%);
+  background: linear-gradient(
+    172.4deg,
+    #24a3ff 5.89%,
+    #24a3ff 5.9%,
+    #0038ff 91.52%
+  );
   border-radius: 5%;
   box-shadow: 10px 10px 5px #cac9c9;
 }

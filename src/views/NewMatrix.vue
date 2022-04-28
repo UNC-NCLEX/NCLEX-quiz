@@ -280,6 +280,9 @@ import { ref } from "vue";
 
 export default {
   name: "NewMatrix",
+  props: {
+    quizzes: Array,
+  },
   components: {
     NButton,
     NTabPane,
