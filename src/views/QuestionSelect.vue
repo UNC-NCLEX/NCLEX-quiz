@@ -60,16 +60,6 @@ export default {
   },
   data() {
     return {
-      fields: [
-        { key: "sid", sortable: true },
-        { key: "qid1", sortable: true },
-        { key: "qid2", sortable: true },
-      ],
-      scores: [
-        { sid: 1, qid1: 90, qid2: 75 },
-        { sid: 2, qid1: 95, qid2: 90 },
-        { sid: 3, qid1: 75, qid2: 85 },
-      ],
       newQuizName: "",
       typeSelected: 0,
       themeOverrides: {
@@ -89,11 +79,12 @@ export default {
           // This implementation can create problems if a quiz
           // is deleted.
           let next_id = Math.max(data.data.length) + 1;
+          console.log(next_id)
 
           await supabase
           .from('quiz')
           .insert([
-            { quiz_id: next_id, title: this.newQuizName }
+            { title: this.newQuizName }
           ]);
 
           this.createSuccessMessage("Success! New quiz was created!", 10000);
@@ -124,8 +115,7 @@ export default {
             break;
           case 4:
             // DropDown Table
-            console.log("Routing...");
-            this.$router.push("/NewDDT");
+            this.$router.push({name: "NewMatrix", params: { quizzes: data.data }});
             break;
           case 5:
             // Matrix Table
