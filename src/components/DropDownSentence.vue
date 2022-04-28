@@ -5,28 +5,28 @@
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
-            {{dds_question.hist_and_phys}}
+            {{ dds_question.hist_and_phys }}
           </n-tab-pane>
           <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            {{dds_question.nurse_notes}}
+            {{ dds_question.nurse_notes }}
           </n-tab-pane>
           <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            {{question.flow_sheet}} 
+            {{ question.flow_sheet }}
           </n-tab-pane>
           <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            {{dds_question.lab_results}}
+            {{ dds_question.lab_results }}
           </n-tab-pane>
           <n-tab-pane name="Orders" tab="Orders">
-            {{dds_question.orders}}
+            {{ dds_question.orders }}
           </n-tab-pane>
         </n-tabs>
       </div>
       <h4>
-        {{dds_question.text}}
+        {{ dds_question.text }}
       </h4>
       <div>
         <tr>
-          <h4 class="questions">{{dds_question.row_headers[0]}}...</h4>
+          <h4 class="questions">{{ dds_question.row_headers[0] }}...</h4>
           <td>
             <n-space vertical>
               <n-select
@@ -34,11 +34,11 @@
                 :options="dds_question.answer_choice[0]"
                 clearable
               />
-              </n-space>
+            </n-space>
           </td>
         </tr>
         <tr>
-          <h4 class="questions">{{dds_question.row_headers[1]}}...</h4>
+          <h4 class="questions">{{ dds_question.row_headers[1] }}...</h4>
           <td>
             <n-space vertical>
               <n-select
@@ -46,35 +46,35 @@
                 :options="dds_question.answer_choice[1]"
                 clearable
               />
-              </n-space>
+            </n-space>
           </td>
         </tr>
         <!-- row only displays if 3rd row in the question -->
         <div v-if="ifrow3">
-        <tr>
-          <h4 class="questions">{{dds_question.row_headers[2]}}...</h4>
-          <td>
-            <n-space vertical>
-              <n-select
-                v-model="p3"
-                :options="dds_question.answer_choice[2]"
-                clearable
-              />
+          <tr>
+            <h4 class="questions">{{ dds_question.row_headers[2] }}...</h4>
+            <td>
+              <n-space vertical>
+                <n-select
+                  v-model="p3"
+                  :options="dds_question.answer_choice[2]"
+                  clearable
+                />
               </n-space>
-          </td>
-        </tr>
+            </td>
+          </tr>
         </div>
       </div>
     </div>
     <div v-if="!this.$store.state.isSubmitted && !view_only">
-            <n-button size="large" @click="checkAnswer">Submit</n-button>
-        </div>
-        <div v-else-if="this.$store.state.isSubmitted && !view_only">
-            <RationalePopup
-                :correct="this.$store.state.correct"
-                :rationale="dds_question.rationale"
-            />
-        </div>
+      <n-button size="large" @click="checkAnswer">Submit</n-button>
+    </div>
+    <div v-else-if="this.$store.state.isSubmitted && !view_only">
+      <RationalePopup
+        :correct="this.$store.state.correct"
+        :rationale="dds_question.rationale"
+      />
+    </div>
   </div>
 </template>
 
@@ -92,65 +92,65 @@ export default {
     NTabs,
     NSpace,
     NSelect,
-    RationalePopup
+    RationalePopup,
   },
   props: {
     //currect question data passed in as a prop -> immutable
     dds_question: Object,
     view_only: {
-            default: false,
-            type: Boolean,
-        },
+      default: false,
+      type: Boolean,
+    },
   },
   computed: {
     question() {
-      return this.$store.getters.questionNext
-    }
+      return this.$store.getters.questionNext;
+    },
   },
   setup(props) {
     //initialize store and student answer variables
     const p1 = ref("");
     const p2 = ref("");
-    const p3 =  ref("");
+    const p3 = ref("");
 
     const store = useStore();
-    //compare if all chosen answers are correct return true else false - no partial credit
-    function ifSameArray(arr1, arr2) {
-      if (arr1.length !== arr2.length) return false;
-        const arr1_sorted = arr1.sort();
-        const arr2_sorted = arr2.sort();
-        for (let i = 0; i < arr1.length; i++) {
-            if (arr1_sorted[i] !== arr2_sorted[i]) return false;
-            }
-          return true;
-        }
     return {
       ifRow3() {
-      if(props.dds_question.row_headers[2]===null){
-        return false
-      } else {return true}
-    },
+        if (props.dds_question.row_headers[2] === null) {
+          return false;
+        } else {
+          return true;
+        }
+      },
       checkAnswer() {
-        console.log(p1, p2, p3)
-        let selectedAns = [p1.value, p2.value, p3.value]
-        console.log(selectedAns);
+        let correct = true;
+        let studentAnswer = [p1.value, p2.value];
+        
         store.state.isSubmitted = true;
-        if (
-          ifSameArray(
-            props.dds_question.correct_answers,
-            selectedAns
-          ) ){
+        //convert Proxy correct answer array from props to parsable array
+        let correctAns = { ...props.dds_question.correct_answers };
+        //if 3rd row
+        if(correctAns[2]!==null){
+          studentAnswer.push(p3.value)
+        }
+        console.log(correctAns)
+        //check if student answers match correct
+        for (let i = 0; i < correctAns.length; i++) {
+          if (studentAnswer[i] != correctAns[i]) {
+            correct = false;
+          }
+        }
+        if (correct) {
           console.log("correct");
           store.state.correct = "correct";
-          store.state.numOfCorrectAnswers =
-          store.state.numOfCorrectAnswers + 1;
+          store.state.numOfCorrectAnswers = store.state.numOfCorrectAnswers + 1;
           store.commit("UPDATE_SCORE");
-          } else {
-           store.state.correct = "incorrect";
-          }
-            },
-        };
-    },
+        } else {
+          store.state.correct = "incorrect";
+        }
+      },
+    };
+  },
 };
 </script>
 

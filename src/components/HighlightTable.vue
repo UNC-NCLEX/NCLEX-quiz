@@ -142,8 +142,10 @@ export default {
         choice[i].addEventListener("click", function () {
           if (choice[i].style.background == "") {
             choice[i].style.background = "yellow";
+            this.choiceSelRef.push(choice[i]);
           } else {
             choice[i].style.background = "";
+            this.choiceSelRef.splice(this.choiceSelRef.indexOf(choice[i]), 1);
           }
         });
       }

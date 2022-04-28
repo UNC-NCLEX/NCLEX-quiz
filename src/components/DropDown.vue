@@ -164,7 +164,6 @@ export default {
                 //check if student answers match correct
                 for(let i = 0; i < correctAns.length; i++) {
                     if(studentAnswer[i]!=correctAns[i]){
-                      console.log(studentAnswer[i], correctAns[i])
                       correct = false;
                     }}
                 if (correct)

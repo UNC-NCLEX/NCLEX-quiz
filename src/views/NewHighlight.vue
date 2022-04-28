@@ -321,7 +321,7 @@ export default {
       methods: {
         enterQuestion() {
           var newQ = {
-            qid: this.qid,
+            quiz_id: this.qid,
             histAndPhys: this.histAndPhys,
             nurseNotes: this.nurseNotes,
             flowSheet: this.flowSheet,
