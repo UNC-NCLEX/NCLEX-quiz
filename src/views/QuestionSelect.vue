@@ -144,7 +144,7 @@ export default {
             break;
           case 4:
             // DropDown Table
-            this.$router.push({name: "NewMatrix"});
+            this.$router.push({name: "NewDDT"});
             break;
           case 5:
             // Matrix Table

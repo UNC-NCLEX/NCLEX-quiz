@@ -30,7 +30,7 @@
             <h4>
                 {{ dds_question.text }}
             </h4>
-                <tr v-for="(item, index) in dds_question.row_headers" :key="'DDS' + index + item">
+            <tr v-for="(item, index) in dds_question.row_headers" :key="'DDS' + index + item">
                     <h4 class="questions">
                         {{ item }}
                     </h4>
@@ -38,6 +38,7 @@
                         <n-space vertical>
                             <n-select
                                 @update:value="handleUpdateValue"
+                                @click="handleRepeat"
                                 :options="dds_question.answer_choice[index]"
                                 clearable
                             />
@@ -58,7 +59,7 @@
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSpace, NSelect } from "naive-ui";
+import { NButton, NTabPane, NTabs, NSelect } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import RationalePopup from "../components/RationalePopup.vue";
@@ -69,7 +70,6 @@ export default {
         NButton,
         NTabPane,
         NTabs,
-        NSpace,
         NSelect,
         RationalePopup,
     },
@@ -85,7 +85,7 @@ export default {
         //initialize store and student answer variables
         const choiceSelRef = ref([]);
         const store = useStore();
-
+        const prev = ref('');
         function ifSameArray(arr1, arr2) {
             if (arr1.length !== arr2.length) return false;
             const arr1_sorted = arr1.sort();
@@ -98,7 +98,13 @@ export default {
         return {
             choiceSel: choiceSelRef,
             handleUpdateValue(value) {
+                if(choiceSelRef.value.includes(prev.value)){
+                    choiceSelRef.value.splice(choiceSelRef.value.indexOf(prev.value), 1);
+                }
                 choiceSelRef.value.push(value);
+            },
+            handleRepeat(e) {
+                prev.value = e.target.outerText
             },
             checkAnswer() {
                 store.state.isSubmitted = true;
