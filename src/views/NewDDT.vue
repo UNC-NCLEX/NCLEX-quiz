@@ -4,7 +4,7 @@
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
       <select v-model="qid">
-        <option v-for="quiz in quizzes" v-bind:value="quiz.quiz_id" :key="quiz.quiz_id">
+        <option v-for="quiz in this.$store.state.quizzes" v-bind:value="quiz.quiz_id" :key="quiz.quiz_id">
           {{ quiz.title }}
         </option>
       </select>

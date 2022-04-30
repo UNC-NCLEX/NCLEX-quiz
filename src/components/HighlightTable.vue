@@ -25,7 +25,7 @@
       <div>
         <n-table>
           <tr>
-            <th><b>{{ ht_question.row_headers[0] }}</b></th>
+            <th><b>{{ ht_question.row_headers[0]}}</b></th>
             <th colspan="2"><b>{{ ht_question.row_headers[1] }}</b></th>
           </tr>
 
@@ -39,7 +39,6 @@
             <tr v-for="(item, index) in ht_question.answer_choice" :key="index">
               <td>{{ ht_question.answer_choice[index].row }}</td>
               <!-- <tr v-for="(item, index) in ht_question.answer_choice." :key="index"> -->
-
               <!-- </tr>   -->
               <td>
                 <div class="choice" @click="highlight" :data-id="ht_question.answer_choice[index].options[0].label">
