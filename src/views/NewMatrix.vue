@@ -4,6 +4,7 @@
       <h2>New Matrix Table Question</h2>
       <div class="quizTitle">
         <label for="quizT">Select Quiz Group for Question </label>
+        <!-- create dropdown of current quizzes from database to select quiz group for question -->
         <select v-model="qid">
           <option
             v-for="quiz in this.$store.state.quizzes"
@@ -15,8 +16,9 @@
         </select>
       </div>
       <div class="question">
-        <h3>Question Information</h3>
+        <h3>Question</h3>
         <div class="information">
+          <!-- tab group for background information to be entered -->
           <n-tabs type="line">
             <n-tab-pane name="History and Physical" tab="History and Physical">
               <n-input
@@ -294,6 +296,7 @@ export default {
       value: ref(null),
       methods: {
         enterQuestion() {
+          //create newQ object with question information to push to database
           var newQ = {
             qid: this.qid,
             histAndPhys: this.histAndPhys,

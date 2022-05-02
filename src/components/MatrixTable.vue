@@ -2,6 +2,7 @@
   <div class="container">
     <div class="question">
       <div class="information">
+        <!-- tab group for background information -->
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
             {{ mt_question.hist_and_phys }}
@@ -26,6 +27,7 @@
       <div>
         <n-table>
           <thead>
+            <!-- for loop through row headers, loops for each row -->
             <th v-for="(item, index) in mt_question.row_headers" :key="index">
               <b>{{ mt_question.row_headers[index] }}</b>
             </th>
@@ -47,7 +49,8 @@
         </n-table>
       </div>
     </div>
- <div v-if="!this.$store.state.isSubmitted && !view_only">
+    <!-- display submit button OR rationale depending on if question has been submitted -->
+    <div v-if="!this.$store.state.isSubmitted && !view_only">
       <n-button size="large" @click="checkAnswer">Submit</n-button>
     </div>
     <div v-else-if="this.$store.state.isSubmitted && !view_only">
@@ -68,11 +71,12 @@ import RationalePopup from "../components/RationalePopup.vue";
 export default {
   name: "MatrixTable",
   props: {
+    //import mt_question as propp - immutable
     mt_question: Object,
-     view_only: {
-            default: false,
-            type: Boolean,
-     },
+    view_only: {
+      default: false,
+      type: Boolean,
+    },
   },
   components: {
     NButton,
@@ -85,6 +89,7 @@ export default {
   setup(props) {
     const choiceSelRef = ref([]);
     const store = useStore();
+    //function to compare student response to correct answer array
     function ifSameArray(arr1, arr2) {
       console.log(arr1);
       console.log(arr2);

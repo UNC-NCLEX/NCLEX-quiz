@@ -14,7 +14,6 @@
 import { NMessageProvider } from "naive-ui";
 import HomePageHeader from "./components/HomePageHeader.vue";
 import StudentDashboardHeader from "./components/StudentDashboardHeader.vue";
-
 import InstructorDashboardHeader from "./components/InstructorDashboardHeader.vue";
 
 export default {

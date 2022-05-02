@@ -4,6 +4,7 @@
     <h2>New Drop Down Sentence Question</h2>
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
+      <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
       <select v-model="qid">
         <option v-for="quiz in this.$store.state.quizzes" v-bind:value="quiz.quiz_id" :key="quiz.quiz_id">
           {{ quiz.title }}
@@ -12,6 +13,7 @@
     </div>
     <div class="question">
       <h3>Question</h3>
+      <!-- tab group for background information n-input fields to take user input -->
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
@@ -311,6 +313,7 @@ export default {
   },
   setup() {
     return {
+      //initialize user input variables for question
       value: ref(null),
       qid: ref(null),
       histAndPhys: ref(null),

@@ -2,6 +2,7 @@
   <div class="container">
     <div class="question">
       <div class="information">
+        <!-- tab group for background information -->
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
             {{ ht_question.hist_and_phys }}
@@ -21,25 +22,17 @@
         </n-tabs>
       </div>
       <h3>{{ ht_question.text }}</h3>
-
+      <!-- question table -->
       <div>
         <n-table>
+          <!-- for loop through row headers, loops for each row -->
           <tr>
             <th><b>{{ ht_question.row_headers[0]}}</b></th>
             <th colspan="2"><b>{{ ht_question.row_headers[1] }}</b></th>
           </tr>
-
-          <!-- <thead>
-            <th v-for="(item, index) in ht_question.row_headers" :key="index">
-                      
-                        <b>{{ ht_question.row_headers[index]}}</b>
-                      </th>
-          </thead> -->
           <tbody>
             <tr v-for="(item, index) in ht_question.answer_choice" :key="index">
               <td>{{ ht_question.answer_choice[index].row }}</td>
-              <!-- <tr v-for="(item, index) in ht_question.answer_choice." :key="index"> -->
-              <!-- </tr>   -->
               <td>
                 <div class="choice" @click="highlight" :data-id="ht_question.answer_choice[index].options[0].label">
                   {{ ht_question.answer_choice[index].options[0].label }}
@@ -55,6 +48,7 @@
         </n-table>
       </div>
     </div>
+    <!-- display submit button OR rationale depending on if question has been submitted -->
     <div v-if="!this.$store.state.isSubmitted && !view_only">
       <n-button size="large" @click="checkAnswer">Submit</n-button>
     </div>
@@ -76,6 +70,7 @@ import RationalePopup from "../components/RationalePopup.vue";
 export default {
   name: "HighlightTable",
   props: {
+    //ht_question imported as prop - immutable
     ht_question: Object,
     view_only: {
       default: false,
@@ -92,6 +87,7 @@ export default {
   setup(props) {
     const choiceSelRef = ref([]);
     const store = useStore();
+    //function used to compare student response to correct answer, no partial credit student answer must fully match
     function ifSameArray(arr1, arr2) {
       console.log(arr1);
       console.log(arr2);
@@ -106,11 +102,8 @@ export default {
     return {
       choiceSel: choiceSelRef,
       checkAnswer() {
-        // TODO:
-        // check answer,
-        // show rational,
-        // and then update scores
         store.state.isSubmitted = true;
+        //check if answer is correct, if yes update score in store
         if (
           ifSameArray(props.ht_question.correct_answers, choiceSelRef.value)
         ) {
@@ -122,6 +115,7 @@ export default {
           store.state.correct = "incorrect";
         }
       },
+      //handle changes to highlight values and update student answer array with changes
       highlight(e) {
         if (e.target.style.backgroundColor == "") {
           e.target.style.backgroundColor = "yellow"

@@ -1,8 +1,10 @@
+<!-- instructor page to view all current quizzes and questions -->
 <template>
     <div class="container">
         <h1 class="question__info">
             Please select a quiz from the dropdown list
         </h1>
+        <!-- drop down to select quiz to display, saved into quizSelect variable -->
         <n-select
             v-model:value="quizSelect"
             placeholder="Please select a quiz to view:"
@@ -12,6 +14,7 @@
             @update:value="handleUpdateValue"
         >
         </n-select>
+        <!-- display each question in selected quiz based on question type -->
         <div
             id="question"
             v-for="(item, index) in questions"
@@ -63,12 +66,11 @@ export default {
     },
     setup() {
         const message = useMessage();
-        const quizSelectRef = ref("");
-        const quizzesRef = ref([]);
-        const questionsRef = ref([]);
+        const quizSelectRef = ref(""); //selected quiz to display
+        const quizzesRef = ref([]); //list of all quizzes
+        const questionsRef = ref([]); //questions in selected quiz
         const getQuizzes = async () => {
-            // TODO: get user's past quizzes in an array
-            // get the user's scores
+            //get quizzes list from database
             try {
                 let { data: quiz, error } = await supabase
                     .from("quiz")
@@ -83,6 +85,7 @@ export default {
                 message.error(error.message);
             }
         };
+        //allows user to change which quiz to view from dropdown selection
         const handleUpdateValue = async () => {
             try {
                 let { data: questions, error } = await supabase

@@ -3,14 +3,20 @@
     <h2>New Drop Down Table Question</h2>
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
+      <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
       <select v-model="qid">
-        <option v-for="quiz in this.$store.state.quizzes" v-bind:value="quiz.quiz_id" :key="quiz.quiz_id">
+        <option
+          v-for="quiz in this.$store.state.quizzes"
+          v-bind:value="quiz.quiz_id"
+          :key="quiz.quiz_id"
+        >
           {{ quiz.title }}
         </option>
       </select>
     </div>
     <div class="question">
       <h3>Question</h3>
+      <!-- tab group for background information n-input fields to take user input -->
       <div class="information">
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
@@ -378,14 +384,14 @@
       </div>
     </div>
     <n-input
-                v-model:value="rationale"
-                type="text"
-                class="form-field"
-                id="rationale"
-                name="rationale"
-                :input-props="{ type: 'clearable' }"
-                placeholder="Enter Rationale Text"
-            />
+      v-model:value="rationale"
+      type="text"
+      class="form-field"
+      id="rationale"
+      name="rationale"
+      :input-props="{ type: 'clearable' }"
+      placeholder="Enter Rationale Text"
+    />
     <n-button @click="enterQuestion()" size="large">Add Question</n-button>
   </div>
 </template>
@@ -409,6 +415,7 @@ export default {
   },
   setup() {
     return {
+      //initialize variables for instructor entered data
       value: ref(null),
       qid: ref(null),
       histAndPhys: ref(null),

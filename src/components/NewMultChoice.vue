@@ -3,6 +3,7 @@
     <h2>New Multiple Choice Question</h2>
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
+      <!-- create dropdown of current quizzes from database to select quiz group for question -->
       <select v-model="qid">
         <option v-for="quiz in quizzes" v-bind:value="quiz.qid" :key="quiz.qid">
           {{ quiz.name }}
@@ -12,6 +13,7 @@
     <div class="question">
       <h3>Question Information</h3>
       <div class="information">
+        <!-- tab group for background information to be entered -->
         <n-tabs type="line">
           <n-tab-pane name="History and Physical" tab="History and Physical">
             <n-input
@@ -70,6 +72,7 @@
           </n-tab-pane>
         </n-tabs>
       </div>
+      <!-- n-input fields for text input -->
       <h4>Question Text</h4>
       <n-input
         v-model:value="questText"
@@ -82,7 +85,7 @@
       />
       <br>
       <div>
-
+        <!-- "answer" variable models the correct answer indicated by instructor (radio button) -->
         <div class="answer">
           <input
             type="radio"
@@ -215,6 +218,7 @@ export default {
   },
   setup() {
     return {
+      //initialize inputted variables
       qid: ref(null),
       histAndPhys: ref(null),
       nurseNotes: ref(null),
@@ -236,6 +240,7 @@ export default {
   },
   methods: {
     enterQuestion() {
+      //object newQ to send to database as new question with user inputted variables
       var newQ = {
         qid: this.qid,
         histAndPhys: this.histAndPhys,
@@ -252,7 +257,6 @@ export default {
         a5: this.answerText5,
         rationale: this.rationale,
       };
-      console.log(newQ);
       this.$store.dispatch("newMult", newQ);
     },
   },

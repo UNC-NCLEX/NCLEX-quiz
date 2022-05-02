@@ -1,58 +1,55 @@
 <template>
-    <div class="container">
-        <div class="question">
-            <div class="information">
-                <n-tabs type="line">
-                    <n-tab-pane
-                        name="History and Physical"
-                        tab="History and Physical"
-                    >
-                        {{ mc_question.hist_and_phys }}
-                    </n-tab-pane>
-                    <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-                        {{ mc_question.nurse_notes }}
-                    </n-tab-pane>
-                    <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-                        {{ mc_question.flow_sheet }}</n-tab-pane
-                    >
-                    <n-tab-pane
-                        name="Laboratory Results"
-                        tab="Laboratory Results"
-                    >
-                        {{ mc_question.lab_results }}
-                    </n-tab-pane>
-                    <n-tab-pane name="Orders" tab="Orders">
-                        {{ mc_question.orders }}
-                    </n-tab-pane>
-                </n-tabs>
-            </div>
-            <h3>
-                {{ mc_question.text }}
-            </h3>
-            <n-radio-group v-model:value="checkedValue" name="radiogroup">
-                <n-radio
-                    v-for="item in mc_question.answer_choice"
-                    :key="item + this.$store.state.currentIndex"
-                    :value="item"
-                    class="choice-text"
-                    :checked="checkedValue === item"
-                    @change="handleChange"
-                    size="large"
-                    >{{ item }}</n-radio
-                >
-            </n-radio-group>
-        </div>
-        <!--rational popup only displays after question is submitted (if isSubmitted). if not submitted then submit button display-->
-        <div v-if="!this.$store.state.isSubmitted && !view_only">
-            <n-button size="large" @click="checkAnswer">Submit</n-button>
-        </div>
-        <div v-else-if="this.$store.state.isSubmitted && !view_only">
-            <RationalePopup
-                :correct="this.$store.state.correct"
-                :rationale="mc_question.rationale"
-            />
-        </div>
+  <div class="container">
+    <div class="question">
+      <div class="information">
+        <!-- tab group for background information -->
+        <n-tabs type="line">
+          <n-tab-pane name="History and Physical" tab="History and Physical">
+            {{ mc_question.hist_and_phys }}
+          </n-tab-pane>
+          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+            {{ mc_question.nurse_notes }}
+          </n-tab-pane>
+          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+            {{ mc_question.flow_sheet }}</n-tab-pane
+          >
+          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+            {{ mc_question.lab_results }}
+          </n-tab-pane>
+          <n-tab-pane name="Orders" tab="Orders">
+            {{ mc_question.orders }}
+          </n-tab-pane>
+        </n-tabs>
+      </div>
+      <h3>
+        {{ mc_question.text }}
+      </h3>
+      <!-- checkedValue => student selected answer -->
+      <n-radio-group v-model:value="checkedValue" name="radiogroup">
+        <!-- for loop to display all answer choices -->
+        <n-radio
+          v-for="item in mc_question.answer_choice"
+          :key="item + this.$store.state.currentIndex"
+          :value="item"
+          class="choice-text"
+          :checked="checkedValue === item"
+          @change="handleChange"
+          size="large"
+          >{{ item }}</n-radio
+        >
+      </n-radio-group>
     </div>
+    <!--rational popup only displays after question is submitted (if isSubmitted). if not submitted then submit button display-->
+    <div v-if="!this.$store.state.isSubmitted && !view_only">
+      <n-button size="large" @click="checkAnswer">Submit</n-button>
+    </div>
+    <div v-else-if="this.$store.state.isSubmitted && !view_only">
+      <RationalePopup
+        :correct="this.$store.state.correct"
+        :rationale="mc_question.rationale"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -62,51 +59,46 @@ import { useStore } from "vuex";
 import RationalePopup from "../components/RationalePopup.vue";
 
 export default {
-    name: "MultipleChoice",
-    props: {
-        //currect question data passed in as a prop -> immutable
-        mc_question: Object,
-        view_only: {
-            default: false,
-            type: Boolean,
-        },
+  name: "MultipleChoice",
+  props: {
+    //currect question data passed in as a prop -> immutable
+    mc_question: Object,
+    view_only: {
+      default: false,
+      type: Boolean,
     },
-    components: {
-        NButton,
-        NTabPane,
-        NTabs,
-        NRadio,
-        NRadioGroup,
-        RationalePopup,
-    },
-    setup(props) {
-        const checkedValue = ref("");
-        const store = useStore();
-        return {
-            checkedValue: ref(null),
-            handleChange(e) {
-                checkedValue.value = e.target.value;
-            },
-            checkAnswer() {
-                //set as true so rationale popup displays for question
-                store.state.isSubmitted = true;
-                //compare submitted answer to correct answer array
-                if (
-                    props.mc_question.correct_answers.includes(
-                        checkedValue.value
-                    )
-                ) {
-                    console.log("correct");
-                    store.state.correct = "correct";
-                    store.state.numOfCorrectAnswers =
-                        store.state.numOfCorrectAnswers + 1;
-                    store.commit("UPDATE_SCORE");
-                } else {
-                    store.state.correct = "incorrect";
-                }
-            },
-        };
-    },
+  },
+  components: {
+    NButton,
+    NTabPane,
+    NTabs,
+    NRadio,
+    NRadioGroup,
+    RationalePopup,
+  },
+  setup(props) {
+    const checkedValue = ref("");
+    const store = useStore();
+    return {
+      checkedValue: ref(null),
+      handleChange(e) {
+        checkedValue.value = e.target.value;
+      },
+      checkAnswer() {
+        //set as true so rationale popup displays for question
+        store.state.isSubmitted = true;
+        //compare submitted answer to correct answer array
+        if (props.mc_question.correct_answers.includes(checkedValue.value)) {
+          console.log("correct");
+          store.state.correct = "correct";
+          store.state.numOfCorrectAnswers = store.state.numOfCorrectAnswers + 1;
+          store.commit("UPDATE_SCORE");
+        } else {
+          store.state.correct = "incorrect";
+        }
+      },
+    };
+  },
 };
 </script>
 

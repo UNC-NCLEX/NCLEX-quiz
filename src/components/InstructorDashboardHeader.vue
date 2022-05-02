@@ -36,6 +36,7 @@ export default {
         }
     },
     methods: {
+        //navigate to instuctor homepage after logo click (functions as home button)
         loadInstructorDashboard() {
             this.$router.push("/InstructorDashboard");
         },

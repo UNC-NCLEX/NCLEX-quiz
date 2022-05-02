@@ -6,6 +6,7 @@
           <h2>Quiz Management</h2>
         </div>
         <br />
+        <!-- if creating a new quiz enter quiz name, saved to newQuizName variable -->
         <div class="newQ">
           <h3>Creating a new quiz? Enter quiz name here:</h3>
           <n-input
@@ -42,17 +43,24 @@
   </n-config-provider>
 </template>
 <script>
-import { NButton, NInput, NRadio, NRadioGroup, NConfigProvider, useMessage } from "naive-ui";
+import {
+  NButton,
+  NInput,
+  NRadio,
+  NRadioGroup,
+  NConfigProvider,
+  useMessage,
+} from "naive-ui";
 import { supabase } from "../supabase/init";
 
 export default {
   name: "QuestionSelect",
-  components:{
-      NButton,
-      NInput,
-      NRadio,
-      NRadioGroup,
-      NConfigProvider
+  components: {
+    NButton,
+    NInput,
+    NRadio,
+    NRadioGroup,
+    NConfigProvider,
   },
   props: {
     msg: String,
@@ -61,12 +69,12 @@ export default {
     const message = useMessage();
     return {
       createSuccessMessage(msg, time) {
-          message.success(msg, { duration: time });
+        message.success(msg, { duration: time });
       },
       createErrorMessage(msg, time) {
-          message.error(msg, { duration: time });
-      }
-    }
+        message.error(msg, { duration: time });
+      },
+    };
   },
   data() {
     return {
@@ -74,90 +82,76 @@ export default {
       typeSelected: 0,
       quizList: {},
       themeOverrides: {
-          common: {
-              primaryColor: "#FF8C00"
-          }
-      }
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      },
     };
   },
   methods: {
-      async createQuiz(){
-          const data = await supabase
-          .from('quiz')
-          .select('quiz_id');
+    async createQuiz() {
+      const data = await supabase.from("quiz").select("quiz_id");
 
-          // TODO: Change the way in which the next ID is chosen.
-          // This implementation can create problems if a quiz
-          // is deleted.
-          let next_id = Math.max(data.data.length) + 1;
-          console.log(next_id)
+      let next_id = Math.max(data.data.length) + 1;
+      console.log(next_id);
+      //send new quiz name to database and create new data row
+      await supabase.from("quiz").insert([{ title: this.newQuizName }]);
 
-          await supabase
-          .from('quiz')
-          .insert([
-            { title: this.newQuizName }
-          ]);
-
-          this.createSuccessMessage("Success! New quiz was created!", 10000);
-      },
-      
-      async createQuestion(){
-        try {
-                let { data: quiz, error } = await supabase
-                    .from("quiz")
-                    .select("*");
-                if (error) throw error;
-                this.quizList = quiz.map((obj) => ({
-                    label: obj.title,
-                    value: obj.quiz_id,
-                }));
-                
-            } catch (error) {
-                console.log(error.message);
-            }
-      
-
-        let { data: qids, error } = await supabase
-          .from('quiz')
-          .select('*');
-        if (error) {this.createErrorMessage(error.message, 10000)}
-        this.$store.commit("SET_QUIZ", qids);
-
-        /*TODO router to correct page - all need :quizzes prop passed in as all current quizzes in databases when routed - pages use quiz.name and quiz.qid*/
-        switch (this.typeSelected) {
-          case 0:
-            this.createErrorMessage("Please select a question type.");
-            break;
-          case 1:
-            // Multiple Choice
-            console.log(qids)
-            this.$router.push({name: "NewMultChoice"});
-            break;
-          case 2:
-            // Select All
-            console.log(qids)
-            this.$router.push({name: "NewSelectAll" });
-            break;
-          case 3:
-            // DropDown Sentence
-            this.$router.push({name: "NewDDS"});
-            break;
-          case 4:
-            // DropDown Table
-            this.$router.push({name: "NewDDT"});
-            break;
-          case 5:
-            // Matrix Table
-            this.$router.push({name: "NewMatrix"});
-            break;
-          case 6:
-            // Highlight
-            this.$router.push({name: "NewHighlight"});
-            break;
-          }
-          console.log("new question"+ this.typeSelected)
+      this.createSuccessMessage("Success! New quiz was created!", 10000);
+    },
+    //get list of quizzes to pass to newQ page as prop
+    async createQuestion() {
+      try {
+        let { data: quiz, error } = await supabase.from("quiz").select("*");
+        if (error) throw error;
+        this.quizList = quiz.map((obj) => ({
+          label: obj.title,
+          value: obj.quiz_id,
+        }));
+      } catch (error) {
+        console.log(error.message);
       }
-  }
+
+      let { data: qids, error } = await supabase.from("quiz").select("*");
+      if (error) {
+        this.createErrorMessage(error.message, 10000);
+      }
+      this.$store.commit("SET_QUIZ", qids);
+      //route to correct page based on typeSelected value
+      switch (this.typeSelected) {
+        case 0:
+          this.createErrorMessage("Please select a question type.");
+          break;
+        case 1:
+          // Multiple Choice
+          console.log(qids);
+          this.$router.push({ name: "NewMultChoice" });
+          break;
+        case 2:
+          // Select All
+          console.log(qids);
+          this.$router.push({ name: "NewSelectAll" });
+          break;
+        case 3:
+          // DropDown Sentence
+          this.$router.push({ name: "NewDDS" });
+          break;
+        case 4:
+          // DropDown Table
+          this.$router.push({ name: "NewDDT" });
+          break;
+        case 5:
+          // Matrix Table
+          this.$router.push({ name: "NewMatrix" });
+          break;
+        case 6:
+          // Highlight
+          this.$router.push({ name: "NewHighlight" });
+          break;
+      }
+      console.log("new question" + this.typeSelected);
+    },
+  },
 };
 </script>
 

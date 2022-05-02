@@ -4,6 +4,7 @@
       <h2>New Highlight Table Question</h2>
       <div class="quizTitle">
         <label for="quizT">Select Quiz Group for Question </label>
+        <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
         <select v-model="qid">
           <option
             v-for="quiz in this.$store.state.quizzes"
@@ -15,7 +16,8 @@
         </select>
       </div>
       <div class="question">
-        <h3>Question Information</h3>
+        <h3>Question</h3>
+        <!-- tab group for background information n-input fields to take user input -->
         <div class="information">
           <n-tabs type="line">
             <n-tab-pane name="History and Physical" tab="History and Physical">
@@ -320,6 +322,7 @@ export default {
       value: ref(null),
       methods: {
         enterQuestion() {
+          //create question object to pass to database
           var newQ = {
             quiz_id: this.qid,
             histAndPhys: this.histAndPhys,
@@ -336,7 +339,6 @@ export default {
             a5: this.answerText5,
             rationale: this.rationale,
           };
-          console.log(newQ);
           this.$store.dispatch("newHighlight", newQ);
         },
       },

@@ -5,16 +5,19 @@
       <br class="header_margin" />
       <div class="container">
         <div class="home_img">
-          <img src="../assets/unc_school_of_nursing.jpg" id="unc_nursing">
+          <img src="../assets/unc_school_of_nursing.jpg" id="unc_nursing" />
           <div class="img_contents">
-            <h1 class="img_caption">Interactive quiz to help you prepare for the NCLEX exam.</h1>
+            <h1 class="img_caption">
+              Interactive quiz to help you prepare for the NCLEX exam.
+            </h1>
+            <!-- Get Started button routes to signup screen -->
             <n-button
               @click="signup()"
               type="primary"
               color="#0984e3"
               text-color="white"
               class="get_started_button"
-            ><h3>Get Started</h3>
+              ><h3>Get Started</h3>
             </n-button>
           </div>
         </div>
@@ -33,12 +36,16 @@ export default {
   name: "HomePage",
   components: {
     HomePageHeader,
-    NButton
+    NButton,
   },
   methods: {
+    //after signup click navigate to signup screen
     signup() {
-      this.$router.push({name: "User Authentication", params: {id: "signup"}});
-    }
+      this.$router.push({
+        name: "User Authentication",
+        params: { id: "signup" },
+      });
+    },
   },
 };
 </script>
@@ -53,7 +60,11 @@ export default {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: linear-gradient(0deg, rgba(36,163,255,1) 15%, rgba(0,56,255,1) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(36, 163, 255, 1) 15%,
+    rgba(0, 56, 255, 1) 100%
+  );
 }
 
 .header_margin {

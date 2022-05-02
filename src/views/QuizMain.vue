@@ -1,6 +1,8 @@
 <template lang="">
   <div id="quiz" v-if="dataLoaded">
+    <!-- question number from state index -->
     <h1>Question {{ this.$store.state.currentIndex + 1 }}</h1>
+    <!-- get question at current index and display using correct component (based on question type) -->
     <div id="question">
       <div v-if="allQuestions[this.$store.state.currentIndex].type === 'mc'">
         <MultipleChoice
@@ -55,7 +57,7 @@ export default {
     DropDownSentence,
     DropDown,
     HighlightTable,
-    MatrixTable
+    MatrixTable,
   },
   setup() {
     const store = useStore();

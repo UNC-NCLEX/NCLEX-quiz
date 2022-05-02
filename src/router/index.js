@@ -1,3 +1,4 @@
+//import all pages to be routed to
 import { createRouter, createWebHistory } from "vue-router";
 import store from "../store/index.js";
 import HomePage from "../views/HomePage.vue";
@@ -17,6 +18,7 @@ import NewMultChoice from "../views/NewMultChoice.vue";
 import NewSelectAll from "../views/NewSelectAll.vue";
 import NewHighlight from "../views/NewHighlight.vue";
 
+//define routes, when pushed to router will navigate to corresponding component
 const routes = [
   {
     path: "/",
