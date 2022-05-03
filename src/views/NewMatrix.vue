@@ -228,7 +228,7 @@
               </tr>
             </tbody>
           </n-table>
-          <br />
+          <h4>Rationale Text</h4>
           <n-input
             v-model:value="rationale"
             type="text"

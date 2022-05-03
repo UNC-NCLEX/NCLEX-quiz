@@ -15,7 +15,7 @@
         </select>
       </div>
       <div class="question">
-        <h4>Question Text</h4>
+        <h4>Question</h4>
         <div class="information">
           <!-- tab group for background information to be entered -->
           <n-tabs type="line">
@@ -76,6 +76,8 @@
             </n-tab-pane>
           </n-tabs>
         </div>
+          <h4>Question Text</h4>
+
         <n-input
           v-model:value="questText"
           type="text"
