@@ -348,7 +348,7 @@ var corAns = [];
 
         }
       };
-            this.$store.dispatch("newMult", newQ);
+            // this.$store.dispatch("newMult", newQ);
 
        addQ();
 
