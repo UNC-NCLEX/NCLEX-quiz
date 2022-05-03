@@ -273,7 +273,42 @@ export default {
     enterQuestion() {
       //object newQ to send to database as new question with user inputted variables
       
+//  var newQ = {
+//         qid: this.qid,
+//         histAndPhys: this.histAndPhys,
+//         nurseNotes: this.nurseNotes,
+//         flowSheet: this.flowSheet,
+//         labResults: this.labResults,
+//         orders: this.orders,
+//         questText: this.questText,
+//         correct: this.answer,
+//         a1: this.answerText1,
+//         a2: this.answerText2,
+//         a3: this.answerText3,
+//         a4: this.answerText4,
+//         a5: this.answerText5,
+//         rationale: this.rationale,
 
+
+var corAns = [];
+      if (this.a1Correct === true) {
+        corAns.push(this.a1);
+      }
+      if (this.a2Correct === true) {
+        corAns.push(this.a2);
+      }
+      if (this.a3Correct === true) {
+        corAns.push(this.a3);
+      }
+      if (this.a4Correct === true) {
+        corAns.push(this.a4);
+      }
+      if (this.a5Correct === true) {
+        corAns.push(this.a5);
+      }
+      if (this.a6Correct === true) {
+        corAns.push(this.a6);
+      }
 
   const addQ = async () => {
         try {
@@ -290,7 +325,7 @@ export default {
                 lab_results: this.labResults,
                 orders: this.orders,
                 text: this.questText,
-                correct_answers: this.answer,
+                correct_answers: corAns,
                 answer_choice: [
                   this.answerText1,
                   this. answerText2,
@@ -313,6 +348,8 @@ export default {
 
         }
       };
+            this.$store.dispatch("newMult", newQ);
+
        addQ();
 
       //end
