@@ -73,7 +73,8 @@
           </n-tab-pane>
         </n-tabs>
       </div>
-      <h4>
+        <h4>Question Text</h4>
+
         <n-input
           v-model:value="text"
           type="text"
@@ -83,7 +84,7 @@
           :input-props="{ type: 'clearable' }"
           placeholder="Enter Overall Main Text"
         />
-      </h4>
+      
       <div>
         <tr>
           <h4 class="questions">
@@ -281,8 +282,8 @@
           </td>
         </tr>
       </div>
-    </div>
-    <n-input
+      <h4>Rationale Text</h4>
+       <n-input
       v-model:value="rationale"
       type="text"
       class="form-field"
@@ -291,6 +292,8 @@
       :input-props="{ type: 'clearable' }"
       placeholder="Enter Rationale Text"
     />
+    </div>
+   
     <n-button @click="enterQuestion()" size="large">Add Question</n-button>
   </div>
 </n-config-provider>
@@ -454,7 +457,6 @@ h2 {
   padding: 35px;
   margin: 35px 0;
   border-radius: 10px;
-  box-shadow: 10px 10px 5px #cac9c9;
 }
 
 /*****QUESTION*****/
@@ -478,7 +480,7 @@ h2 {
 /*****BUTTON*****/
 .n-button {
   background-color: #ffc633;
-  box-shadow: 10px 10px 5px #cac9c9;
+  /* box-shadow: 10px 10px 5px #cac9c9; */
   margin: 25px 0;
 }
 

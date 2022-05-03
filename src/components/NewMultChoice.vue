@@ -168,6 +168,7 @@
         </div>
         <br />
       </div>
+
       <n-input
         v-model:value="rationale"
         type="text"
