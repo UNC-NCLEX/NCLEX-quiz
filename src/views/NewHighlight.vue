@@ -1,7 +1,7 @@
 <template>
   <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
     <div class="container">
-      <h2>New Highlight Table Question</h2>
+      <h1>New Highlight Table Question</h1>
       <div class="quizTitle">
         <label for="quizT">Select Quiz Group for Question </label>
         <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
@@ -16,7 +16,7 @@
         </select>
       </div>
       <div class="question">
-        <h3>Question</h3>
+        <h2>Question</h2>
         <!-- tab group for background information n-input fields to take user input -->
         <div class="information">
           <n-tabs type="line">
@@ -77,7 +77,7 @@
             </n-tab-pane>
           </n-tabs>
         </div>
-        <h4>Question Text</h4>
+        <h2>Question Text</h2>
         <n-input
           v-model:value="questText"
           type="text"
@@ -257,7 +257,7 @@
               </tr>
             </tbody>
           </n-table>
-                    <h4>Rationale Text</h4>
+                    <h2>Rationale Text</h2>
 
           <n-input
             v-model:value="rationale"
@@ -365,11 +365,6 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
-}
-
-/*****TITLE*****/
-h2 {
-  color: #fe4400;
 }
 
 /*****TABS*****/

@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="question">
-      <h3>Question</h3>
       <div class="information">
         <!-- tab group for background information -->
         <n-tabs type="line">
@@ -22,9 +21,9 @@
           </n-tab-pane>
         </n-tabs>
       </div>
-      <h4>
+      <h3>
         {{ dds_question.text }}
-      </h4>
+      </h3>
       <!-- for loop through row headers (contain beginning text for each sentence) -->
       <tr
         v-for="(item, index) in dds_question.row_headers"

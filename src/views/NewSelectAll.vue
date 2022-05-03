@@ -1,7 +1,7 @@
 <template>
   <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
     <div class="main">
-      <h2>New Select All That Apply Question</h2>
+      <h1>New Select All That Apply Question</h1>
       <div class="quizTitle">
         <label for="quizT">Select Quiz Group for Question </label>
         <select v-model="qid">
@@ -15,7 +15,7 @@
         </select>
       </div>
       <div class="question">
-        <h4>Question</h4>
+        <h2>Question</h2>
         <div class="information">
           <!-- tab group for background information to be entered -->
           <n-tabs type="line">
@@ -76,7 +76,7 @@
             </n-tab-pane>
           </n-tabs>
         </div>
-          <h4>Question Text</h4>
+          <h2>Question Text</h2>
 
         <n-input
           v-model:value="questText"
@@ -185,7 +185,7 @@
             />
           </div>
         </div>
-        <h4>Rationale Text</h4>
+        <h2>Rationale Text</h2>
         <n-input
           v-model:value="rationale"
           type="text"
@@ -225,7 +225,7 @@
 </template>
 
 <script>
-import { NButton, NInput, NConfigProvider, NTabs, NTabPane } from "naive-ui";
+import { NButton, NInput, NConfigProvider, NTabs, NTabPane, useMessage} from "naive-ui";
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
@@ -237,8 +237,11 @@ export default {
     NConfigProvider,
     NTabs,
     NTabPane,
+
   },
   setup() {
+        const message = useMessage();
+
     return {
       histAndPhys: ref(null),
       nurseNotes: ref(null),
@@ -261,6 +264,13 @@ export default {
       a6Correct: false,
       a6: ref(null),
       rationale: ref(null),
+      
+      createSuccessMessage(msg, time) {
+        message.success(msg, { duration: time });
+      },
+      createErrorMessage(msg, time) {
+        message.error(msg, { duration: time });
+      },
     };
   },
   data() {
@@ -326,12 +336,17 @@ export default {
           if (error) throw error;
           //console entire question if successfully added
           console.log(successAdd);
+          this.createSuccessMessage("Success! New question was created! Check selected quiz.", 5000);
+
         } catch (error) {
           //console error if not added
           console.warn(error.message);
+          this.createErrorMessage("Error! Check to see if all fields have been entered", 5000);
+
         }
       };
       addQ();
+
     },
   },
 };
@@ -348,9 +363,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-h2 {
-  color: #fe4400;
-}
+
 
 .question {
   width: 75vw;

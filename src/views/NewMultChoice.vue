@@ -1,17 +1,23 @@
 <template>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+
   <div class="main">
-    <h2>New Multiple Choice Question</h2>
+    <h1>New Multiple Choice Question</h1>
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
       <!-- create dropdown of current quizzes from database to select quiz group for question -->
       <select v-model="qid">
-        <option v-for="quiz in quizzes" v-bind:value="quiz.qid" :key="quiz.qid">
-          {{ quiz.name }}
-        </option>
+        <option
+            v-for="quiz in this.$store.state.quizzes"
+            v-bind:value="quiz.quiz_id"
+            :key="quiz.quiz_id"
+          >
+            {{ quiz.title }}
+          </option>
       </select>
     </div>
     <div class="question">
-      <h3>Question</h3>
+      <h2>Question</h2>
       <div class="information">
         <!-- tab group for background information to be entered -->
         <n-tabs type="line">
@@ -73,7 +79,7 @@
         </n-tabs>
       </div>
       <!-- n-input fields for text input -->
-      <h4>Question Text</h4>
+      <h2>Question Text</h2>
       <n-input
         v-model:value="questText"
         type="text"
@@ -168,7 +174,7 @@
         </div>
         <br />
       </div>
-              <h4>Rationale Text</h4>
+              <h2>Rationale Text</h2>
 
       <n-input
         v-model:value="rationale"
@@ -204,10 +210,14 @@
       >Add Question</n-button
     >
   </div>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NInput } from "naive-ui";
+import { NButton, NTabPane, NTabs, NInput,  NConfigProvider, useMessage
+ } from "naive-ui";
+ import { supabase } from "../supabase/init";
+
 import { ref } from "vue";
 
 export default {
@@ -217,8 +227,12 @@ export default {
     NTabPane,
     NTabs,
     NInput,
+  NConfigProvider,
+
   },
   setup() {
+    const message = useMessage();
+
     return {
       //initialize inputted variables
       qid: ref(null),
@@ -235,32 +249,131 @@ export default {
       answerText4: ref(null),
       answerText5: ref(null),
       rationale: ref(null),
+      createSuccessMessage(msg, time) {
+        message.success(msg, { duration: time });
+      },
+      createErrorMessage(msg, time) {
+        message.error(msg, { duration: time });
+      },
     };
   },
   props: {
     quizzes: Array,
   },
+  data() {
+    return {
+      themeOverrides: {
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      },
+    };
+  },
   methods: {
     enterQuestion() {
       //object newQ to send to database as new question with user inputted variables
-      var newQ = {
-        qid: this.qid,
-        histAndPhys: this.histAndPhys,
-        nurseNotes: this.nurseNotes,
-        flowSheet: this.flowSheet,
-        labResults: this.labResults,
-        orders: this.orders,
-        questText: this.questText,
-        correct: this.answer,
-        a1: this.answerText1,
-        a2: this.answerText2,
-        a3: this.answerText3,
-        a4: this.answerText4,
-        a5: this.answerText5,
-        rationale: this.rationale,
+      
+//  var newQ = {
+//         qid: this.qid,
+//         histAndPhys: this.histAndPhys,
+//         nurseNotes: this.nurseNotes,
+//         flowSheet: this.flowSheet,
+//         labResults: this.labResults,
+//         orders: this.orders,
+//         questText: this.questText,
+//         correct: this.answer,
+//         a1: this.answerText1,
+//         a2: this.answerText2,
+//         a3: this.answerText3,
+//         a4: this.answerText4,
+//         a5: this.answerText5,
+//         rationale: this.rationale,
+
+
+var corAns = [];
+      if (this.a1Correct === true) {
+        corAns.push(this.a1);
+      }
+      if (this.a2Correct === true) {
+        corAns.push(this.a2);
+      }
+      if (this.a3Correct === true) {
+        corAns.push(this.a3);
+      }
+      if (this.a4Correct === true) {
+        corAns.push(this.a4);
+      }
+      if (this.a5Correct === true) {
+        corAns.push(this.a5);
+      }
+      if (this.a6Correct === true) {
+        corAns.push(this.a6);
+      }
+
+  const addQ = async () => {
+        try {
+          let { data: successAdd, error } = await supabase
+            .from("question")
+            .insert([
+              {
+                quiz_id: this.qid,
+                //all questions added from this page are multiple choice type
+                type: "mc",
+                hist_and_phys: this.histAndPhys,
+                nurse_notes: this.nurseNotes,
+                flow_sheet: this.flowSheet,
+                lab_results: this.labResults,
+                orders: this.orders,
+                text: this.questText,
+                correct_answers: corAns,
+                answer_choice: [
+                  this.answerText1,
+                  this. answerText2,
+                  this.answerText3,
+                  this.answerText4,
+                  this.answerText5,
+                ],
+                rationale: this.rationale,
+              },
+            ]);
+          if (error) throw error;
+          //console entire question if successfully added
+          console.log(successAdd);
+          this.createSuccessMessage("Success! New question was created! Check selected quiz.", 5000);
+
+        } catch (error) {
+          //console error if not added
+          console.warn(error.message);
+          this.createErrorMessage("Error! Check to see if all fields have been entered", 5000);
+
+        }
       };
-      this.$store.dispatch("newMult", newQ);
+            // this.$store.dispatch("newMult", newQ);
+
+       addQ();
+
+      //end
+      // var newQ = {
+      //   qid: this.qid,
+      //   histAndPhys: this.histAndPhys,
+      //   nurseNotes: this.nurseNotes,
+      //   flowSheet: this.flowSheet,
+      //   labResults: this.labResults,
+      //   orders: this.orders,
+      //   questText: this.questText,
+      //   correct: this.answer,
+      //   a1: this.answerText1,
+      //   a2: this.answerText2,
+      //   a3: this.answerText3,
+      //   a4: this.answerText4,
+      //   a5: this.answerText5,
+      //   rationale: this.rationale,
+      // };
+      // this.$store.dispatch("newMult", newQ);
+      // this.createSuccessMessage("Success! New multiple choice question was created!", 10000);
+
     },
+    
   },
 };
 </script>
@@ -276,9 +389,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-h2 {
-  color: #fe4400;
-}
+
 
 .question {
   /* background-color: pink; */

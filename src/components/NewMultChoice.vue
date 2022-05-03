@@ -1,17 +1,21 @@
 <template>
   <div class="main">
-    <h2>New Multiple Choice Question</h2>
+    <h1>New Multiple Choice Question</h1>
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
       <!-- create dropdown of current quizzes from database to select quiz group for question -->
       <select v-model="qid">
-        <option v-for="quiz in quizzes" v-bind:value="quiz.qid" :key="quiz.qid">
-          {{ quiz.name }}
-        </option>
+        <option
+            v-for="quiz in this.$store.state.quizzes"
+            v-bind:value="quiz.quiz_id"
+            :key="quiz.quiz_id"
+          >
+            {{ quiz.title }}
+          </option>
       </select>
     </div>
     <div class="question">
-      <h3>Question Information</h3>
+      <h2>Question Information</h2>
       <div class="information">
         <!-- tab group for background information to be entered -->
         <n-tabs type="line">
@@ -73,7 +77,7 @@
         </n-tabs>
       </div>
       <!-- n-input fields for text input -->
-      <h4>Question Text</h4>
+      <h2>Question Text</h2>
       <n-input
         v-model:value="questText"
         type="text"

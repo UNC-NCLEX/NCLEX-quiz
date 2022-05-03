@@ -1,7 +1,7 @@
 <template>
   <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
     <div class="container">
-      <h2>New Matrix Table Question</h2>
+      <h1>New Matrix Table Question</h1>
       <div class="quizTitle">
         <label for="quizT">Select Quiz Group for Question </label>
         <!-- create dropdown of current quizzes from database to select quiz group for question -->
@@ -16,7 +16,7 @@
         </select>
       </div>
       <div class="question">
-        <h3>Question</h3>
+        <h2>Question</h2>
         <div class="information">
           <!-- tab group for background information to be entered -->
           <n-tabs type="line">
@@ -77,7 +77,7 @@
             </n-tab-pane>
           </n-tabs>
         </div>
-        <h4>Question Text</h4>
+        <h2>Question Text</h2>
         <n-input
           v-model:value="questText"
           type="text"
@@ -228,7 +228,7 @@
               </tr>
             </tbody>
           </n-table>
-          <h4>Rationale Text</h4>
+          <h2>Rationale Text</h2>
           <n-input
             v-model:value="rationale"
             type="text"
@@ -341,10 +341,6 @@ export default {
   align-items: center;
 }
 
-/*****TITLE*****/
-h2 {
-  color: #fe4400;
-}
 
 /*****TABS*****/
 .information {
