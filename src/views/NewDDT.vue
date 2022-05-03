@@ -1,6 +1,8 @@
 <template>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+
   <div class="container">
-    <h2>New Drop Down Table Question</h2>
+    <h1>New Drop Down Table Question</h1>
     <div class="quizTitle">
       <label for="quizT">Select Quiz Group for Question </label>
       <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
@@ -15,7 +17,7 @@
       </select>
     </div>
     <div class="question">
-      <h3>Question</h3>
+      <h2>Question</h2>
       <!-- tab group for background information n-input fields to take user input -->
       <div class="information">
         <n-tabs type="line">
@@ -76,7 +78,7 @@
           </n-tab-pane>
         </n-tabs>
       </div>
-      <h4>Question Text</h4>
+      <h2>Question Text</h2>
         <n-input
           v-model:value="text"
           type="text"
@@ -382,7 +384,7 @@
           </td>
         </tr>
       </div>
-      <h4>Rationale Text</h4>
+      <h2>Rationale Text</h2>
       <n-input
       v-model:value="rationale"
       type="text"
@@ -396,10 +398,12 @@
     
     <n-button @click="enterQuestion()" size="large">Add Question</n-button>
   </div>
+    </n-config-provider>
+
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSpace, NInput } from "naive-ui";
+import { NButton, NTabPane, NTabs, NSpace, NInput, NConfigProvider } from "naive-ui";
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
@@ -414,6 +418,7 @@ export default {
     NTabs,
     NSpace,
     NInput,
+    NConfigProvider
   },
   setup() {
     return {
@@ -445,6 +450,15 @@ export default {
       p4correct: ref(null),
       p5correct: ref(null),
       p6correct: ref(null),
+    };
+  },
+  data() {
+    return {
+      themeOverrides: {
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      },
     };
   },
   methods: {
@@ -584,10 +598,6 @@ export default {
   align-items: center;
 }
 
-/*****TITLE*****/
-h2 {
-  color: #fe4400;
-}
 
 /*****TABS*****/
 .information {

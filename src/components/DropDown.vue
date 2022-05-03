@@ -20,9 +20,9 @@
         </n-tab-pane>
       </n-tabs>
     </div>
-    <h4>
+    <h3>
       {{ ddt_question.text }}
-    </h4>
+    </h3>
     <table class="table">
       <thead>
         <!-- for loop through row headers -->
