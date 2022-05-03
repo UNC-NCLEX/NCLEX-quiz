@@ -354,33 +354,34 @@ export default {
   },
   methods: {
     enterQuestion() {
+     
       //save correct answer text to corAns variable for db - answer var is INT from radio buttons, save corresponding text into corAns variable
       var corAns = [];
-      if (this.p1Correct == 1) {
+      if (this.p1correct == 1) {
         corAns.push(this.p1c1);
       }
-      if (this.p1Correct == 2) {
+      if (this.p1correct == 2) {
         corAns.push(this.p1c2);
       }
-      if (this.p1Correct == 3) {
+      if (this.p1correct == 3) {
         corAns.push(this.p1c3);
       }
-      if (this.p2Correct == 1) {
+      if (this.p2correct == 1) {
         corAns.push(this.p2c1);
       }
-      if (this.p2Correct == 2) {
+      if (this.p2correct == 2) {
         corAns.push(this.p2c2);
       }
-      if (this.p2Correct == 3) {
+      if (this.p2correct == 3) {
         corAns.push(this.p2c3);
       }
-      if (this.p3Correct == 1) {
+      if (this.p3correct == 1) {
         corAns.push(this.p3c1);
       }
-      if (this.p3Correct == 2) {
+      if (this.p3correct == 2) {
         corAns.push(this.p3c2);
       }
-      if (this.p3Correct == 3) {
+      if (this.p3correct == 3) {
         corAns.push(this.p3c3);
       }
 

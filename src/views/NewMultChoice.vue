@@ -1,222 +1,227 @@
 <template>
   <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
-
-  <div class="main">
-    <h1>New Multiple Choice Question</h1>
-    <div class="quizTitle">
-      <label for="quizT">Select Quiz Group for Question </label>
-      <!-- create dropdown of current quizzes from database to select quiz group for question -->
-      <select v-model="qid">
-        <option
+    <div class="main">
+      <h1>New Multiple Choice Question</h1>
+      <div class="quizTitle">
+        <label for="quizT">Select Quiz Group for Question </label>
+        <!-- create dropdown of current quizzes from database to select quiz group for question -->
+        <select v-model="qid">
+          <option
             v-for="quiz in this.$store.state.quizzes"
             v-bind:value="quiz.quiz_id"
             :key="quiz.quiz_id"
           >
             {{ quiz.title }}
           </option>
-      </select>
-    </div>
-    <div class="question">
-      <h2>Question</h2>
-      <div class="information">
-        <!-- tab group for background information to be entered -->
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            <n-input
-              v-model:value="histAndPhys"
-              type="text"
-              class="form-field"
-              id="histAndPhys"
-              name="histAndPhys"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter History &amp; Physical Information"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            <n-input
-              v-model:value="nurseNotes"
-              type="text"
-              class="form-field"
-              id="nurseNotes"
-              name="nurseNotes"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Nurse's Notes"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            <n-input
-              v-model:value="flowSheet"
-              type="text"
-              class="form-field"
-              id="flowSheet"
-              name="flowSheet"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Flow Sheet"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            <n-input
-              v-model:value="labResults"
-              type="text"
-              class="form-field"
-              id="labResults"
-              name="labResults"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Labratory Results"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            <n-input
-              v-model:value="orders"
-              type="text"
-              class="form-field"
-              id="orders"
-              name="orders"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Orders"
-            />
-          </n-tab-pane>
-        </n-tabs>
+        </select>
       </div>
-      <!-- n-input fields for text input -->
-      <h2>Question Text</h2>
-      <n-input
-        v-model:value="questText"
-        type="text"
-        class="form-field"
-        id="questText"
-        name="questText"
-        :input-props="{ type: 'clearable' }"
-        placeholder="Enter Question Text"
-      />
-      <br />
-      <div>
-        <!-- "answer" variable models the correct answer indicated by instructor (radio button) -->
-        <div class="answer">
-          <input
-            type="radio"
-            value="1"
-            v-model="answer"
-            name="answerchoice"
-          /><n-input
-            v-model:value="answerText1"
-            type="text"
-            class="form-field"
-            id="answerText1"
-            name="answerText1"
-            :input-props="{ type: 'clearable' }"
-            placeholder="Enter Answer Choice 1"
-          />
+      <div class="question">
+        <h2>Question</h2>
+        <div class="information">
+          <!-- tab group for background information to be entered -->
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              <n-input
+                v-model:value="histAndPhys"
+                type="text"
+                class="form-field"
+                id="histAndPhys"
+                name="histAndPhys"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter History &amp; Physical Information"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              <n-input
+                v-model:value="nurseNotes"
+                type="text"
+                class="form-field"
+                id="nurseNotes"
+                name="nurseNotes"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Nurse's Notes"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              <n-input
+                v-model:value="flowSheet"
+                type="text"
+                class="form-field"
+                id="flowSheet"
+                name="flowSheet"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Flow Sheet"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              <n-input
+                v-model:value="labResults"
+                type="text"
+                class="form-field"
+                id="labResults"
+                name="labResults"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Labratory Results"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              <n-input
+                v-model:value="orders"
+                type="text"
+                class="form-field"
+                id="orders"
+                name="orders"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Orders"
+              />
+            </n-tab-pane>
+          </n-tabs>
         </div>
-        <div class="answer">
-          <input
-            type="radio"
-            value="2"
-            v-model="answer"
-            name="answerchoice"
-          /><n-input
-            v-model:value="answerText2"
-            type="text"
-            class="form-field"
-            id="answerText2"
-            name="answerText2"
-            :input-props="{ type: 'clearable' }"
-            placeholder="Enter Answer Choice 2"
-          />
-        </div>
-        <div class="answer">
-          <input
-            type="radio"
-            value="3"
-            v-model="answer"
-            name="answerchoice"
-          /><n-input
-            v-model:value="answerText3"
-            type="text"
-            class="form-field"
-            id="answerText3"
-            name="answerText3"
-            :input-props="{ type: 'clearable' }"
-            placeholder="Enter Answer Choice 3"
-          />
-        </div>
-        <div class="answer">
-          <input
-            type="radio"
-            value="4"
-            v-model="answer"
-            name="answerchoice"
-          /><n-input
-            v-model:value="answerText4"
-            type="text"
-            class="form-field"
-            id="answerText4"
-            name="answerText4"
-            :input-props="{ type: 'clearable' }"
-            placeholder="Enter Answer Choice 4"
-          />
-        </div>
-        <div class="answer">
-          <input
-            type="radio"
-            value="5"
-            v-model="answer"
-            name="answerchoice"
-          /><n-input
-            v-model:value="answerText5"
-            type="text"
-            class="form-field"
-            id="answerText5"
-            name="answerText5"
-            :input-props="{ type: 'clearable' }"
-            placeholder="Enter Answer Choice 5"
-          />
-        </div>
+        <!-- n-input fields for text input -->
+        <h2>Question Text</h2>
+        <n-input
+          v-model:value="questText"
+          type="text"
+          class="form-field"
+          id="questText"
+          name="questText"
+          :input-props="{ type: 'clearable' }"
+          placeholder="Enter Question Text"
+        />
         <br />
+        <div>
+          <!-- "answer" variable models the correct answer indicated by instructor (radio button) -->
+          <div class="answer">
+            <input
+              type="radio"
+              value="1"
+              v-model="answer"
+              name="answerchoice"
+            /><n-input
+              v-model:value="answerText1"
+              type="text"
+              class="form-field"
+              id="answerText1"
+              name="answerText1"
+              :input-props="{ type: 'clearable' }"
+              placeholder="Enter Answer Choice 1"
+            />
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              value="2"
+              v-model="answer"
+              name="answerchoice"
+            /><n-input
+              v-model:value="answerText2"
+              type="text"
+              class="form-field"
+              id="answerText2"
+              name="answerText2"
+              :input-props="{ type: 'clearable' }"
+              placeholder="Enter Answer Choice 2"
+            />
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              value="3"
+              v-model="answer"
+              name="answerchoice"
+            /><n-input
+              v-model:value="answerText3"
+              type="text"
+              class="form-field"
+              id="answerText3"
+              name="answerText3"
+              :input-props="{ type: 'clearable' }"
+              placeholder="Enter Answer Choice 3"
+            />
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              value="4"
+              v-model="answer"
+              name="answerchoice"
+            /><n-input
+              v-model:value="answerText4"
+              type="text"
+              class="form-field"
+              id="answerText4"
+              name="answerText4"
+              :input-props="{ type: 'clearable' }"
+              placeholder="Enter Answer Choice 4"
+            />
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              value="5"
+              v-model="answer"
+              name="answerchoice"
+            /><n-input
+              v-model:value="answerText5"
+              type="text"
+              class="form-field"
+              id="answerText5"
+              name="answerText5"
+              :input-props="{ type: 'clearable' }"
+              placeholder="Enter Answer Choice 5"
+            />
+          </div>
+          <br />
+        </div>
+        <h2>Rationale Text</h2>
+
+        <n-input
+          v-model:value="rationale"
+          type="text"
+          class="form-field"
+          id="rationale"
+          name="rationale"
+          :input-props="{ type: 'clearable' }"
+          placeholder="Enter Rationale Text"
+        />
       </div>
-              <h2>Rationale Text</h2>
 
-      <n-input
-        v-model:value="rationale"
-        type="text"
-        class="form-field"
-        id="rationale"
-        name="rationale"
-        :input-props="{ type: 'clearable' }"
-        placeholder="Enter Rationale Text"
-      />
+      <n-button
+        size="large"
+        @click="
+          enterQuestion(
+            qid,
+            histAndPhys,
+            nurseNotes,
+            flowSheet,
+            labResults,
+            orders,
+            questText,
+            answer,
+            answerText1,
+            answerText2,
+            answerText3,
+            answerText4,
+            answerText5,
+            rationale
+          )
+        "
+        >Add Question</n-button
+      >
     </div>
-
-    <n-button
-      size="large"
-      @click="
-        enterQuestion(
-          qid,
-          histAndPhys,
-          nurseNotes,
-          flowSheet,
-          labResults,
-          orders,
-          questText,
-          answer,
-          answerText1,
-          answerText2,
-          answerText3,
-          answerText4,
-          answerText5,
-          rationale
-        )
-      "
-      >Add Question</n-button
-    >
-  </div>
   </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NInput,  NConfigProvider, useMessage
- } from "naive-ui";
- import { supabase } from "../supabase/init";
+import {
+  NButton,
+  NTabPane,
+  NTabs,
+  NInput,
+  NConfigProvider,
+  useMessage,
+} from "naive-ui";
+import { supabase } from "../supabase/init";
 
 import { ref } from "vue";
 
@@ -227,8 +232,7 @@ export default {
     NTabPane,
     NTabs,
     NInput,
-  NConfigProvider,
-
+    NConfigProvider,
   },
   setup() {
     const message = useMessage();
@@ -271,46 +275,23 @@ export default {
   },
   methods: {
     enterQuestion() {
-      //object newQ to send to database as new question with user inputted variables
-      
-//  var newQ = {
-//         qid: this.qid,
-//         histAndPhys: this.histAndPhys,
-//         nurseNotes: this.nurseNotes,
-//         flowSheet: this.flowSheet,
-//         labResults: this.labResults,
-//         orders: this.orders,
-//         questText: this.questText,
-//         correct: this.answer,
-//         a1: this.answerText1,
-//         a2: this.answerText2,
-//         a3: this.answerText3,
-//         a4: this.answerText4,
-//         a5: this.answerText5,
-//         rationale: this.rationale,
-
-
-var corAns = [];
-      if (this.a1Correct === true) {
-        corAns.push(this.a1);
+      var corAns = [];
+      if (this.answer == 1) {
+        corAns.push(this.answerText1);
       }
-      if (this.a2Correct === true) {
-        corAns.push(this.a2);
+      if (this.answer == 2) {
+        corAns.push(this.answerText2);
       }
-      if (this.a3Correct === true) {
-        corAns.push(this.a3);
+      if (this.answer == 3) {
+        corAns.push(this.answerText3);
       }
-      if (this.a4Correct === true) {
-        corAns.push(this.a4);
+      if (this.answer == 4) {
+        corAns.push(this.answerText4);
       }
-      if (this.a5Correct === true) {
-        corAns.push(this.a5);
+      if (this.answer == 5) {
+        corAns.push(this.answerText5);
       }
-      if (this.a6Correct === true) {
-        corAns.push(this.a6);
-      }
-
-  const addQ = async () => {
+      const addQ = async () => {
         try {
           let { data: successAdd, error } = await supabase
             .from("question")
@@ -328,7 +309,7 @@ var corAns = [];
                 correct_answers: corAns,
                 answer_choice: [
                   this.answerText1,
-                  this. answerText2,
+                  this.answerText2,
                   this.answerText3,
                   this.answerText4,
                   this.answerText5,
@@ -339,41 +320,22 @@ var corAns = [];
           if (error) throw error;
           //console entire question if successfully added
           console.log(successAdd);
-          this.createSuccessMessage("Success! New question was created! Check selected quiz.", 5000);
-
+          this.createSuccessMessage(
+            "Success! New question was created! Check selected quiz.",
+            5000
+          );
         } catch (error) {
           //console error if not added
           console.warn(error.message);
-          this.createErrorMessage("Error! Check to see if all fields have been entered", 5000);
-
+          this.createErrorMessage(
+            "Error! Check to see if all fields have been entered",
+            5000
+          );
         }
       };
-            // this.$store.dispatch("newMult", newQ);
 
-       addQ();
-
-      //end
-      // var newQ = {
-      //   qid: this.qid,
-      //   histAndPhys: this.histAndPhys,
-      //   nurseNotes: this.nurseNotes,
-      //   flowSheet: this.flowSheet,
-      //   labResults: this.labResults,
-      //   orders: this.orders,
-      //   questText: this.questText,
-      //   correct: this.answer,
-      //   a1: this.answerText1,
-      //   a2: this.answerText2,
-      //   a3: this.answerText3,
-      //   a4: this.answerText4,
-      //   a5: this.answerText5,
-      //   rationale: this.rationale,
-      // };
-      // this.$store.dispatch("newMult", newQ);
-      // this.createSuccessMessage("Success! New multiple choice question was created!", 10000);
-
+      addQ();
     },
-    
   },
 };
 </script>
@@ -389,7 +351,6 @@ var corAns = [];
   margin-left: auto;
   margin-right: auto;
 }
-
 
 .question {
   /* background-color: pink; */
