@@ -36,14 +36,8 @@
             <tbody>
               <tr v-for="(item, index) in mt_question.answer_choice" :key="index">
                 <td>{{ mt_question.answer_choice[index].row }}</td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
-                </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
-                </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td v-for="index2 in 3" :key="index2 + item">
+                  <n-checkbox :checked-value="index * 3 +index2" :unchecked-value="-1" @update:checked="handleUpdateChecked" size="large" />
                 </td>
               </tr>
             </tbody>
@@ -102,8 +96,6 @@ export default {
     const store = useStore();
     //function to compare student response to correct answer array
     function ifSameArray(arr1, arr2) {
-      console.log(arr1);
-      console.log(arr2);
       if (arr1.length !== arr2.length) return false;
       const arr1_sorted = arr1.sort();
       const arr2_sorted = arr2.sort();
@@ -121,7 +113,7 @@ export default {
         // and then update scores
         store.state.isSubmitted = true;
         if (
-          ifSameArray(props.ht_question.correct_answers, choiceSelRef.value)
+          ifSameArray(props.mt_question.correct_answers, choiceSelRef.value)
         ) {
           store.state.correct = "correct";
           store.state.numOfCorrectAnswers = store.state.numOfCorrectAnswers + 1;
@@ -130,6 +122,15 @@ export default {
           store.state.correct = "incorrect";
         }
       },
+      handleUpdateChecked(value) {
+      value = value.toString();
+        if(value != -1){
+            choiceSelRef.value.push(value);
+        } else {
+            let selectedIndex = choiceSelRef.value.indexOf(value);
+            choiceSelRef.value.splice(selectedIndex, 1);
+        }
+      }
     };
   },
   data() {
