@@ -91,7 +91,7 @@ export default {
         const enrollButton = async () => {
             const { error } = await supabase.from("roster").insert([
                 {
-                    onyen: newOnyen.value,
+                    onyen: newOnyen.value.toLowerCase(),
                 },
             ]);
             if (error) message.error(error.message);

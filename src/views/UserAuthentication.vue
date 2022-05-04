@@ -316,9 +316,9 @@ export default {
           },
           {
             data: {
-              name: this.name,
+              name: this.toTitleCase(this.name),
               userType: "student",
-              onyen: this.onyen,
+              onyen: this.onyen.toLowerCase(),
               profileImg: photoUrl,
             },
           }
@@ -330,12 +330,14 @@ export default {
             10000
           );
         } else {
-          console.log(resp.error);
+          this.createErrorMessage("User already exists.");
         }
       } else {
-        this.createErrorMessage(
-          "Input failed validation. Please check your email and password and try again."
-        );
+        if (!this.isInRoster()) {
+          this.createErrorMessage("Onyen is not in the roster. Please contact your instructor.");
+        } else {
+          this.createErrorMessage("Input failed validation. Please check your email and password and try again.");
+        }
       }
     },
     async handlePasswordRecovery() {
@@ -394,6 +396,10 @@ export default {
         return false;
       }
 
+      if (!this.isInRoster()) {
+        return false;
+      }
+
       return true;
     },
     isValidEmail() {
@@ -419,6 +425,18 @@ export default {
 
       return true;
     },
+    isInRoster() {
+      return this.rosterArray.includes(this.onyen);
+    },
+    toTitleCase(str) {
+      let components = str.toLowerCase().split(" ");
+      for (let i = 0; i < components.length; i++) {
+        let firstChar = components[i].charAt(0);
+        components[i] = components[i].replace(firstChar, firstChar.toUpperCase());
+      }
+
+      return components.join(" ");
+    }
   },
 };
 </script>
