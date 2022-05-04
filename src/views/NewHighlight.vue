@@ -474,10 +474,7 @@ export default {
           this.a2,
           this.a3,
           this.a4,
-          this.a5,
-          this.a6,
-          this.a7,
-          this.a8,
+
           this.rationale,
         ];
         let requiredFieldErrorLabels = [
@@ -487,10 +484,6 @@ export default {
           "Please input Answer Choice 2",
           "Please input Answer Choice 3",
           "Please input Answer Choice 4",
-          "Please input Answer Choice 5",
-          "Please input Answer Choice 6",
-          "Please input Answer Choice 7",
-          "Please input Answer Choice 8",
           "Please input a rationale for correct answer",
         ];
         if (requiredFields.includes(null) || requiredFields.includes("")) {
