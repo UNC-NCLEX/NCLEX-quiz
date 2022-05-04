@@ -458,11 +458,10 @@ export default {
           this.h1,
           this.h2,
           this.h3,
-          this.h4,
           this.row1,
           this.row2,
           this.row3,
-          this.row4,
+         
           this.rationale,
         ];
         let requiredFieldErrorLabels = [
@@ -471,11 +470,9 @@ export default {
           "Please input Heading 1",
           "Please input Heading 2",
           "Please input Heading 3",
-          "Please input Heading 4",
           "Please input Row 1",
           "Please input Row 2",
           "Please input Row 3",
-          "Please input Row 4",
           "Please input a rationale for correct answer",
         ];
         if (requiredFields.includes(null) || requiredFields.includes("")) {
