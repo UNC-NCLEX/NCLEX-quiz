@@ -343,7 +343,7 @@ export default {
             .insert([
               {
                 quiz_id: this.qid,
-                //all questions added from this page are multiple choice type
+                //all questions added from this page are select choice type
                 type: "select",
                 hist_and_phys: this.histAndPhys,
                 nurse_notes: this.nurseNotes,
