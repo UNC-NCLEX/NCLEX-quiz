@@ -59,7 +59,7 @@ Please refer to the following architecture diagram to get a better sense of how 
 
 ## Website Diagram
 
-TO BE ADDED
+![Website Diagram](./src/assets/website_diagram.png)
 
 ## Getting Started with the Project
 
