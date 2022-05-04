@@ -22,7 +22,6 @@
         :size="48"
         class="profile_img"
         :src="profile_img"
-        @click="loadProfile"
       />
     </div>
   </section>
@@ -45,9 +44,6 @@ export default {
     //navigate home
     loadStudentDashboard() {
       this.$router.push("/StudentDashboard");
-    },
-    loadProfile() {
-      this.$router.push("/Profile");
     },
     async signout() {
       let { error } = await supabase.auth.signOut();

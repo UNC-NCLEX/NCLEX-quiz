@@ -1,54 +1,56 @@
 <template>
-    <div class="roster">
-        <h2>Class Roster</h2>
-        <div class="subhead">
-            <!-- text input to add new student onyen to roster, saved in newOnyen variable -->
-            <div class="enroll">
-                <h3>Add New Student</h3>
-                <div class="form-group">
-                    <label for="onyen" class="onyen-label">Onyen</label>
-                    <n-input
-                        v-model:value="newOnyen"
-                        type="text"
-                        class="form-field"
-                        id="onyen"
-                        name="onyenInput"
-                        :input-props="{ type: 'clearable' }"
-                        placeholder="Student Onyen"
-                    />
-                </div>
-                <div class="form-group">
-                    <n-button
-                        @click="enrollButton()"
-                        type="primary"
-                        id="add"
-                        color="#ff853e"
-                        text-color="black"
-                        >Enroll Student</n-button
-                    >
+    <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+        <div class="roster">
+            <h2>Class Roster</h2>
+            <div class="subhead">
+                <!-- text input to add new student onyen to roster, saved in newOnyen variable -->
+                <div class="enroll">
+                    <h3>Add New Student</h3>
+                    <div class="form-group">
+                        <label for="onyen" class="onyen-label">Onyen</label>
+                        <n-input
+                            v-model:value="newOnyen"
+                            type="text"
+                            class="form-field"
+                            id="onyen"
+                            name="onyenInput"
+                            :input-props="{ type: 'clearable' }"
+                            placeholder="Student Onyen"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <n-button
+                            @click="enrollButton()"
+                            type="primary"
+                            id="add"
+                            color="#ff853e"
+                            text-color="black"
+                            >Enroll Student</n-button
+                        >
+                    </div>
                 </div>
             </div>
+            <table id="rosterTable">
+                <thead>
+                    <th>Onyen</th>
+                    <th>Remove</th>
+                </thead>
+                <tbody>
+                    <!-- for loop to display every student inn current roster in table -->
+                    <tr v-for="(item, index) in rosterRef" :key="item + index">
+                        <td width="100" align='center'>{{ item }}</td>
+                        <td width="5%"> 
+                            <n-button @click="deleteStudent(item)" type="error">Remove</n-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <table id="rosterTable">
-            <thead>
-                <th>Onyen</th>
-                <th>Remove</th>
-            </thead>
-            <tbody>
-                <!-- for loop to display every student inn current roster in table -->
-                <tr v-for="(item, index) in rosterRef" :key="item + index">
-                    <td width="100" align='center'>{{ item }}</td>
-                    <td width="5%"> 
-                        <n-button @click="deleteStudent(item)" type="error">Remove</n-button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    </n-config-provider>
 </template>
 
 <script>
-import { NButton, NInput, useMessage } from "naive-ui";
+import { NButton, NInput, useMessage, NConfigProvider } from "naive-ui";
 import { ref } from "vue";
 import { supabase } from "../supabase/init";
 
@@ -57,6 +59,7 @@ export default {
     components: {
         NButton,
         NInput,
+        NConfigProvider
     },
     setup() {
         const message = useMessage();
@@ -103,6 +106,15 @@ export default {
         getRoster();
         return { rosterRef, newOnyen, enrollButton, deleteStudent };
     },
+    data() {
+        return {
+            themeOverrides: {
+                common: {
+                    primaryColor: "#FF8C00",
+                },
+            }
+        }
+    }
 };
 </script>
 
