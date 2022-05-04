@@ -19,7 +19,15 @@
             placeholder="Enter New Quiz Name"
           />
           <div class="space"></div>
-          <n-button size="large" @click="createQuiz">Add Quiz</n-button>
+          <n-button
+            @click="createQuiz"
+            size="large"
+            type="primary"
+            color="#fdcb6e"
+            text-color="black"
+            class="button"
+            >Add Quiz</n-button
+          >
         </div>
         <br />
         <div class="qType">
@@ -34,7 +42,13 @@
             <n-radio :value="6" class="choice-text">Highlight Table</n-radio>
           </n-radio-group>
           <div class="space"></div>
-          <n-button size="large" @click="createQuestion"
+          <n-button
+            @click="createQuestion"
+            size="large"
+            type="primary"
+            color="#fdcb6e"
+            text-color="black"
+            class="button"
             >Create Question</n-button
           >
         </div>
