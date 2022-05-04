@@ -66,7 +66,6 @@ export default {
     let dataLoaded = ref(false);
     let index = ref(0);
     const qid = computed(() => store.state.currentQid);
-    console.log(qid);
     const getAllQuestions = async () => {
       // get all Questions from a specific quiz that the user selected
       try {

@@ -1,49 +1,51 @@
 <!-- instructor page to view all current quizzes and questions -->
 <template>
-    <div class="container">
-        <h1 class="question__info">
-            Please select a quiz from the dropdown list
-        </h1>
-        <!-- drop down to select quiz to display, saved into quizSelect variable -->
-        <n-select
-            v-model:value="quizSelect"
-            placeholder="Please select a quiz to view:"
-            :options="quizzes"
-            name="select"
-            class="question__select"
-            @update:value="handleUpdateValue"
-        >
-        </n-select>
-        <!-- display each question in selected quiz based on question type -->
-        <div
-            id="question"
-            v-for="(item, index) in questions"
-            :key="'QuizInstructor' + item.qid"
-        >
-            <h1 class="question__number">Question {{ index + 1 }}</h1>
-            <div v-if="item.type === 'mc'">
-                <MultipleChoice :mc_question="item" :view_only="true"></MultipleChoice>
-            </div>
-            <div v-else-if="item.type === 'select'">
-                <MultipleResponse :mr_question="item" :view_only="true"></MultipleResponse>
-            </div>
-            <div v-else-if="item.type === 'dds'">
-                 <DropDownSentence :dds_question="item" :view_only="true"></DropDownSentence>
-            </div>
-            <div v-else-if="item.type === 'ddt'">
-                <DropDown :ddt_question="item" :view_only="true"></DropDown>
-            </div>
-            <div v-if="item.type === 'ht'">
-                <HighlightTable :ht_question="item" :view_only="true"></HighlightTable>
-            </div>
-            <div v-if="item.type === 'mt'">
-                <MatrixTable :mt_question="item" :view_only="true"></MatrixTable>
+    <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+        <div class="container">
+            <h1 class="question__info">
+                Please select a quiz from the dropdown list
+            </h1>
+            <!-- drop down to select quiz to display, saved into quizSelect variable -->
+            <n-select
+                v-model:value="quizSelect"
+                placeholder="Please select a quiz to view:"
+                :options="quizzes"
+                name="select"
+                class="question__select"
+                @update:value="handleUpdateValue"
+            >
+            </n-select>
+            <!-- display each question in selected quiz based on question type -->
+            <div
+                id="question"
+                v-for="(item, index) in questions"
+                :key="'QuizInstructor' + item.qid"
+            >
+                <h1 class="question__number">Question {{ index + 1 }}</h1>
+                <div v-if="item.type === 'mc'">
+                    <MultipleChoice :mc_question="item" :view_only="true"></MultipleChoice>
+                </div>
+                <div v-else-if="item.type === 'select'">
+                    <MultipleResponse :mr_question="item" :view_only="true"></MultipleResponse>
+                </div>
+                <div v-else-if="item.type === 'dds'">
+                    <DropDownSentence :dds_question="item" :view_only="true"></DropDownSentence>
+                </div>
+                <div v-else-if="item.type === 'ddt'">
+                    <DropDown :ddt_question="item" :view_only="true"></DropDown>
+                </div>
+                <div v-if="item.type === 'ht'">
+                    <HighlightTable :ht_question="item" :view_only="true"></HighlightTable>
+                </div>
+                <div v-if="item.type === 'mt'">
+                    <MatrixTable :mt_question="item" :view_only="true"></MatrixTable>
+                </div>
             </div>
         </div>
-  </div>
+    </n-config-provider>
 </template>
 <script>
-import { useMessage, NSelect } from "naive-ui";
+import { useMessage, NSelect, NConfigProvider } from "naive-ui";
 import { ref } from "vue";
 import { supabase } from "../supabase/init";
 import MultipleChoice from "../components/MultipleChoice.vue";
@@ -62,7 +64,8 @@ export default {
         DropDownSentence,
         DropDown,
         HighlightTable,
-        MatrixTable
+        MatrixTable,
+        NConfigProvider
     },
     setup() {
         const message = useMessage();
@@ -93,7 +96,6 @@ export default {
                     .select("*")
                     .eq("quiz_id", quizSelectRef.value);
                 if (error) throw error;
-                console.log(questions);
                 questionsRef.value = questions;
             } catch (error) {
                 message.error(error.message);
@@ -107,8 +109,18 @@ export default {
             handleUpdateValue,
         };
     },
+    data() {
+        return {
+            themeOverrides: {
+                common: {
+                    primaryColor: "#FF8C00",
+                },
+            }
+        }
+    }
 };
 </script>
+
 <style>
 .container {
     display: flex;

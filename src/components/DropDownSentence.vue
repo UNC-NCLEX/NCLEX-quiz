@@ -1,66 +1,76 @@
 <template>
-  <div class="container">
-    <div class="question">
-      <div class="information">
-        <!-- tab group for background information -->
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            {{ dds_question.hist_and_phys }}
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            {{ dds_question.nurse_notes }}
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            {{ dds_question.flow_sheet }}
-          </n-tab-pane>
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            {{ dds_question.lab_results }}
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            {{ dds_question.orders }}
-          </n-tab-pane>
-        </n-tabs>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <div class="question">
+        <div class="information">
+          <!-- tab group for background information -->
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              {{ dds_question.hist_and_phys }}
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              {{ dds_question.nurse_notes }}
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              {{ dds_question.flow_sheet }}
+            </n-tab-pane>
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              {{ dds_question.lab_results }}
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              {{ dds_question.orders }}
+            </n-tab-pane>
+          </n-tabs>
+        </div>
+        <h3>
+          {{ dds_question.text }}
+        </h3>
+        <!-- for loop through row headers (contain beginning text for each sentence) -->
+        <tr
+          v-for="(item, index) in dds_question.row_headers"
+          :key="'DDS' + index + item"
+        >
+          <!-- item = question sentence text (contained in row headers column from database) -->
+          <h4 class="questions">
+            {{ item }}
+          </h4>
+          <td>
+            <n-space vertical>
+              <!-- options for each dropdown from the answer_choice column in database -->
+              <n-select
+                @update:value="handleUpdateValue"
+                @click="handleRepeat"
+                :options="dds_question.answer_choice[index]"
+                clearable
+              />
+            </n-space>
+          </td>
+        </tr>
       </div>
-      <h3>
-        {{ dds_question.text }}
-      </h3>
-      <!-- for loop through row headers (contain beginning text for each sentence) -->
-      <tr
-        v-for="(item, index) in dds_question.row_headers"
-        :key="'DDS' + index + item"
-      >
-        <!-- item = question sentence text (contained in row headers column from database) -->
-        <h4 class="questions">
-          {{ item }}
-        </h4>
-        <td>
-          <n-space vertical>
-            <!-- options for each dropdown from the answer_choice column in database -->
-            <n-select
-              @update:value="handleUpdateValue"
-              @click="handleRepeat"
-              :options="dds_question.answer_choice[index]"
-              clearable
-            />
-          </n-space>
-        </td>
-      </tr>
+      <!-- display Submit button OR rationale based on if question has been submitted  -->
+      <div v-if="!this.$store.state.isSubmitted && !view_only">
+        <n-button
+          @click="checkAnswer"
+          size="large"
+          type="primary"
+          color="#fdcb6e"
+          text-color="black"
+          class="button"
+          >Submit</n-button
+        >
+      </div>
+      <div v-else-if="this.$store.state.isSubmitted && !view_only">
+        <RationalePopup
+          :correct="this.$store.state.correct"
+          :rationale="dds_question.rationale"
+        />
+      </div>
     </div>
-    <!-- display Submit button OR rationale based on if question has been submitted  -->
-    <div v-if="!this.$store.state.isSubmitted && !view_only">
-      <n-button size="large" @click="checkAnswer">Submit</n-button>
-    </div>
-    <div v-else-if="this.$store.state.isSubmitted && !view_only">
-      <RationalePopup
-        :correct="this.$store.state.correct"
-        :rationale="dds_question.rationale"
-      />
-    </div>
-  </div>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSelect } from "naive-ui";
+import { NButton, NTabPane, NTabs, NSelect, NConfigProvider } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import RationalePopup from "../components/RationalePopup.vue";
@@ -73,6 +83,7 @@ export default {
     NTabs,
     NSelect,
     RationalePopup,
+    NConfigProvider
   },
   props: {
     //currect question data passed in as a prop -> immutable
@@ -115,7 +126,6 @@ export default {
         if (
           ifSameArray(props.dds_question.correct_answers, choiceSelRef.value)
         ) {
-          console.log("correct");
           store.state.correct = "correct";
           store.state.numOfCorrectAnswers = store.state.numOfCorrectAnswers + 1;
           store.commit("UPDATE_SCORE");
@@ -125,6 +135,15 @@ export default {
       },
     };
   },
+  data() {
+    return {
+      themeOverrides: {
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      }
+    }
+  }
 };
 </script>
 

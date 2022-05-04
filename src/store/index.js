@@ -77,7 +77,7 @@ export default createStore({
             state.dropDownSentence.push(newQ);
         },
         UPDATE_SCORE(state) {
-            state.score = (state.numOfCorrectAnswers / state.quizLength) * 100;
+            state.score = ((state.numOfCorrectAnswers / state.quizLength) * 100).toFixed(2);
         },
         RESET_QUIZ(state) {
             state.score = 0;
@@ -165,7 +165,7 @@ export default createStore({
             var nextQ = eval(
                 "state.".concat(quizTitle, "[", state.currentXid - 1, "].xid")
             );
-            console.log(nextQ);
+            
             var toRet;
             var exe = "for(var i=0; i<state.".concat(
                 tableSearch,
