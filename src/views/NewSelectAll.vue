@@ -76,7 +76,7 @@
             </n-tab-pane>
           </n-tabs>
         </div>
-          <h2>Question Text</h2>
+        <h2>Question Text</h2>
 
         <n-input
           v-model:value="questText"
@@ -225,7 +225,14 @@
 </template>
 
 <script>
-import { NButton, NInput, NConfigProvider, NTabs, NTabPane, useMessage} from "naive-ui";
+import {
+  NButton,
+  NInput,
+  NConfigProvider,
+  NTabs,
+  NTabPane,
+  useMessage,
+} from "naive-ui";
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
@@ -237,10 +244,9 @@ export default {
     NConfigProvider,
     NTabs,
     NTabPane,
-
   },
   setup() {
-        const message = useMessage();
+    const message = useMessage();
 
     return {
       histAndPhys: ref(null),
@@ -264,7 +270,7 @@ export default {
       a6Correct: false,
       a6: ref(null),
       rationale: ref(null),
-      
+
       createSuccessMessage(msg, time) {
         message.success(msg, { duration: time });
       },
@@ -337,7 +343,7 @@ export default {
             .insert([
               {
                 quiz_id: this.qid,
-                //all questions added from this page are multiple choice type
+                //all questions added from this page are select choice type
                 type: "select",
                 hist_and_phys: this.histAndPhys,
                 nurse_notes: this.nurseNotes,
@@ -360,17 +366,20 @@ export default {
           if (error) throw error;
           //console entire question if successfully added
           console.log(successAdd);
-          this.createSuccessMessage("Success! New question was created! Check selected quiz.", 5000);
-
+          this.createSuccessMessage(
+            "Success! New question was created! Check selected quiz.",
+            5000
+          );
         } catch (error) {
           //console error if not added
           console.warn(error.message);
-          this.createErrorMessage("Error! Check to see if all fields have been entered", 5000);
-
+          this.createErrorMessage(
+            "Error! Check to see if all fields have been entered.",
+            5000
+          );
         }
       };
       addQ();
-
     },
   },
 };
@@ -387,7 +396,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-
 
 .question {
   width: 75vw;

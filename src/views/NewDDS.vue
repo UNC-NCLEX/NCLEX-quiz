@@ -1,78 +1,82 @@
 <template>
-<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
-  <div class="container">
-    <h1>New Drop Down Sentence Question</h1>
-    <div class="quizTitle">
-      <label for="quizT">Select Quiz Group for Question </label>
-      <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
-      <select v-model="qid">
-        <option v-for="quiz in this.$store.state.quizzes" v-bind:value="quiz.quiz_id" :key="quiz.quiz_id">
-          {{ quiz.title }}
-        </option>
-      </select>
-    </div>
-    <div class="question">
-      <h2>Question</h2>
-      <!-- tab group for background information n-input fields to take user input -->
-      <div class="information">
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            <n-input
-              v-model:value="histAndPhys"
-              type="text"
-              class="form-field"
-              id="histAndPhys"
-              name="histAndPhys"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter History &amp; Physical Information"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            <n-input
-              v-model:value="nurseNotes"
-              type="text"
-              class="form-field"
-              id="nurseNotes"
-              name="nurseNotes"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Nurse's Notes"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            <n-input
-              v-model:value="flowSheet"
-              type="text"
-              class="form-field"
-              id="flowSheet"
-              name="flowSheet"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Flow Sheet"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            <n-input
-              v-model:value="labResults"
-              type="text"
-              class="form-field"
-              id="labResults"
-              name="labResults"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Labratory Results"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            <n-input
-              v-model:value="orders"
-              type="text"
-              class="form-field"
-              id="orders"
-              name="orders"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Orders"
-            />
-          </n-tab-pane>
-        </n-tabs>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <h1>New Drop Down Sentence Question</h1>
+      <div class="quizTitle">
+        <label for="quizT">Select Quiz Group for Question </label>
+        <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
+        <select v-model="qid">
+          <option
+            v-for="quiz in this.$store.state.quizzes"
+            v-bind:value="quiz.quiz_id"
+            :key="quiz.quiz_id"
+          >
+            {{ quiz.title }}
+          </option>
+        </select>
       </div>
+      <div class="question">
+        <h2>Question</h2>
+        <!-- tab group for background information n-input fields to take user input -->
+        <div class="information">
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              <n-input
+                v-model:value="histAndPhys"
+                type="text"
+                class="form-field"
+                id="histAndPhys"
+                name="histAndPhys"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter History &amp; Physical Information"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              <n-input
+                v-model:value="nurseNotes"
+                type="text"
+                class="form-field"
+                id="nurseNotes"
+                name="nurseNotes"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Nurse's Notes"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              <n-input
+                v-model:value="flowSheet"
+                type="text"
+                class="form-field"
+                id="flowSheet"
+                name="flowSheet"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Flow Sheet"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              <n-input
+                v-model:value="labResults"
+                type="text"
+                class="form-field"
+                id="labResults"
+                name="labResults"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Labratory Results"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              <n-input
+                v-model:value="orders"
+                type="text"
+                class="form-field"
+                id="orders"
+                name="orders"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Orders"
+              />
+            </n-tab-pane>
+          </n-tabs>
+        </div>
         <h2>Question Text</h2>
 
         <n-input
@@ -282,24 +286,14 @@
           </td>
         </tr>
       </div>
-      <h2>Rationale Text</h2>
-       <n-input
-      v-model:value="rationale"
-      type="text"
-      class="form-field"
-      id="rationale"
-      name="rationale"
-      :input-props="{ type: 'clearable' }"
-      placeholder="Enter Rationale Text"
-    />
+      <n-button @click="enterQuestion()" size="large">Add Question</n-button>
     </div>
-   
-    <n-button @click="enterQuestion()" size="large">Add Question</n-button>
-  </div>
-</n-config-provider>
+    </div>
+  </n-config-provider>
 </template>
 
 <script>
+
 import { NButton, NTabPane, NTabs, NSpace, NInput, NConfigProvider, useMessage } from "naive-ui";
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
@@ -312,10 +306,12 @@ export default {
     NTabs,
     NSpace,
     NInput,
-    NConfigProvider
+    NConfigProvider,
   },
   setup() {
+
     const message = useMessage();
+
     return {
       //initialize user input variables for question
       value: ref(null),
@@ -353,14 +349,15 @@ export default {
   data() {
     return {
       themeOverrides: {
-            common: {
-                primaryColor: "#FF8C00"
-            }
-        }
-    }
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      },
+    };
   },
   methods: {
     enterQuestion() {
+
      const findMissingIndex = function(arr){
         let idx = arr.indexOf(null)
         if (idx == -1){
@@ -442,7 +439,9 @@ export default {
                 lab_results: this.labResults,
                 orders: this.orders,
                 text: this.text,
+
                 row_headers: rowH,
+
                 correct_answers: corAns,
                 answer_choice: [
                   [
@@ -465,7 +464,7 @@ export default {
               },
             ]);
           if (error) throw error;
-          //console entire question if successfully added
+          //console success if successfully added
           this.createSuccessMessage(
             "Success! New question was created! Check selected quiz.",
             5000
@@ -493,7 +492,6 @@ export default {
   flex-wrap: wrap;
   align-items: center;
 }
-
 
 /*****TABS*****/
 .information {

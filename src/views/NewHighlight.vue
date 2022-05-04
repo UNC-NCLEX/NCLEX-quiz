@@ -93,7 +93,7 @@
             <thead>
               <th>
                 <n-input
-                  v-model:value="rowText"
+                  v-model:value="h1"
                   type="text"
                   class="form-field"
                   id="questText"
@@ -104,7 +104,7 @@
               </th>
               <th colspan="2">
                 <n-input
-                  v-model:value="rowText"
+                  v-model:value="h2"
                   type="text"
                   class="form-field"
                   id="questText"
@@ -118,146 +118,194 @@
               <tr>
                 <td>
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="row1"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Question Text"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a1Correct"
+                    name="answerchoice"
+                  />
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="a1"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
                 <td>
-                  <n-input
-                    v-model:value="rowText"
-                    type="text"
-                    class="form-field"
-                    id="questText"
-                    name="questText"
-                    :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a2Correct"
+                    name="answerchoice"
                   />
-                </td>
-              </tr>
-              <tr>
-                <td>
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="a2"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
-                  />
-                </td>
-                <td>
-                  <n-input
-                    v-model:value="rowText"
-                    type="text"
-                    class="form-field"
-                    id="questText"
-                    name="questText"
-                    :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
-                  />
-                </td>
-                <td>
-                  <n-input
-                    v-model:value="rowText"
-                    type="text"
-                    class="form-field"
-                    id="questText"
-                    name="questText"
-                    :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
               </tr>
               <tr>
                 <td>
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="row2"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Question Text"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a3Correct"
+                    name="answerchoice"
+                  />
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="a3"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a4Correct"
+                    name="answerchoice"
+                  />
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="a4"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
               </tr>
               <tr>
                 <td>
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="row3"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Question Text"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a5Correct"
+                    name="answerchoice"
+                  />
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="a5"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a6Correct"
+                    name="answerchoice"
+                  />
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="a6"
                     type="text"
                     class="form-field"
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <n-input
+                    v-model:value="row4"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Question Text"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a7Correct"
+                    name="answerchoice"
+                  />
+                  <n-input
+                    v-model:value="a7"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a8Correct"
+                    name="answerchoice"
+                  />
+                  <n-input
+                    v-model:value="a8"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
               </tr>
             </tbody>
           </n-table>
-                    <h2>Rationale Text</h2>
+          <h2>Rationale Text</h2>
 
           <n-input
             v-model:value="rationale"
@@ -287,6 +335,14 @@
             answerText2,
             answerText3,
             answerText4,
+            a1Correct,
+            a2Correct,
+            a3Correct,
+            a4Correct,
+            a5Correct,
+            a6Correct,
+            a7Correct,
+            a8Correct,
             rationale
           )
         "
@@ -304,9 +360,11 @@ import {
   NTable,
   NInput,
   NConfigProvider,
+  useMessage,
 } from "naive-ui";
 
 import { ref } from "vue";
+import { supabase } from "../supabase/init";
 
 export default {
   name: "NewHighlight",
@@ -319,29 +377,46 @@ export default {
     NConfigProvider,
   },
   setup() {
+    const message = useMessage();
+
     return {
+      histAndPhys: ref(null),
+      nurseNotes: ref(null),
+      flowSheet: ref(null),
+      labResults: ref(null),
+      orders: ref(null),
       value: ref(null),
-      methods: {
-        enterQuestion() {
-          //create question object to pass to database
-          var newQ = {
-            quiz_id: this.qid,
-            histAndPhys: this.histAndPhys,
-            nurseNotes: this.nurseNotes,
-            flowSheet: this.flowSheet,
-            labResults: this.labResults,
-            orders: this.orders,
-            questText: this.questText,
-            rowText: this.rowText,
-            a1: this.answerText1,
-            a2: this.answerText2,
-            a3: this.answerText3,
-            a4: this.answerText4,
-            a5: this.answerText5,
-            rationale: this.rationale,
-          };
-          this.$store.dispatch("newHighlight", newQ);
-        },
+      qid: ref(null),
+      questText: ref(null),
+      h1: ref(null),
+      h2: ref(null),
+      row1: ref(null),
+      row2: ref(null),
+      row3: ref(null),
+      row4: ref(null),
+      a1Correct: false,
+      a1: ref(null),
+      a2Correct: false,
+      a2: ref(null),
+      a3Correct: false,
+      a3: ref(null),
+      a4Correct: false,
+      a4: ref(null),
+      a5Correct: false,
+      a5: ref(null),
+      a6Correct: false,
+      a6: ref(null),
+      a7Correct: false,
+      a7: ref(null),
+      a8Correct: false,
+      a8: ref(null),
+      rationale: ref(null),
+
+      createSuccessMessage(msg, time) {
+        message.success(msg, { duration: time });
+      },
+      createErrorMessage(msg, time) {
+        message.error(msg, { duration: time });
       },
     };
   },
@@ -353,6 +428,168 @@ export default {
         },
       },
     };
+  },
+  methods: {
+    enterQuestion() {
+      const findMissingIndex = function (arr) {
+        let idx = arr.indexOf(null);
+        if (idx == -1) {
+          idx = arr.indexOf("");
+        }
+        return idx;
+      };
+      //save correct answer text to corAns array variable for db - a1Correct, a2Correct, etc. vars are BOOLEAN, save corresponding text into corAns variable
+      var corAns = [];
+      if (this.a1Correct === true) {
+        corAns.push(this.a1);
+      }
+      if (this.a2Correct === true) {
+        corAns.push(this.a2);
+      }
+      if (this.a3Correct === true) {
+        corAns.push(this.a3);
+      }
+      if (this.a4Correct === true) {
+        corAns.push(this.a4);
+      }
+      if (this.a5Correct === true) {
+        corAns.push(this.a5);
+      }
+      if (this.a6Correct === true) {
+        corAns.push(this.a6);
+      }
+      if (this.a7Correct === true) {
+        corAns.push(this.a7);
+      }
+      if (this.a8Correct === true) {
+        corAns.push(this.a8);
+      }
+
+      //push new question to database (unused fields as empty)
+      const addQ = async () => {
+        let requiredFields = [
+          this.qid,
+          this.questText,
+          this.a1,
+          this.a2,
+          this.a3,
+          this.a4,
+          this.a5,
+          this.a6,
+          this.a7,
+          this.a8,
+          this.rationale,
+        ];
+        let requiredFieldErrorLabels = [
+          "Please Select a Quiz",
+          "Please Enter a Main Question Text",
+          "Please input Answer Choice 1",
+          "Please input Answer Choice 2",
+          "Please input Answer Choice 3",
+          "Please input Answer Choice 4",
+          "Please input Answer Choice 5",
+          "Please input Answer Choice 6",
+          "Please input a rationale for correct answer",
+        ];
+        if (requiredFields.includes(null) || requiredFields.includes("")) {
+          let missingIndex = findMissingIndex(requiredFields);
+          this.createErrorMessage(
+            `Error: ${requiredFieldErrorLabels[missingIndex]}`,
+            5000
+          );
+          return;
+        }
+        if (corAns.length == 0) {
+          this.createErrorMessage(
+            `Error: Please Select the Correct Answer(s)`,
+            5000
+          );
+          return;
+        }
+        try {
+          let { data: successAdd, error } = await supabase
+            .from("question")
+            .insert([
+              {
+                quiz_id: this.qid,
+                //all questions added from this page are highlight type
+                type: "ht",
+                hist_and_phys: this.histAndPhys,
+                has_table: true,
+                row_headers: [this.h1, this.h2],
+                nurse_notes: this.nurseNotes,
+                flow_sheet: this.flowSheet,
+                lab_results: this.labResults,
+                orders: this.orders,
+                text: this.questText,
+                correct_answers: corAns,
+                answer_choice: [
+                    {
+                      row: this.row1,
+                      options: [
+                        {
+                          label: this.a1,
+                        },
+                        {
+                          label: this.a2,
+                        },
+                      ],
+                    },
+                    {
+                      row: this.row2,
+                      options: [
+                        {
+                          label: this.a3,
+                        },
+                        {
+                          label: this.a4,
+                        },
+                      ],
+                    },
+                    {
+                      row: this.row3,
+                      options: [
+                        {
+                          label: this.a5,
+                        },
+                        {
+                          label: this.a6,
+                        },
+                      ],
+                    },
+                    {
+                      row: this.row4,
+                      options: [
+                        {
+                          label: this.a7,
+                        },
+                        {
+                          label: this.a8,
+                        },
+                      ],
+                    },
+                ],
+                rationale: this.rationale,
+              },
+            ]);
+          if (error) throw error;
+          //console entire question if successfully added
+          console.log(successAdd);
+          this.createSuccessMessage(
+            "Success! New question was created! Check selected quiz.",
+            5000
+          );
+        } catch (error) {
+          //console error if not added
+          console.warn(error.message);
+          this.createErrorMessage(
+            "Error! Check to see if all fields have been entered.",
+            5000
+          );
+        }
+      };
+      addQ();
+    },
   },
 };
 </script>
