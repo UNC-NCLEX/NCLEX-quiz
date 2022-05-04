@@ -81,8 +81,8 @@ export default {
 }
 
 .header_contents {
-    position: fixed;
-    z-index: 1;
+    position: sticky;
+    top: 0;
     display: flex;
     background: linear-gradient(.25turn, #ffffff, #f1f2f6);
     filter: drop-shadow(0px 5px 10px #2f3542);
