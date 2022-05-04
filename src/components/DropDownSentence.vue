@@ -155,7 +155,6 @@ h2 {
 /*****QUESTION*****/
 .question {
   width: 75vw;
-  text-align: left;
 }
 
 /*****ANSWERS*****/

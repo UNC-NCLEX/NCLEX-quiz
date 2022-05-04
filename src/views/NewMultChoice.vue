@@ -348,14 +348,14 @@ export default {
           //console entire question if successfully added
           console.log(successAdd);
           this.createSuccessMessage(
-            "Success! New question was created! Check selected quiz.",
+            "Success! New question was created! Check selected {hello} quiz.",
             5000
           );
         } catch (error) {
           //console error if not added
           console.warn(error.message);
           this.createErrorMessage(
-            "Error! Check to see if all fields have been entered",
+            "Error! Check to see if all fields have been entered.",
             5000
           );
         }

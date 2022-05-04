@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="question">
     <div class="information">
       <!-- tab group for background information -->
       <n-tabs type="line">
@@ -91,6 +92,7 @@
       :correct="this.$store.state.correct"
       :rationale="ddt_question.rationale"
     />
+    </div>
   </div>
 </template>
 
