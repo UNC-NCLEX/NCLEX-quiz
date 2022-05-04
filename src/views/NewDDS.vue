@@ -286,6 +286,16 @@
           </td>
         </tr>
       </div>
+      <h2>Rationale Text</h2>
+        <n-input
+          v-model:value="rationale"
+          type="text"
+          class="form-field"
+          id="rationale"
+          name="rationale"
+          :input-props="{ type: 'clearable' }"
+          placeholder="Enter Rationale Text"
+        />
       <n-button @click="enterQuestion()" size="large">Add Question</n-button>
     </div>
     </div>
