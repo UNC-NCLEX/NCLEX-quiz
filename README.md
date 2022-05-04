@@ -38,14 +38,14 @@ The NCLEX Interactive Quiz has 6 different question types:
 
 Front-End:
 
-* **Vue.js**: Vue.js is an open-source front end JavaScript framework for building single-page applications and user interfaces. Vue.js builds on top of standard HTML, CSS, and JavaScript to allow you to build single-page applications and user interfaces efficiently through the use of component-based programming.
-* **HTML/CSS**: HTML and CSS are used throughout the project to structure and style different webpages.
-* **Naive UI**: Naive UI is a Vue 3 component library that provides a nice set of components (such as buttons, input fields, etc.) that can make your Vue 3 application look/function better. Naive UI components are commonly used throughout the project.
+* Vue.js: Vue.js is an open-source front end JavaScript framework for building single-page applications and user interfaces. Vue.js builds on top of standard HTML, CSS, and JavaScript to allow you to build single-page applications and user interfaces efficiently through the use of component-based programming.
+* HTML/CSS: HTML and CSS are used throughout the project to structure and style different webpages.
+* Naive UI: Naive UI is a Vue 3 component library that provides a nice set of components (such as buttons, input fields, etc.) that can make your Vue 3 application look/function better. Naive UI components are commonly used throughout the project.
 
 Back-End:
 
-* **Supabase**: Supabase is an open-source alternative to Firebase that provides a backend SQL database for storing and retrieving data. This is used by the Interactive NCLEX Quiz to store quizzes, user authentication information, student scores, etc.
-* **Vercel**: Vercel is a web hosting service that makes it simple to host and deploy websites. Vercel automatically redeploys when changes are pushed to main, so Vercel is relatively low maintenance and automates a lot of deployment processes.
+* Supabase: Supabase is an open-source alternative to Firebase that provides a backend SQL database for storing and retrieving data. This is used by the Interactive NCLEX Quiz to store quizzes, user authentication information, student scores, etc.
+* Vercel: Vercel is a web hosting service that makes it simple to host and deploy websites. Vercel automatically redeploys when changes are pushed to main, so Vercel is relatively low maintenance and automates a lot of deployment processes.
 
 If you aren't already familiar with Vue.js, we have created a tutorial that serves as both an introduction to Vue 3 as well as a demo of Vue 3. Although this tutorial doesn't cover every possible topic on Vue 3, it serves as a great starting point for anybody new to Vue 3, and we highly recommend that you start here if you aren't familiar with it.
 
@@ -58,6 +58,8 @@ Please refer to the following architecture diagram to get a better sense of how 
 ![Architecture Diagram](./src/assets/architecture_diagram.png)
 
 ## Website Diagram
+
+Please refer to the following website diagram for an overview of how all of the different webpages connect with each other.
 
 ![Website Diagram](./src/assets/website_diagram.png)
 
