@@ -1,68 +1,70 @@
 <template>
-  <div class="container">
-    <div class="question">
-      <div class="information">
-        <!-- tab group for background information -->
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            {{ ht_question.hist_and_phys }}
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            {{ ht_question.nurse_notes }}
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            {{ ht_question.flow_sheet }}
-          </n-tab-pane>
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            {{ ht_question.lab_results }}
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            {{ ht_question.orders }}
-          </n-tab-pane>
-        </n-tabs>
-      </div>
-      <h3>{{ ht_question.text }}</h3>
-      <!-- question table -->
-      <div>
-        <n-table>
-          <!-- for loop through row headers, loops for each row -->
-          <tr>
-            <th><b>{{ ht_question.row_headers[0]}}</b></th>
-            <th colspan="2"><b>{{ ht_question.row_headers[1] }}</b></th>
-          </tr>
-          <tbody>
-            <tr v-for="(item, index) in ht_question.answer_choice" :key="index">
-              <td>{{ ht_question.answer_choice[index].row }}</td>
-              <td>
-                <div class="choice" @click="highlight" :data-id="ht_question.answer_choice[index].options[0].label">
-                  {{ ht_question.answer_choice[index].options[0].label }}
-                </div>
-              </td>
-              <td>
-                <div class="choice" @click="highlight" :data-id="ht_question.answer_choice[index].options[1].label">
-                  {{ ht_question.answer_choice[index].options[1].label }}
-                </div>
-              </td>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <div class="question">
+        <div class="information">
+          <!-- tab group for background information -->
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              {{ ht_question.hist_and_phys }}
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              {{ ht_question.nurse_notes }}
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              {{ ht_question.flow_sheet }}
+            </n-tab-pane>
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              {{ ht_question.lab_results }}
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              {{ ht_question.orders }}
+            </n-tab-pane>
+          </n-tabs>
+        </div>
+        <h3>{{ ht_question.text }}</h3>
+        <!-- question table -->
+        <div>
+          <n-table>
+            <!-- for loop through row headers, loops for each row -->
+            <tr>
+              <th><b>{{ ht_question.row_headers[0]}}</b></th>
+              <th colspan="2"><b>{{ ht_question.row_headers[1] }}</b></th>
             </tr>
-          </tbody>
-        </n-table>
+            <tbody>
+              <tr v-for="(item, index) in ht_question.answer_choice" :key="index">
+                <td>{{ ht_question.answer_choice[index].row }}</td>
+                <td>
+                  <div class="choice" @click="highlight" :data-id="ht_question.answer_choice[index].options[0].label">
+                    {{ ht_question.answer_choice[index].options[0].label }}
+                  </div>
+                </td>
+                <td>
+                  <div class="choice" @click="highlight" :data-id="ht_question.answer_choice[index].options[1].label">
+                    {{ ht_question.answer_choice[index].options[1].label }}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </n-table>
+        </div>
+      </div>
+      <!-- display submit button OR rationale depending on if question has been submitted -->
+      <div v-if="!this.$store.state.isSubmitted && !view_only">
+        <n-button size="large" @click="checkAnswer">Submit</n-button>
+      </div>
+      <div v-else-if="this.$store.state.isSubmitted && !view_only">
+        <RationalePopup
+          :correct="this.$store.state.correct"
+          :rationale="ht_question.rationale"
+        />
       </div>
     </div>
-    <!-- display submit button OR rationale depending on if question has been submitted -->
-    <div v-if="!this.$store.state.isSubmitted && !view_only">
-      <n-button size="large" @click="checkAnswer">Submit</n-button>
-    </div>
-    <div v-else-if="this.$store.state.isSubmitted && !view_only">
-      <RationalePopup
-        :correct="this.$store.state.correct"
-        :rationale="ht_question.rationale"
-      />
-    </div>
-  </div>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NTable } from "naive-ui";
+import { NButton, NTabPane, NTabs, NTable, NConfigProvider } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import RationalePopup from "../components/RationalePopup.vue";
@@ -83,6 +85,7 @@ export default {
     NTabs,
     NTable,
     RationalePopup,
+    NConfigProvider
   },
   setup(props) {
     const choiceSelRef = ref([]);
@@ -107,7 +110,6 @@ export default {
         if (
           ifSameArray(props.ht_question.correct_answers, choiceSelRef.value)
         ) {
-          console.log("correct");
           store.state.correct = "correct";
           store.state.numOfCorrectAnswers = store.state.numOfCorrectAnswers + 1;
           store.commit("UPDATE_SCORE");
@@ -127,7 +129,15 @@ export default {
         }
     };
   },
-
+  data() {
+    return {
+      themeOverrides: {
+        common: {
+          primaryColor: "#FF8C00",
+        }
+      }
+    }
+  }
 };
 </script>
 

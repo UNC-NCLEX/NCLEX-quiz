@@ -313,7 +313,7 @@ export default {
             a5: this.answerText5,
             rationale: this.rationale,
           };
-          console.log(newQ);
+          
           this.$store.dispatch("newMatrix", newQ);
         },
       },

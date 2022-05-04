@@ -210,7 +210,6 @@ export default {
         if (error) throw error;
         let roster_onyens = roster.map((x) => x.onyen);
         rosterArray.value = roster_onyens;
-        console.log(roster_onyens);
       } catch (error) {
         message.error(error.message);
       }
@@ -255,7 +254,6 @@ export default {
 
         try {
           let decoded = VueJwtDecode.decode(jwt);
-          console.log(decoded);
           this.setUID(decoded.sub);
           this.setName(decoded.user_metadata.name);
           this.setUserType(decoded.user_metadata.userType);
@@ -267,7 +265,6 @@ export default {
             this.$store.state.user.userType == "student" &&
             !this.rosterArray.includes(this.$store.state.user.onyen)
           ) {
-            console.log(this.rosterArray);
             this.createErrorMessage(
               "You are not a part of the roster. Please contact your instructor.",
               10000

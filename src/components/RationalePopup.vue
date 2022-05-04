@@ -56,7 +56,6 @@ export default {
       if (this.$store.state.currentIndex < this.$store.state.quizLength - 1) {
         this.$store.commit("INC_QUESTION");
       } else {
-        console.log("last question go to sd");
         this.updateScore();
         this.createSuccessMessage(
           `Your score for ${this.$store.state.currentQuizTitle} is: ${this.$store.state.score}. Please refresh to see the changes.`,

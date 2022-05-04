@@ -1,101 +1,103 @@
 <template>
-  <div class="container">
-    <div class="information">
-      <!-- tab group for background information -->
-      <n-tabs type="line">
-        <n-tab-pane name="History and Physical" tab="History and Physical">
-          {{ ddt_question.hist_and_phys }}
-        </n-tab-pane>
-        <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-          {{ ddt_question.nurse_notes }}
-        </n-tab-pane>
-        <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-          {{ ddt_question.flow_sheet }}
-        </n-tab-pane>
-        <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-          {{ ddt_question.lab_results }}
-        </n-tab-pane>
-        <n-tab-pane name="Orders" tab="Orders">
-          {{ ddt_question.orders }}
-        </n-tab-pane>
-      </n-tabs>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <div class="information">
+        <!-- tab group for background information -->
+        <n-tabs type="line">
+          <n-tab-pane name="History and Physical" tab="History and Physical">
+            {{ ddt_question.hist_and_phys }}
+          </n-tab-pane>
+          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+            {{ ddt_question.nurse_notes }}
+          </n-tab-pane>
+          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+            {{ ddt_question.flow_sheet }}
+          </n-tab-pane>
+          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+            {{ ddt_question.lab_results }}
+          </n-tab-pane>
+          <n-tab-pane name="Orders" tab="Orders">
+            {{ ddt_question.orders }}
+          </n-tab-pane>
+        </n-tabs>
+      </div>
+      <h3>
+        {{ ddt_question.text }}
+      </h3>
+      <table class="table">
+        <thead>
+          <!-- for loop through row headers -->
+          <th v-for="(header, index) in ddt_question.row_headers" :key="index">
+            <b>{{ header }}</b>
+          </th>
+        </thead>
+        <tbody>
+          <!--table row 1-->
+          <tr class="row">
+            <td>{{ ddt_question.answer_choice[0]["row0"][0] }}</td>
+            <td>
+              <n-select
+                v-model:value="p1c1"
+                :options="ddt_question.answer_choice[0]['row1']"
+              />
+            </td>
+            <td>
+              <n-select
+                v-model:value="p1c2"
+                :options="ddt_question.answer_choice[0]['row2']"
+              />
+            </td>
+          </tr>
+          <!--table row 2-->
+          <tr class="row">
+            <td>{{ ddt_question.answer_choice[0]["row0"][1] }}</td>
+            <td>
+              <n-select
+                v-model:value="p2c1"
+                :options="ddt_question.answer_choice[0]['row1']"
+              />
+            </td>
+            <td>
+              <n-select
+                v-model:value="p2c2"
+                :options="ddt_question.answer_choice[0]['row2']"
+              />
+            </td>
+          </tr>
+          <!--table row 3 only displays if row 3 question-->
+          <tr v-if="ifRow3" class="row">
+            <td>{{ ddt_question.answer_choice[0]["row0"][2] }}</td>
+            <td>
+              <n-select
+                v-model:value="p3c1"
+                :options="ddt_question.answer_choice[0]['row1']"
+              />
+            </td>
+            <td>
+              <n-select
+                v-model:value="p3c2"
+                :options="ddt_question.answer_choice[0]['row2']"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <h3>
-      {{ ddt_question.text }}
-    </h3>
-    <table class="table">
-      <thead>
-        <!-- for loop through row headers -->
-        <th v-for="(header, index) in ddt_question.row_headers" :key="index">
-          <b>{{ header }}</b>
-        </th>
-      </thead>
-      <tbody>
-        <!--table row 1-->
-        <tr class="row">
-          <td>{{ ddt_question.answer_choice[0]["row0"][0] }}</td>
-          <td>
-            <n-select
-              v-model:value="p1c1"
-              :options="ddt_question.answer_choice[0]['row1']"
-            />
-          </td>
-          <td>
-            <n-select
-              v-model:value="p1c2"
-              :options="ddt_question.answer_choice[0]['row2']"
-            />
-          </td>
-        </tr>
-        <!--table row 2-->
-        <tr class="row">
-          <td>{{ ddt_question.answer_choice[0]["row0"][1] }}</td>
-          <td>
-            <n-select
-              v-model:value="p2c1"
-              :options="ddt_question.answer_choice[0]['row1']"
-            />
-          </td>
-          <td>
-            <n-select
-              v-model:value="p2c2"
-              :options="ddt_question.answer_choice[0]['row2']"
-            />
-          </td>
-        </tr>
-        <!--table row 3 only displays if row 3 question-->
-        <tr v-if="ifRow3" class="row">
-          <td>{{ ddt_question.answer_choice[0]["row0"][2] }}</td>
-          <td>
-            <n-select
-              v-model:value="p3c1"
-              :options="ddt_question.answer_choice[0]['row1']"
-            />
-          </td>
-          <td>
-            <n-select
-              v-model:value="p3c2"
-              :options="ddt_question.answer_choice[0]['row2']"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <!-- display submit button OR rationale depending on if question is submitted -->
-  <div v-if="!this.$store.state.isSubmitted && !view_only">
-    <n-button size="large" @click="checkAnswer">Submit</n-button>
-  </div>
-  <div v-else-if="this.$store.state.isSubmitted && !view_only">
-    <RationalePopup
-      :correct="this.$store.state.correct"
-      :rationale="ddt_question.rationale"
-    />
-  </div>
+    <!-- display submit button OR rationale depending on if question is submitted -->
+    <div v-if="!this.$store.state.isSubmitted && !view_only">
+      <n-button size="large" @click="checkAnswer">Submit</n-button>
+    </div>
+    <div v-else-if="this.$store.state.isSubmitted && !view_only">
+      <RationalePopup
+        :correct="this.$store.state.correct"
+        :rationale="ddt_question.rationale"
+      />
+    </div>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSelect } from "naive-ui";
+import { NButton, NTabPane, NTabs, NSelect, NConfigProvider } from "naive-ui";
 import { useStore } from "vuex";
 import { ref } from "vue";
 import RationalePopup from "../components/RationalePopup.vue";
@@ -108,6 +110,7 @@ export default {
     NTabs,
     NSelect,
     RationalePopup,
+    NConfigProvider
   },
   props: {
     //ddt_question as a prop - immutable
@@ -172,6 +175,15 @@ export default {
       },
     };
   },
+  data() {
+    return {
+      themeOverrides: {
+        common: {
+          primaryColor: "#FF8C00",
+        }
+      }
+    }
+  }
 };
 </script>
 

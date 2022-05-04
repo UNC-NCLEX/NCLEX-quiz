@@ -1,59 +1,61 @@
 <template>
-  <div class="container">
-    <div class="question">
-      <div class="information">
-        <!-- tab group for background information -->
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            {{ mc_question.hist_and_phys }}
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            {{ mc_question.nurse_notes }}
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            {{ mc_question.flow_sheet }}</n-tab-pane
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <div class="question">
+        <div class="information">
+          <!-- tab group for background information -->
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              {{ mc_question.hist_and_phys }}
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              {{ mc_question.nurse_notes }}
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              {{ mc_question.flow_sheet }}</n-tab-pane
+            >
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              {{ mc_question.lab_results }}
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              {{ mc_question.orders }}
+            </n-tab-pane>
+          </n-tabs>
+        </div>
+        <h3>
+          {{ mc_question.text }}
+        </h3>
+        <!-- checkedValue => student selected answer -->
+        <n-radio-group v-model:value="checkedValue" name="radiogroup">
+          <!-- for loop to display all answer choices -->
+          <n-radio
+            v-for="item in mc_question.answer_choice"
+            :key="item + this.$store.state.currentIndex"
+            :value="item"
+            class="choice-text"
+            :checked="checkedValue === item"
+            @change="handleChange"
+            size="large"
+            >{{ item }}</n-radio
           >
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            {{ mc_question.lab_results }}
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            {{ mc_question.orders }}
-          </n-tab-pane>
-        </n-tabs>
+        </n-radio-group>
       </div>
-      <h3>
-        {{ mc_question.text }}
-      </h3>
-      <!-- checkedValue => student selected answer -->
-      <n-radio-group v-model:value="checkedValue" name="radiogroup">
-        <!-- for loop to display all answer choices -->
-        <n-radio
-          v-for="item in mc_question.answer_choice"
-          :key="item + this.$store.state.currentIndex"
-          :value="item"
-          class="choice-text"
-          :checked="checkedValue === item"
-          @change="handleChange"
-          size="large"
-          >{{ item }}</n-radio
-        >
-      </n-radio-group>
+      <!--rational popup only displays after question is submitted (if isSubmitted). if not submitted then submit button display-->
+      <div v-if="!this.$store.state.isSubmitted && !view_only">
+        <n-button size="large" @click="checkAnswer">Submit</n-button>
+      </div>
+      <div v-else-if="this.$store.state.isSubmitted && !view_only">
+        <RationalePopup
+          :correct="this.$store.state.correct"
+          :rationale="mc_question.rationale"
+        />
+      </div>
     </div>
-    <!--rational popup only displays after question is submitted (if isSubmitted). if not submitted then submit button display-->
-    <div v-if="!this.$store.state.isSubmitted && !view_only">
-      <n-button size="large" @click="checkAnswer">Submit</n-button>
-    </div>
-    <div v-else-if="this.$store.state.isSubmitted && !view_only">
-      <RationalePopup
-        :correct="this.$store.state.correct"
-        :rationale="mc_question.rationale"
-      />
-    </div>
-  </div>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NRadio, NRadioGroup } from "naive-ui";
+import { NButton, NTabPane, NTabs, NRadio, NRadioGroup, NConfigProvider } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import RationalePopup from "../components/RationalePopup.vue";
@@ -75,6 +77,7 @@ export default {
     NRadio,
     NRadioGroup,
     RationalePopup,
+    NConfigProvider
   },
   setup(props) {
     const checkedValue = ref("");
@@ -89,7 +92,6 @@ export default {
         store.state.isSubmitted = true;
         //compare submitted answer to correct answer array
         if (props.mc_question.correct_answers.includes(checkedValue.value)) {
-          console.log("correct");
           store.state.correct = "correct";
           store.state.numOfCorrectAnswers = store.state.numOfCorrectAnswers + 1;
           store.commit("UPDATE_SCORE");
@@ -99,6 +101,15 @@ export default {
       },
     };
   },
+  data() {
+    return {
+      themeOverrides: {
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      }
+    }
+  }
 };
 </script>
 

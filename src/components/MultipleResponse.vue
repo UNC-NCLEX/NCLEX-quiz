@@ -1,56 +1,58 @@
 <template>
-  <div class="container">
-    <div class="question">
-      <div class="information">
-        <!-- tab group for background information -->
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            {{ mr_question.hist_and_phys }}
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            {{ mr_question.nurse_notes }}
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            {{ mr_question.flow_sheet }}</n-tab-pane
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <div class="question">
+        <div class="information">
+          <!-- tab group for background information -->
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              {{ mr_question.hist_and_phys }}
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              {{ mr_question.nurse_notes }}
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              {{ mr_question.flow_sheet }}</n-tab-pane
+            >
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              {{ mr_question.lab_results }}
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              {{ mr_question.orders }}
+            </n-tab-pane>
+          </n-tabs>
+        </div>
+        <h3>
+          {{ mr_question.text }}
+        </h3>
+        <!-- choiceSel models student selected answers -->
+        <n-checkbox-group v-model:value="choiceSel" name="radiogroup">
+          <!-- for loop to display all answer choices -->
+          <n-checkbox
+            v-for="(item, index) in mr_question.answer_choice"
+            :key="item + index"
+            :value="item"
+            :label="item"
           >
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            {{ mr_question.lab_results }}
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            {{ mr_question.orders }}
-          </n-tab-pane>
-        </n-tabs>
+          </n-checkbox>
+        </n-checkbox-group>
       </div>
-      <h3>
-        {{ mr_question.text }}
-      </h3>
-      <!-- choiceSel models student selected answers -->
-      <n-checkbox-group v-model:value="choiceSel" name="radiogroup">
-        <!-- for loop to display all answer choices -->
-        <n-checkbox
-          v-for="(item, index) in mr_question.answer_choice"
-          :key="item + index"
-          :value="item"
-          :label="item"
-        >
-        </n-checkbox>
-      </n-checkbox-group>
+      <!--rational popup component only displays after question is submitted (if isSubmitted). if not submitted then submit button displays-->
+      <div v-if="!this.$store.state.isSubmitted && !view_only">
+        <n-button size="large" @click="checkAnswer">Submit</n-button>
+      </div>
+      <div v-else-if="this.$store.state.isSubmitted && !view_only">
+        <RationalePopup
+          :correct="this.$store.state.correct"
+          :rationale="mr_question.rationale"
+        />
+      </div>
     </div>
-    <!--rational popup component only displays after question is submitted (if isSubmitted). if not submitted then submit button displays-->
-    <div v-if="!this.$store.state.isSubmitted && !view_only">
-      <n-button size="large" @click="checkAnswer">Submit</n-button>
-    </div>
-    <div v-else-if="this.$store.state.isSubmitted && !view_only">
-      <RationalePopup
-        :correct="this.$store.state.correct"
-        :rationale="mr_question.rationale"
-      />
-    </div>
-  </div>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NCheckbox, NCheckboxGroup, NTabPane, NTabs } from "naive-ui";
+import { NButton, NCheckbox, NCheckboxGroup, NTabPane, NTabs, NConfigProvider } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import RationalePopup from "../components/RationalePopup.vue";
@@ -72,6 +74,7 @@ export default {
     NTabPane,
     NTabs,
     RationalePopup,
+    NConfigProvider
   },
   setup(props) {
     const choiceSelRef = ref([]);
@@ -94,7 +97,6 @@ export default {
         if (
           ifSameArray(props.mr_question.correct_answers, choiceSelRef.value)
         ) {
-          console.log("correct");
           store.state.correct = "correct";
           store.state.numOfCorrectAnswers = store.state.numOfCorrectAnswers + 1;
           store.commit("UPDATE_SCORE");
@@ -104,6 +106,15 @@ export default {
       },
     };
   },
+  data() {
+    return {
+      themeOverrides: {
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      }
+    }
+  }
 };
 </script>
 

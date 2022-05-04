@@ -90,10 +90,6 @@ export default {
   },
   methods: {
     async createQuiz() {
-      const data = await supabase.from("quiz").select("quiz_id");
-
-      let next_id = Math.max(data.data.length) + 1;
-      console.log(next_id);
       //send new quiz name to database and create new data row
       await supabase.from("quiz").insert([{ title: this.newQuizName }]);
 
@@ -124,12 +120,10 @@ export default {
           break;
         case 1:
           // Multiple Choice
-          console.log(qids);
           this.$router.push({ name: "NewMultChoice" });
           break;
         case 2:
           // Select All
-          console.log(qids);
           this.$router.push({ name: "NewSelectAll" });
           break;
         case 3:
@@ -149,7 +143,6 @@ export default {
           this.$router.push({ name: "NewHighlight" });
           break;
       }
-      console.log("new question" + this.typeSelected);
     },
   },
 };

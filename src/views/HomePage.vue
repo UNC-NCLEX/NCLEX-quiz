@@ -102,6 +102,6 @@ export default {
 
 .copyright {
     margin: 0%;
-    font-size: 1.5rem;
+    font-size: 0.8rem;
 }
 </style>

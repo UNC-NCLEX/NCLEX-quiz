@@ -165,7 +165,7 @@ export default createStore({
             var nextQ = eval(
                 "state.".concat(quizTitle, "[", state.currentXid - 1, "].xid")
             );
-            console.log(nextQ);
+            
             var toRet;
             var exe = "for(var i=0; i<state.".concat(
                 tableSearch,
