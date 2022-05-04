@@ -94,7 +94,7 @@
             <thead>
               <th>
                 <n-input
-                  v-model:value="rowText"
+                  v-model:value="h1"
                   type="text"
                   class="form-field"
                   id="questText"
@@ -105,7 +105,7 @@
               </th>
               <th>
                 <n-input
-                  v-model:value="rowText"
+                  v-model:value="h2"
                   type="text"
                   class="form-field"
                   id="questText"
@@ -116,7 +116,7 @@
               </th>
               <th>
                 <n-input
-                  v-model:value="rowText"
+                  v-model:value="h3"
                   type="text"
                   class="form-field"
                   id="questText"
@@ -127,7 +127,7 @@
               </th>
               <th>
                 <n-input
-                  v-model:value="rowText"
+                  v-model:value="h4"
                   type="text"
                   class="form-field"
                   id="questText"
@@ -141,7 +141,7 @@
               <tr>
                 <td>
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="row1"
                     type="text"
                     class="form-field"
                     id="questText"
@@ -150,20 +150,35 @@
                     placeholder="Enter Question Text"
                   />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r1b1"
+                    name="answerchoice"
+                  />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r1b2"
+                    name="answerchoice"
+                  />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r1b3"
+                    name="answerchoice"
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="row2"
                     type="text"
                     class="form-field"
                     id="questText"
@@ -172,20 +187,35 @@
                     placeholder="Enter Question Text"
                   />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r2b1"
+                    name="answerchoice"
+                  />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r2b2"
+                    name="answerchoice"
+                  />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r2b3"
+                    name="answerchoice"
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="row3"
                     type="text"
                     class="form-field"
                     id="questText"
@@ -194,20 +224,35 @@
                     placeholder="Enter Question Text"
                   />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r3b1"
+                    name="answerchoice"
+                  />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r3b2"
+                    name="answerchoice"
+                  />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r3b3"
+                    name="answerchoice"
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
                   <n-input
-                    v-model:value="rowText"
+                    v-model:value="row4"
                     type="text"
                     class="form-field"
                     id="questText"
@@ -216,14 +261,29 @@
                     placeholder="Enter Question Text"
                   />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r4b1"
+                    name="answerchoice"
+                  />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r4b2"
+                    name="answerchoice"
+                  />
                 </td>
-                <td>
-                  <n-checkbox v-model="value" size="large" />
+                <td style="text-align:center">
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="r4b3"
+                    name="answerchoice"
+                  />
                 </td>
               </tr>
             </tbody>
@@ -273,12 +333,13 @@ import {
   NTabPane,
   NTabs,
   NTable,
-  NCheckbox,
   NInput,
   NConfigProvider,
+  useMessage,
 } from "naive-ui";
 
 import { ref } from "vue";
+import { supabase } from "../supabase/init";
 
 export default {
   name: "NewMatrix",
@@ -287,35 +348,48 @@ export default {
     NTabPane,
     NTabs,
     NTable,
-    NCheckbox,
     NInput,
     NConfigProvider,
   },
   setup() {
+    const message = useMessage();
+
     return {
+      histAndPhys: ref(null),
+      nurseNotes: ref(null),
+      flowSheet: ref(null),
+      labResults: ref(null),
+      orders: ref(null),
       value: ref(null),
-      methods: {
-        enterQuestion() {
-          //create newQ object with question information to push to database
-          var newQ = {
-            qid: this.qid,
-            histAndPhys: this.histAndPhys,
-            nurseNotes: this.nurseNotes,
-            flowSheet: this.flowSheet,
-            labResults: this.labResults,
-            orders: this.orders,
-            questText: this.questText,
-            rowText: this.rowText,
-            a1: this.answerText1,
-            a2: this.answerText2,
-            a3: this.answerText3,
-            a4: this.answerText4,
-            a5: this.answerText5,
-            rationale: this.rationale,
-          };
-          console.log(newQ);
-          this.$store.dispatch("newMatrix", newQ);
-        },
+      qid: ref(null),
+      questText: ref(null),
+      h1: ref(null),
+      h2: ref(null),
+      h3: ref(null),
+      h4: ref(null),
+      row1: ref(null),
+      row2: ref(null),
+      row3: ref(null),
+      row4: ref(null),
+      r1b1: false,
+      r1b2: false,
+      r1b3: false,
+      r2b1: false,
+      r2b2: false,
+      r2b3: false,
+      r3b1: false,
+      r3b2: false,
+      r3b3: false,
+      r4b1: false,
+      r4b2: false,
+      r4b3: false,
+      rationale: ref(null),
+
+      createSuccessMessage(msg, time) {
+        message.success(msg, { duration: time });
+      },
+      createErrorMessage(msg, time) {
+        message.error(msg, { duration: time });
       },
     };
   },
@@ -327,6 +401,150 @@ export default {
         },
       },
     };
+  },
+  methods: {
+    enterQuestion() {
+      const findMissingIndex = function (arr) {
+        let idx = arr.indexOf(null);
+        if (idx == -1) {
+          idx = arr.indexOf("");
+        }
+        return idx;
+      };
+      //save correct answer text to corAns array variable for db - a1Correct, a2Correct, etc. vars are BOOLEAN, save corresponding text into corAns variable
+      var corAns = [];
+      if (this.r1b1 === true) {
+        corAns.push(1);
+      }
+      if (this.r1b2 === true) {
+        corAns.push(2);
+      }
+      if (this.r1b3 === true) {
+        corAns.push(3);
+      }
+      if (this.r2b1 === true) {
+        corAns.push(4);
+      }
+      if (this.r2b2 === true) {
+        corAns.push(5);
+      }
+      if (this.r2b3 === true) {
+        corAns.push(6);
+      }
+      if (this.r3b1 === true) {
+        corAns.push(7);
+      }
+      if (this.r3b2 === true) {
+        corAns.push(8);
+      }
+      if (this.r3b3 === true) {
+        corAns.push(9);
+      }
+      if (this.r4b1 === true) {
+        corAns.push(10);
+      }
+      if (this.r4b2 === true) {
+        corAns.push(11);
+      }
+      if (this.r4b3 === true) {
+        corAns.push(12);
+      }
+
+      //push new question to database (unused fields as empty)
+      const addQ = async () => {
+        let requiredFields = [
+          this.qid,
+          this.questText,
+          this.h1,
+          this.h2,
+          this.h3,
+          this.h4,
+          this.row1,
+          this.row2,
+          this.row3,
+          this.row4,
+          this.rationale,
+        ];
+        let requiredFieldErrorLabels = [
+          "Please Select a Quiz",
+          "Please Enter a Main Question Text",
+          "Please input Heading 1",
+          "Please input Heading 2",
+          "Please input Heading 3",
+          "Please input Heading 4",
+          "Please input Row 1",
+          "Please input Row 2",
+          "Please input Row 3",
+          "Please input Row 4",
+          "Please input a rationale for correct answer",
+        ];
+        if (requiredFields.includes(null) || requiredFields.includes("")) {
+          let missingIndex = findMissingIndex(requiredFields);
+          this.createErrorMessage(
+            `Error: ${requiredFieldErrorLabels[missingIndex]}`,
+            5000
+          );
+          return;
+        }
+        if (corAns.length == 0) {
+          this.createErrorMessage(
+            `Error: Please Select the Correct Answer(s)`,
+            5000
+          );
+          return;
+        }
+        try {
+          let { data: successAdd, error } = await supabase
+            .from("question")
+            .insert([
+              {
+                quiz_id: this.qid,
+                //all questions added from this page are highlight type
+                type: "mt",
+                hist_and_phys: this.histAndPhys,
+                has_table: true,
+                row_headers: [this.h1, this.h2, this.h3, this.h4],
+                nurse_notes: this.nurseNotes,
+                flow_sheet: this.flowSheet,
+                lab_results: this.labResults,
+                orders: this.orders,
+                text: this.questText,
+                correct_answers: corAns,
+                answer_choice: [
+                  {
+                    row: this.row1
+                  },
+                  {
+                    row: this.row2
+                  },
+                  {
+                    row: this.row3
+                  },
+                  {
+                    row: this.row4
+                  }
+                ],
+                rationale: this.rationale,
+              },
+            ]);
+          if (error) throw error;
+          //console entire question if successfully added
+          console.log(successAdd);
+          this.createSuccessMessage(
+            "Success! New question was created! Check selected quiz.",
+            5000
+          );
+        } catch (error) {
+          //console error if not added
+          console.warn(error.message);
+          this.createErrorMessage(
+            "Error! Check to see if all fields have been entered.",
+            5000
+          );
+        }
+      };
+      addQ();
+    },
   },
 };
 </script>
@@ -340,7 +558,6 @@ export default {
   flex-wrap: wrap;
   align-items: center;
 }
-
 
 /*****TABS*****/
 .information {

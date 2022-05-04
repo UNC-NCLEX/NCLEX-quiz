@@ -489,6 +489,8 @@ export default {
           "Please input Answer Choice 4",
           "Please input Answer Choice 5",
           "Please input Answer Choice 6",
+          "Please input Answer Choice 7",
+          "Please input Answer Choice 8",
           "Please input a rationale for correct answer",
         ];
         if (requiredFields.includes(null) || requiredFields.includes("")) {
@@ -524,50 +526,50 @@ export default {
                 text: this.questText,
                 correct_answers: corAns,
                 answer_choice: [
-                    {
-                      row: this.row1,
-                      options: [
-                        {
-                          label: this.a1,
-                        },
-                        {
-                          label: this.a2,
-                        },
-                      ],
-                    },
-                    {
-                      row: this.row2,
-                      options: [
-                        {
-                          label: this.a3,
-                        },
-                        {
-                          label: this.a4,
-                        },
-                      ],
-                    },
-                    {
-                      row: this.row3,
-                      options: [
-                        {
-                          label: this.a5,
-                        },
-                        {
-                          label: this.a6,
-                        },
-                      ],
-                    },
-                    {
-                      row: this.row4,
-                      options: [
-                        {
-                          label: this.a7,
-                        },
-                        {
-                          label: this.a8,
-                        },
-                      ],
-                    },
+                  {
+                    row: this.row1,
+                    options: [
+                      {
+                        label: this.a1,
+                      },
+                      {
+                        label: this.a2,
+                      },
+                    ],
+                  },
+                  {
+                    row: this.row2,
+                    options: [
+                      {
+                        label: this.a3,
+                      },
+                      {
+                        label: this.a4,
+                      },
+                    ],
+                  },
+                  {
+                    row: this.row3,
+                    options: [
+                      {
+                        label: this.a5,
+                      },
+                      {
+                        label: this.a6,
+                      },
+                    ],
+                  },
+                  {
+                    row: this.row4,
+                    options: [
+                      {
+                        label: this.a7,
+                      },
+                      {
+                        label: this.a8,
+                      },
+                    ],
+                  },
                 ],
                 rationale: this.rationale,
               },
