@@ -286,8 +286,8 @@
           </td>
         </tr>
       </div>
-
       <n-button @click="enterQuestion()" size="large">Add Question</n-button>
+    </div>
     </div>
   </n-config-provider>
 </template>
@@ -464,16 +464,13 @@ export default {
               },
             ]);
           if (error) throw error;
-          //console entire question if successfully added
-          console.log(successAdd);
-
+          //console success if successfully added
           this.createSuccessMessage(
             "Success! New question was created! Check selected quiz.",
             5000
           );
         } catch (error) {
           //console error if not added
-
           this.createErrorMessage(
             "Error! Check to see if all fields have been entered",
             5000

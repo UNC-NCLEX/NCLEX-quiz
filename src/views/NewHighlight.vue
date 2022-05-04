@@ -124,10 +124,16 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Question Text"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a1Correct"
+                    name="answerchoice"
+                  />
                   <n-input
                     v-model:value="rowText"
                     type="text"
@@ -135,10 +141,16 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a2Correct"
+                    name="answerchoice"
+                  />
                   <n-input
                     v-model:value="rowText"
                     type="text"
@@ -146,42 +158,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <n-input
-                    v-model:value="rowText"
-                    type="text"
-                    class="form-field"
-                    id="questText"
-                    name="questText"
-                    :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
-                  />
-                </td>
-                <td>
-                  <n-input
-                    v-model:value="rowText"
-                    type="text"
-                    class="form-field"
-                    id="questText"
-                    name="questText"
-                    :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
-                  />
-                </td>
-                <td>
-                  <n-input
-                    v-model:value="rowText"
-                    type="text"
-                    class="form-field"
-                    id="questText"
-                    name="questText"
-                    :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
               </tr>
@@ -194,10 +171,16 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Question Text"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a3Correct"
+                    name="answerchoice"
+                  />
                   <n-input
                     v-model:value="rowText"
                     type="text"
@@ -205,10 +188,16 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a4Correct"
+                    name="answerchoice"
+                  />
                   <n-input
                     v-model:value="rowText"
                     type="text"
@@ -216,7 +205,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
               </tr>
@@ -229,9 +218,45 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Question Text"
                   />
                 </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a5Correct"
+                    name="answerchoice"
+                  />
+                  <n-input
+                    v-model:value="rowText"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a6Correct"
+                    name="answerchoice"
+                  />
+                  <n-input
+                    v-model:value="rowText"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice"
+                  />
+                </td>
+              </tr>
+              <tr>
                 <td>
                   <n-input
                     v-model:value="rowText"
@@ -240,10 +265,16 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Question Text"
                   />
                 </td>
                 <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a7Correct"
+                    name="answerchoice"
+                  />
                   <n-input
                     v-model:value="rowText"
                     type="text"
@@ -251,13 +282,30 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Heading Text"
+                    placeholder="Enter Answer Choice"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    v-model="a8Correct"
+                    name="answerchoice"
+                  />
+                  <n-input
+                    v-model:value="rowText"
+                    type="text"
+                    class="form-field"
+                    id="questText"
+                    name="questText"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice"
                   />
                 </td>
               </tr>
             </tbody>
           </n-table>
-                    <h2>Rationale Text</h2>
+          <h2>Rationale Text</h2>
 
           <n-input
             v-model:value="rationale"
@@ -287,6 +335,14 @@
             answerText2,
             answerText3,
             answerText4,
+            a1Correct,
+            a2Correct,
+            a3Correct,
+            a4Correct,
+            a5Correct,
+            a6Correct,
+            a7Correct,
+            a8Correct,
             rationale
           )
         "
