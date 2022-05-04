@@ -1,78 +1,82 @@
 <template>
-<n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
-  <div class="container">
-    <h1>New Drop Down Sentence Question</h1>
-    <div class="quizTitle">
-      <label for="quizT">Select Quiz Group for Question </label>
-      <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
-      <select v-model="qid">
-        <option v-for="quiz in this.$store.state.quizzes" v-bind:value="quiz.quiz_id" :key="quiz.quiz_id">
-          {{ quiz.title }}
-        </option>
-      </select>
-    </div>
-    <div class="question">
-      <h2>Question</h2>
-      <!-- tab group for background information n-input fields to take user input -->
-      <div class="information">
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            <n-input
-              v-model:value="histAndPhys"
-              type="text"
-              class="form-field"
-              id="histAndPhys"
-              name="histAndPhys"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter History &amp; Physical Information"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            <n-input
-              v-model:value="nurseNotes"
-              type="text"
-              class="form-field"
-              id="nurseNotes"
-              name="nurseNotes"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Nurse's Notes"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            <n-input
-              v-model:value="flowSheet"
-              type="text"
-              class="form-field"
-              id="flowSheet"
-              name="flowSheet"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Flow Sheet"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            <n-input
-              v-model:value="labResults"
-              type="text"
-              class="form-field"
-              id="labResults"
-              name="labResults"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Labratory Results"
-            />
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            <n-input
-              v-model:value="orders"
-              type="text"
-              class="form-field"
-              id="orders"
-              name="orders"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Orders"
-            />
-          </n-tab-pane>
-        </n-tabs>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <h1>New Drop Down Sentence Question</h1>
+      <div class="quizTitle">
+        <label for="quizT">Select Quiz Group for Question </label>
+        <!-- dropdown with current quiz names to assign question to quiz, saved in qid variable -->
+        <select v-model="qid">
+          <option
+            v-for="quiz in this.$store.state.quizzes"
+            v-bind:value="quiz.quiz_id"
+            :key="quiz.quiz_id"
+          >
+            {{ quiz.title }}
+          </option>
+        </select>
       </div>
+      <div class="question">
+        <h2>Question</h2>
+        <!-- tab group for background information n-input fields to take user input -->
+        <div class="information">
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              <n-input
+                v-model:value="histAndPhys"
+                type="text"
+                class="form-field"
+                id="histAndPhys"
+                name="histAndPhys"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter History &amp; Physical Information"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              <n-input
+                v-model:value="nurseNotes"
+                type="text"
+                class="form-field"
+                id="nurseNotes"
+                name="nurseNotes"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Nurse's Notes"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              <n-input
+                v-model:value="flowSheet"
+                type="text"
+                class="form-field"
+                id="flowSheet"
+                name="flowSheet"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Flow Sheet"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              <n-input
+                v-model:value="labResults"
+                type="text"
+                class="form-field"
+                id="labResults"
+                name="labResults"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Labratory Results"
+              />
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              <n-input
+                v-model:value="orders"
+                type="text"
+                class="form-field"
+                id="orders"
+                name="orders"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Orders"
+              />
+            </n-tab-pane>
+          </n-tabs>
+        </div>
         <h2>Question Text</h2>
 
         <n-input
@@ -84,223 +88,231 @@
           :input-props="{ type: 'clearable' }"
           placeholder="Enter Overall Main Text"
         />
-      
-      <div>
-        <tr>
-          <h4 class="questions">
-            <n-input
-              v-model:value="questionp1"
-              type="text"
-              class="form-field"
-              id="answerText1"
-              name="answerText1"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Question Sentence 1"
-            />...
-          </h4>
-          <td>
-            <n-space vertical>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="1"
-                  v-model="p1correct"
-                  name="answerchoice1"
-                /><n-input
-                  v-model:value="p1c1"
-                  type="text"
-                  class="form-field"
-                  id="answerText1"
-                  name="answerText1"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 1 for Question 1"
-                />
-              </div>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="2"
-                  v-model="p1correct"
-                  name="answerchoice1"
-                /><n-input
-                  v-model:value="p1c2"
-                  type="text"
-                  class="form-field"
-                  id="answerText2"
-                  name="answerText2"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 2 for Question 1"
-                />
-              </div>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="3"
-                  v-model="p1correct"
-                  name="answerchoice1"
-                /><n-input
-                  v-model:value="p1c3"
-                  type="text"
-                  class="form-field"
-                  id="answerText3"
-                  name="answerText3"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 3 for Question 1"
-                />
-              </div>
-            </n-space>
-          </td>
-        </tr>
-        <tr>
-          <h4 class="questions">
-            <n-input
-              v-model:value="questionp2"
-              type="text"
-              class="form-field"
-              id="answerText1"
-              name="answerText1"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Question Sentence 2"
-            />...
-          </h4>
-          <td>
-            <n-space vertical>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="1"
-                  v-model="p2correct"
-                  name="answerchoice2"
-                /><n-input
-                  v-model:value="p2c1"
-                  type="text"
-                  class="form-field"
-                  id="answerText1"
-                  name="answerText1"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 1 for Question 2"
-                />
-              </div>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="2"
-                  v-model="p2correct"
-                  name="answerchoice2"
-                /><n-input
-                  v-model:value="p2c2"
-                  type="text"
-                  class="form-field"
-                  id="answerText2"
-                  name="answerText2"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 2 for Question 2"
-                />
-              </div>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="3"
-                  v-model="p2correct"
-                  name="answerchoice2"
-                /><n-input
-                  v-model:value="p2c3"
-                  type="text"
-                  class="form-field"
-                  id="answerText3"
-                  name="answerText3"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 3 for Question 2"
-                />
-              </div>
-            </n-space>
-          </td>
-        </tr>
-        <tr>
-          <h4 class="questions">
-            <n-input
-              v-model:value="questionp3"
-              type="text"
-              class="form-field"
-              id="answerText1"
-              name="answerText1"
-              :input-props="{ type: 'clearable' }"
-              placeholder="Enter Question Sentence 3"
-            />...
-          </h4>
-          <td>
-            <n-space vertical>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="1"
-                  v-model="p3correct"
-                  name="answerchoice3"
-                /><n-input
-                  v-model:value="p3c1"
-                  type="text"
-                  class="form-field"
-                  id="answerText1"
-                  name="answerText1"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 1 for Question 3"
-                />
-              </div>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="2"
-                  v-model="p3correct"
-                  name="answerchoice3"
-                /><n-input
-                  v-model:value="p3c2"
-                  type="text"
-                  class="form-field"
-                  id="answerText2"
-                  name="answerText2"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 2 for Question 3"
-                />
-              </div>
-              <div class="answer">
-                <input
-                  type="radio"
-                  value="3"
-                  v-model="p3correct"
-                  name="answerchoice3"
-                /><n-input
-                  v-model:value="p3c3"
-                  type="text"
-                  class="form-field"
-                  id="answerText3"
-                  name="answerText3"
-                  :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Answer Choice 3 for Question 3"
-                />
-              </div>
-            </n-space>
-          </td>
-        </tr>
+
+        <div>
+          <tr>
+            <h4 class="questions">
+              <n-input
+                v-model:value="questionp1"
+                type="text"
+                class="form-field"
+                id="answerText1"
+                name="answerText1"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Question Sentence 1"
+              />...
+            </h4>
+            <td>
+              <n-space vertical>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="1"
+                    v-model="p1correct"
+                    name="answerchoice1"
+                  /><n-input
+                    v-model:value="p1c1"
+                    type="text"
+                    class="form-field"
+                    id="answerText1"
+                    name="answerText1"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 1 for Question 1"
+                  />
+                </div>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="2"
+                    v-model="p1correct"
+                    name="answerchoice1"
+                  /><n-input
+                    v-model:value="p1c2"
+                    type="text"
+                    class="form-field"
+                    id="answerText2"
+                    name="answerText2"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 2 for Question 1"
+                  />
+                </div>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="3"
+                    v-model="p1correct"
+                    name="answerchoice1"
+                  /><n-input
+                    v-model:value="p1c3"
+                    type="text"
+                    class="form-field"
+                    id="answerText3"
+                    name="answerText3"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 3 for Question 1"
+                  />
+                </div>
+              </n-space>
+            </td>
+          </tr>
+          <tr>
+            <h4 class="questions">
+              <n-input
+                v-model:value="questionp2"
+                type="text"
+                class="form-field"
+                id="answerText1"
+                name="answerText1"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Question Sentence 2"
+              />...
+            </h4>
+            <td>
+              <n-space vertical>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="1"
+                    v-model="p2correct"
+                    name="answerchoice2"
+                  /><n-input
+                    v-model:value="p2c1"
+                    type="text"
+                    class="form-field"
+                    id="answerText1"
+                    name="answerText1"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 1 for Question 2"
+                  />
+                </div>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="2"
+                    v-model="p2correct"
+                    name="answerchoice2"
+                  /><n-input
+                    v-model:value="p2c2"
+                    type="text"
+                    class="form-field"
+                    id="answerText2"
+                    name="answerText2"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 2 for Question 2"
+                  />
+                </div>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="3"
+                    v-model="p2correct"
+                    name="answerchoice2"
+                  /><n-input
+                    v-model:value="p2c3"
+                    type="text"
+                    class="form-field"
+                    id="answerText3"
+                    name="answerText3"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 3 for Question 2"
+                  />
+                </div>
+              </n-space>
+            </td>
+          </tr>
+          <tr>
+            <h4 class="questions">
+              <n-input
+                v-model:value="questionp3"
+                type="text"
+                class="form-field"
+                id="answerText1"
+                name="answerText1"
+                :input-props="{ type: 'clearable' }"
+                placeholder="Enter Question Sentence 3"
+              />...
+            </h4>
+            <td>
+              <n-space vertical>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="1"
+                    v-model="p3correct"
+                    name="answerchoice3"
+                  /><n-input
+                    v-model:value="p3c1"
+                    type="text"
+                    class="form-field"
+                    id="answerText1"
+                    name="answerText1"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 1 for Question 3"
+                  />
+                </div>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="2"
+                    v-model="p3correct"
+                    name="answerchoice3"
+                  /><n-input
+                    v-model:value="p3c2"
+                    type="text"
+                    class="form-field"
+                    id="answerText2"
+                    name="answerText2"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 2 for Question 3"
+                  />
+                </div>
+                <div class="answer">
+                  <input
+                    type="radio"
+                    value="3"
+                    v-model="p3correct"
+                    name="answerchoice3"
+                  /><n-input
+                    v-model:value="p3c3"
+                    type="text"
+                    class="form-field"
+                    id="answerText3"
+                    name="answerText3"
+                    :input-props="{ type: 'clearable' }"
+                    placeholder="Enter Answer Choice 3 for Question 3"
+                  />
+                </div>
+              </n-space>
+            </td>
+          </tr>
+        </div>
+        <h2>Rationale Text</h2>
+        <n-input
+          v-model:value="rationale"
+          type="text"
+          class="form-field"
+          id="rationale"
+          name="rationale"
+          :input-props="{ type: 'clearable' }"
+          placeholder="Enter Rationale Text"
+        />
       </div>
-      <h2>Rationale Text</h2>
-       <n-input
-      v-model:value="rationale"
-      type="text"
-      class="form-field"
-      id="rationale"
-      name="rationale"
-      :input-props="{ type: 'clearable' }"
-      placeholder="Enter Rationale Text"
-    />
+
+      <n-button @click="enterQuestion()" size="large">Add Question</n-button>
     </div>
-   
-    <n-button @click="enterQuestion()" size="large">Add Question</n-button>
-  </div>
-</n-config-provider>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSpace, NInput, NConfigProvider } from "naive-ui";
+import {
+  NButton,
+  NTabPane,
+  NTabs,
+  NSpace,
+  NInput,
+  NConfigProvider,
+  useMessage
+} from "naive-ui";
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
@@ -312,9 +324,11 @@ export default {
     NTabs,
     NSpace,
     NInput,
-    NConfigProvider
+    NConfigProvider,
   },
   setup() {
+        const message = useMessage();
+
     return {
       //initialize user input variables for question
       value: ref(null),
@@ -341,20 +355,25 @@ export default {
       p3c3: ref(null),
       p3correct: ref(null),
       rationale: ref(null),
+      createSuccessMessage(msg, time) {
+        message.success(msg, { duration: time });
+      },
+      createErrorMessage(msg, time) {
+        message.error(msg, { duration: time });
+      },
     };
   },
   data() {
     return {
       themeOverrides: {
-            common: {
-                primaryColor: "#FF8C00"
-            }
-        }
-    }
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      },
+    };
   },
   methods: {
     enterQuestion() {
-     
       //save correct answer text to corAns variable for db - answer var is INT from radio buttons, save corresponding text into corAns variable
       var corAns = [];
       if (this.p1correct == 1) {
@@ -401,7 +420,11 @@ export default {
                 lab_results: this.labResults,
                 orders: this.orders,
                 text: this.text,
-                row_headers: [this.questionp1, this.questionp2, this.questionp3],
+                row_headers: [
+                  this.questionp1,
+                  this.questionp2,
+                  this.questionp3,
+                ],
                 correct_answers: corAns,
                 answer_choice: [
                   [
@@ -426,9 +449,17 @@ export default {
           if (error) throw error;
           //console entire question if successfully added
           console.log(successAdd);
+          this.createSuccessMessage(
+            "Success! New question was created! Check selected quiz.",
+            5000
+          );
         } catch (error) {
           //console error if not added
           console.warn(error.message);
+          this.createErrorMessage(
+            "Error! Check to see if all fields have been entered.",
+            5000
+          );
         }
       };
       addQ();
@@ -446,7 +477,6 @@ export default {
   flex-wrap: wrap;
   align-items: center;
 }
-
 
 /*****TABS*****/
 .information {
