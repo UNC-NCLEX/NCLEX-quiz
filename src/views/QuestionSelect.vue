@@ -19,7 +19,15 @@
             placeholder="Enter New Quiz Name"
           />
           <div class="space"></div>
-          <n-button size="large" @click="createQuiz">Add Quiz</n-button>
+          <n-button
+            @click="createQuiz"
+            size="large"
+            type="primary"
+            color="#fdcb6e"
+            text-color="black"
+            class="button"
+            >Add Quiz</n-button
+          >
         </div>
         <br />
         <div class="qType">
@@ -34,7 +42,13 @@
             <n-radio :value="6" class="choice-text">Highlight Table</n-radio>
           </n-radio-group>
           <div class="space"></div>
-          <n-button size="large" @click="createQuestion"
+          <n-button
+            @click="createQuestion"
+            size="large"
+            type="primary"
+            color="#fdcb6e"
+            text-color="black"
+            class="button"
             >Create Question</n-button
           >
         </div>
@@ -90,10 +104,6 @@ export default {
   },
   methods: {
     async createQuiz() {
-      const data = await supabase.from("quiz").select("quiz_id");
-
-      let next_id = Math.max(data.data.length) + 1;
-      console.log(next_id);
       //send new quiz name to database and create new data row
       await supabase.from("quiz").insert([{ title: this.newQuizName }]);
 
@@ -124,12 +134,10 @@ export default {
           break;
         case 1:
           // Multiple Choice
-          console.log(qids);
           this.$router.push({ name: "NewMultChoice" });
           break;
         case 2:
           // Select All
-          console.log(qids);
           this.$router.push({ name: "NewSelectAll" });
           break;
         case 3:
@@ -149,7 +157,6 @@ export default {
           this.$router.push({ name: "NewHighlight" });
           break;
       }
-      console.log("new question" + this.typeSelected);
     },
   },
 };

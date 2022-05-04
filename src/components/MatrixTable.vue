@@ -1,69 +1,79 @@
 <template>
-  <div class="container">
-    <div class="question">
-      <div class="information">
-        <!-- tab group for background information -->
-        <n-tabs type="line">
-          <n-tab-pane name="History and Physical" tab="History and Physical">
-            {{ mt_question.hist_and_phys }}
-          </n-tab-pane>
-          <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
-            {{ mt_question.nurse_notes }}
-          </n-tab-pane>
-          <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
-            {{ mt_question.flow_sheet }}
-          </n-tab-pane>
-          <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
-            {{ mt_question.lab_results }}
-          </n-tab-pane>
-          <n-tab-pane name="Orders" tab="Orders">
-            {{ mt_question.orders }}
-          </n-tab-pane>
-        </n-tabs>
+  <n-config-provider :theme-overrides="this.themeOverrides" class="wrapper">
+    <div class="container">
+      <div class="question">
+        <div class="information">
+          <!-- tab group for background information -->
+          <n-tabs type="line">
+            <n-tab-pane name="History and Physical" tab="History and Physical">
+              {{ mt_question.hist_and_phys }}
+            </n-tab-pane>
+            <n-tab-pane name="Nurse's Notes" tab="Nurse's Notes">
+              {{ mt_question.nurse_notes }}
+            </n-tab-pane>
+            <n-tab-pane name="Flow Sheet" tab="Flow Sheet">
+              {{ mt_question.flow_sheet }}
+            </n-tab-pane>
+            <n-tab-pane name="Laboratory Results" tab="Laboratory Results">
+              {{ mt_question.lab_results }}
+            </n-tab-pane>
+            <n-tab-pane name="Orders" tab="Orders">
+              {{ mt_question.orders }}
+            </n-tab-pane>
+          </n-tabs>
+        </div>
+        <h3>
+          {{ mt_question.text }}
+        </h3>
+        <div>
+          <n-table>
+            <thead>
+              <!-- for loop through row headers, loops for each row -->
+              <th v-for="(item, index) in mt_question.row_headers" :key="index">
+                <b>{{ mt_question.row_headers[index] }}</b>
+              </th>
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in mt_question.answer_choice" :key="index">
+                <td>{{ mt_question.answer_choice[index].row }}</td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+                <td>
+                  <n-checkbox v-model="value" size="large" />
+                </td>
+              </tr>
+            </tbody>
+          </n-table>
+        </div>
       </div>
-      <h3>
-        {{ mt_question.text }}
-      </h3>
-      <div>
-        <n-table>
-          <thead>
-            <!-- for loop through row headers, loops for each row -->
-            <th v-for="(item, index) in mt_question.row_headers" :key="index">
-              <b>{{ mt_question.row_headers[index] }}</b>
-            </th>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in mt_question.answer_choice" :key="index">
-              <td>{{ mt_question.answer_choice[index].row }}</td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-              <td>
-                <n-checkbox v-model="value" size="large" />
-              </td>
-            </tr>
-          </tbody>
-        </n-table>
+      <!-- display submit button OR rationale depending on if question has been submitted -->
+      <div v-if="!this.$store.state.isSubmitted && !view_only">
+        <n-button
+          @click="checkAnswer"
+          size="large"
+          type="primary"
+          color="#fdcb6e"
+          text-color="black"
+          class="button"
+          >Submit</n-button
+        >
+      </div>
+      <div v-else-if="this.$store.state.isSubmitted && !view_only">
+        <RationalePopup
+          :correct="this.$store.state.correct"
+          :rationale="mt_question.rationale"
+        />
       </div>
     </div>
-    <!-- display submit button OR rationale depending on if question has been submitted -->
-    <div v-if="!this.$store.state.isSubmitted && !view_only">
-      <n-button size="large" @click="checkAnswer">Submit</n-button>
-    </div>
-    <div v-else-if="this.$store.state.isSubmitted && !view_only">
-      <RationalePopup
-        :correct="this.$store.state.correct"
-        :rationale="mt_question.rationale"
-      />
-    </div>
-  </div>
+  </n-config-provider>
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NTable, NCheckbox } from "naive-ui";
+import { NButton, NTabPane, NTabs, NTable, NCheckbox, NConfigProvider } from "naive-ui";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import RationalePopup from "../components/RationalePopup.vue";
@@ -85,6 +95,7 @@ export default {
     NTable,
     NCheckbox,
     RationalePopup,
+    NConfigProvider
   },
   setup(props) {
     const choiceSelRef = ref([]);
@@ -112,7 +123,6 @@ export default {
         if (
           ifSameArray(props.ht_question.correct_answers, choiceSelRef.value)
         ) {
-          console.log("correct");
           store.state.correct = "correct";
           store.state.numOfCorrectAnswers = store.state.numOfCorrectAnswers + 1;
           store.commit("UPDATE_SCORE");
@@ -122,6 +132,15 @@ export default {
       },
     };
   },
+  data() {
+    return {
+      themeOverrides: {
+        common: {
+          primaryColor: "#FF8C00",
+        },
+      }
+    }
+  }
 };
 </script>
 

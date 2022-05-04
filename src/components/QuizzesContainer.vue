@@ -27,7 +27,6 @@ export default {
       const selected_quiz_id = e.target.id;
       this.$store.state.currentQid = selected_quiz_id;
       this.$store.state.currentQuizTitle = e.target.getAttribute("data-id");
-      console.log(e.target);
       this.$router.push(`/Quiz/${selected_quiz_id}`);
     },
   },
