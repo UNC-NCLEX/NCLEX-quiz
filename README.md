@@ -141,35 +141,37 @@ It's important to understand the difference between the components and views sub
 This section will provide an overview of what each file in src/components and src/views is about and what they do.
 
 src/components:
-    - DropDown: Defines a drop-down quiz question
-    - DropDownSentence: Defines a drop-down sentence quiz question
-    - HighlightTable: Defines a highlight table quiz question
-    - HomePageHeader: Defines the header used only on the website's home page
-    - InstructionDashboardHeader: Defines the header used for the instructor dashboard page
-    - MatrixTable: Defines a matrix table quiz question
-    - MultipleChoice: Defines a multiple choice quiz question
-    - MultipleResponse: Defines a multiple response quiz question
-    - PasswordRules: Defines a widget used in the user authentication that displays the criteria for a valid password
-    - QuizCard: Defines a card widget used at the top of the student dashboard that shows a graphic of the scores that a student got on each quiz they've taken
-    - QuizzesContainer: Defines a list of quiz buttons that are displayed on the student dashboard. These buttons are created dynamically after pulling the quizzes from Supabase.
-    - RationalePopup: Defines a widget used to show the rationale behind a quiz question's correct/incorrect answer
-    - StudentDashboardHeader: Defines the header used for the student dashboard page
+
+* DropDown: Defines a drop-down quiz question
+* DropDownSentence: Defines a drop-down sentence quiz question
+* HighlightTable: Defines a highlight table quiz question
+* HomePageHeader: Defines the header used only on the website's home page
+* InstructionDashboardHeader: Defines the header used for the instructor dashboard page
+* MatrixTable: Defines a matrix table quiz question
+* MultipleChoice: Defines a multiple choice quiz question
+* MultipleResponse: Defines a multiple response quiz question
+* PasswordRules: Defines a widget used in the user authentication that displays the criteria for a valid password
+* QuizCard: Defines a card widget used at the top of the student dashboard that shows a graphic of the scores that a student got on each quiz they've taken
+* QuizzesContainer: Defines a list of quiz buttons that are displayed on the student dashboard. These buttons are created dynamically after pulling the quizzes from Supabase.
+* RationalePopup: Defines a widget used to show the rationale behind a quiz question's correct/incorrect answer
+* StudentDashboardHeader: Defines the header used for the student dashboard page
 
 src/views:
-    - HomePage: Defines the home page
-    - InstructorDashboard: Defines the instructor dashboard
-    - NewDDS: Defines the page that allows you to create a new drop-down sentence quiz question (found in the add quiz/question section of the instructor dashboard)
-    - NewDDT: Defines the page that allows you to create a new drop-down table quiz question (found in the add quiz/question section of the instructor dashboard)
-    - NewHighlight: Defines the page that allows you to create a new highlight quiz question (found in the add quiz/question section of the instructor dashboard)
-    - NewMatrix: Defines the page that allows you to create a new matrix table quiz question (found in the add quiz/question section of the instructor dashboard)
-    - NewMultChoice: Defines the page that allows you to create a new multiple choice (single answer) quiz question (found in the add quiz/question section of the instructor dashboard)
-    - NewSelectAll: Defines the page that allows you to create a new select all (multiple answers) quiz question (found in the add quiz/question section of the instructor dashboard)
-    - NotFound: Defines the 404 error page that is displayed if someone visits a page that does not exist
-    - PasswordRecovery: Defines the password recovery page that allows a user to change their password
-    - QuestionSelect: Defines the add new quiz/question page in the instructor dashboard
-    - Roster: Defines the roster of active student onyens
-    - UserAuthentication: Defines the user authentication page that allows users to sign in, sign up, or reset their password
-    - ViewAllQuizzes: Defines the page that allows the instructor to view all active quizzes in the instructor dashboard
+
+* HomePage: Defines the home page
+* InstructorDashboard: Defines the instructor dashboard
+* NewDDS: Defines the page that allows you to create a new drop-down sentence quiz question (found in the add quiz/question section of the instructor dashboard)
+* NewDDT: Defines the page that allows you to create a new drop-down table quiz question (found in the add quiz/question section of the instructor dashboard)
+* NewHighlight: Defines the page that allows you to create a new highlight quiz question (found in the add quiz/question section of the instructor dashboard)
+* NewMatrix: Defines the page that allows you to create a new matrix table quiz question (found in the add quiz/question section of the instructor dashboard)
+* NewMultChoice: Defines the page that allows you to create a new multiple choice (single answer) quiz question (found in the add quiz/question section of the instructor dashboard)
+* NewSelectAll: Defines the page that allows you to create a new select all (multiple answers) quiz question (found in the add quiz/question section of the instructor dashboard)
+* NotFound: Defines the 404 error page that is displayed if someone visits a page that does not exist
+* PasswordRecovery: Defines the password recovery page that allows a user to change their password
+* QuestionSelect: Defines the add new quiz/question page in the instructor dashboard
+* Roster: Defines the roster of active student onyens
+* UserAuthentication: Defines the user authentication page that allows users to sign in, sign up, or reset their password
+* ViewAllQuizzes: Defines the page that allows the instructor to view all active quizzes in the instructor dashboard
 
 ## User Authentication
 
