@@ -52,6 +52,8 @@ export default {
         {
           user: this.$store.state.user.uid,
           quiz: this.$store.state.currentQid,
+          email: this.$store.state.user.email,
+          name: this.$store.state.user.name,
           score: this.$store.state.score,
           title: this.$store.state.currentQuizTitle,
         },
@@ -66,7 +68,7 @@ export default {
       } else {
         this.updateScore();
         this.createSuccessMessage(
-          `Your score for ${this.$store.state.currentQuizTitle} is: ${this.$store.state.score}%.`,
+          `Your score for ${this.$store.state.currentQuizTitle} is: ${this.$store.state.score}%. Please refresh to see your updated score.`,
           10000
         );
         this.$store.commit("RESET_QUIZ");
