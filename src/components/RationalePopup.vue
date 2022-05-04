@@ -9,7 +9,15 @@
       </div>
       <!-- continue button to navigate to next question in quiz -->
       <div id="button">
-        <n-button size="large" @click="handleContinue">Continue</n-button>
+        <n-button
+          @click="handleContinue"
+          size="large"
+          type="primary"
+          color="#fdcb6e"
+          text-color="black"
+          class="button"
+          >Continue</n-button
+        >
       </div>
     </div>
   </div>
@@ -58,7 +66,7 @@ export default {
       } else {
         this.updateScore();
         this.createSuccessMessage(
-          `Your score for ${this.$store.state.currentQuizTitle} is: ${this.$store.state.score}%. Please refresh to see the changes.`,
+          `Your score for ${this.$store.state.currentQuizTitle} is: ${this.$store.state.score}%.`,
           10000
         );
         this.$store.commit("RESET_QUIZ");
