@@ -275,6 +275,13 @@ export default {
   },
   methods: {
     enterQuestion() {
+      const findMissingIndex = function(arr){
+        let idx = arr.indexOf(null)
+        if (idx == -1){
+          idx = arr.indexOf('')
+        }
+        return idx
+      }
       var corAns = [];
       if (this.answer == 1) {
         corAns.push(this.answerText1);
@@ -292,6 +299,26 @@ export default {
         corAns.push(this.answerText5);
       }
       const addQ = async () => {
+        // Data Validation: Checks if any required field is empty or null
+        let requiredFields = [this.qid, this.questText, this.answerText1, this.answerText2, this.answerText3, this.answerText4, this.answerText5, this.rationale]
+        let requiredFieldErrorLabels = ['Please Select a Quiz', 'Please Enter a Main Question Text', 'Please input Answer Choice 1', 'Please input Answer Choice 2', 'Please input Answer Choice 3', 'Please input Answer Choice 4', 'Please input Answer Choice 5', 'Please input Answer Choice 6', 'Please input a rationale for correct answer']
+        if(requiredFields.includes(null) || requiredFields.includes('')){
+          let missingIndex = findMissingIndex(requiredFields)
+          this.createErrorMessage(
+            `Error: ${requiredFieldErrorLabels[missingIndex]}`,
+            5000
+          );
+          return;
+        }
+        if(corAns.length == 0 ){
+          this.createErrorMessage(
+            `Error: Please Select the Correct Answer`,
+            5000
+          );
+          return 
+        }
+
+        // Input the question into the database
         try {
           let { data: successAdd, error } = await supabase
             .from("question")

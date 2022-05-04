@@ -96,7 +96,7 @@
               name="answerText1"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Question Sentence 1"
-            />...
+            />
           </h4>
           <td>
             <n-space vertical>
@@ -161,7 +161,7 @@
               name="answerText1"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Question Sentence 2"
-            />...
+            />
           </h4>
           <td>
             <n-space vertical>
@@ -226,7 +226,7 @@
               name="answerText1"
               :input-props="{ type: 'clearable' }"
               placeholder="Enter Question Sentence 3"
-            />...
+            />
           </h4>
           <td>
             <n-space vertical>
@@ -300,7 +300,7 @@
 </template>
 
 <script>
-import { NButton, NTabPane, NTabs, NSpace, NInput, NConfigProvider } from "naive-ui";
+import { NButton, NTabPane, NTabs, NSpace, NInput, NConfigProvider, useMessage } from "naive-ui";
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
@@ -315,6 +315,7 @@ export default {
     NConfigProvider
   },
   setup() {
+    const message = useMessage();
     return {
       //initialize user input variables for question
       value: ref(null),
@@ -341,6 +342,12 @@ export default {
       p3c3: ref(null),
       p3correct: ref(null),
       rationale: ref(null),
+      createSuccessMessage(msg, time) {
+        message.success(msg, { duration: time });
+      },
+      createErrorMessage(msg, time) {
+        message.error(msg, { duration: time });
+      },
     };
   },
   data() {
@@ -354,7 +361,13 @@ export default {
   },
   methods: {
     enterQuestion() {
-     
+     const findMissingIndex = function(arr){
+        let idx = arr.indexOf(null)
+        if (idx == -1){
+          idx = arr.indexOf('')
+        }
+        return idx
+      }
       //save correct answer text to corAns variable for db - answer var is INT from radio buttons, save corresponding text into corAns variable
       var corAns = [];
       if (this.p1correct == 1) {
@@ -384,11 +397,39 @@ export default {
       if (this.p3correct == 3) {
         corAns.push(this.p3c3);
       }
+      let rowH = [this.questionp1, this.questionp2, this.questionp3];
 
-      //push new question to database (unused fields as empty)
       const addQ = async () => {
+        // Data Validation: Checks if any required field is empty or null
+
+        let requiredFields = [this.qid, this.questText, this.p1c1, this.p1c2, this.p1c3, this.p2c1, this.p2c2, this.p2c3, this.p3c1, this.p3c2, this.p3c3, this.rationale]
+        let requiredFieldErrorLabels = ['Please Select a Quiz', 'Please Enter a Main Question Text', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input a rationale for correct answer']
+        if(requiredFields.includes(null) || requiredFields.includes('')){ // if any of the fields in the requiredFields array are empty or null
+          let missingIndex = findMissingIndex(requiredFields)
+          this.createErrorMessage(
+            `Error: ${requiredFieldErrorLabels[missingIndex]}`,
+            5000
+          );
+          return;
+        }
+        if(rowH.includes(null) || rowH.includes('')){
+          let missingIndex = findMissingIndex(requiredFields)
+          this.createErrorMessage(
+            `Error: Please Input Row Header ${missingIndex + 1}`,
+            5000
+          );
+          return 
+        }
+        if(corAns.length !== 3 ){
+          this.createErrorMessage(
+            `Error: Please Select all Correct Answers for each question`,
+            5000
+          );
+          return 
+        }
+
         try {
-          let { data: successAdd, error } = await supabase
+          let { error } = await supabase
             .from("question")
             .insert([
               {
@@ -401,7 +442,7 @@ export default {
                 lab_results: this.labResults,
                 orders: this.orders,
                 text: this.text,
-                row_headers: [this.questionp1, this.questionp2, this.questionp3],
+                row_headers: rowH,
                 correct_answers: corAns,
                 answer_choice: [
                   [
@@ -425,10 +466,16 @@ export default {
             ]);
           if (error) throw error;
           //console entire question if successfully added
-          console.log(successAdd);
+          this.createSuccessMessage(
+            "Success! New question was created! Check selected quiz.",
+            5000
+          );
         } catch (error) {
           //console error if not added
-          console.warn(error.message);
+          this.createErrorMessage(
+            "Error! Check to see if all fields have been entered",
+            5000
+          );
         }
       };
       addQ();
