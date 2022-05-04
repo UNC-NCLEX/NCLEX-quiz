@@ -99,7 +99,7 @@
                   id="questText"
                   name="questText"
                   :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Heading Text"
+                  placeholder="Enter Column 1 Text"
                 />
               </th>
               <th colspan="2">
@@ -110,7 +110,7 @@
                   id="questText"
                   name="questText"
                   :input-props="{ type: 'clearable' }"
-                  placeholder="Enter Heading Text"
+                  placeholder="Enter Column 2 Text"
                 />
               </th>
             </thead>
@@ -124,7 +124,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Question Text"
+                    placeholder="Enter Question 1"
                   />
                 </td>
                 <td>
@@ -141,7 +141,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Answer Choice"
+                    placeholder="Enter Answer Choice 1"
                   />
                 </td>
                 <td>
@@ -158,7 +158,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Answer Choice"
+                    placeholder="Enter Answer Choice 2"
                   />
                 </td>
               </tr>
@@ -171,7 +171,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Question Text"
+                    placeholder="Enter Question 2"
                   />
                 </td>
                 <td>
@@ -188,7 +188,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Answer Choice"
+                    placeholder="Enter Answer Choice 1"
                   />
                 </td>
                 <td>
@@ -205,7 +205,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Answer Choice"
+                    placeholder="Enter Answer Choice 2"
                   />
                 </td>
               </tr>
@@ -218,7 +218,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Question Text"
+                    placeholder="Enter Question 3"
                   />
                 </td>
                 <td>
@@ -235,7 +235,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Answer Choice"
+                    placeholder="Enter Answer Choice 1"
                   />
                 </td>
                 <td>
@@ -252,7 +252,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Answer Choice"
+                    placeholder="Enter Answer Choice 2"
                   />
                 </td>
               </tr>
@@ -265,7 +265,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Question Text"
+                    placeholder="Enter Question 4"
                   />
                 </td>
                 <td>
@@ -282,7 +282,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Answer Choice"
+                    placeholder="Enter Answer Choice 1"
                   />
                 </td>
                 <td>
@@ -299,7 +299,7 @@
                     id="questText"
                     name="questText"
                     :input-props="{ type: 'clearable' }"
-                    placeholder="Enter Answer Choice"
+                    placeholder="Enter Answer Choice 2"
                   />
                 </td>
               </tr>
