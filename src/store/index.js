@@ -30,10 +30,15 @@ export default createStore({
             state.signedIn = false;
         },
         CLEAR_USER(state) {
-            state.user.uid = "";
-            state.user.jwt = "";
-            state.user.name = "";
-            state.user.email = "";
+            state.user = {
+                uid: "",
+                jwt: "",
+                name: "",
+                email: "",
+                userType: "",
+                onyen: "",
+                profileImg: ""
+            }
         },
         SET_UID(state, uid) {
             state.user.uid = uid;

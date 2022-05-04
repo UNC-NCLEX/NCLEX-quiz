@@ -72,13 +72,19 @@ export default {
 }
 
 .header_contents {
-  position: fixed;
+  position: sticky;
+  top: 0;
   z-index: 1;
   display: flex;
   background: linear-gradient(0.25turn, #ffffff, #f1f2f6);
   filter: drop-shadow(0px 5px 10px #2f3542);
   width: 100%;
   height: 70px;
+  -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 1s; /* Firefox < 16 */
+        -ms-animation: fadein 1s; /* Internet Explorer */
+         -o-animation: fadein 1s; /* Opera < 12.1 */
+            animation: fadein 1s;
 }
 
 .website_title {

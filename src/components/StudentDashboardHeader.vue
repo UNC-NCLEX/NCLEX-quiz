@@ -1,5 +1,5 @@
 <template>
-  <section class="header_contents">
+  <section class="student_header_contents">
     <!-- logo works as a home button -->
     <div class="header_img">
       <img
@@ -81,8 +81,8 @@ export default {
   align-items: center;
   margin-left: 2%;
 }
-.header_contents {
-  position: fixed;
+.student_header_contents {
+  position: sticky;
   z-index: 1;
   display: flex;
   background: linear-gradient(0.25turn, #ffffff, #f1f2f6);
