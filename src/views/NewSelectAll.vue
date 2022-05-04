@@ -290,6 +290,13 @@ export default {
   },
   methods: {
     enterQuestion() {
+      const findMissingIndex = function(arr){
+        let idx = arr.indexOf(null)
+        if (idx == -1){
+          idx = arr.indexOf('')
+        }
+        return idx
+      }
       //save correct answer text to corAns array variable for db - a1Correct, a2Correct, etc. vars are BOOLEAN, save corresponding text into corAns variable
       var corAns = [];
       if (this.a1Correct === true) {
@@ -313,6 +320,23 @@ export default {
 
       //push new question to database (unused fields as empty)
       const addQ = async () => {
+        let requiredFields = [this.qid, this.questText, this.a1, this.a2, this.a3, this.a4, this.a5, this.a6, this.rationale]
+        let requiredFieldErrorLabels = ['Please Select a Quiz', 'Please Enter a Main Question Text', 'Please input Answer Choice 1', 'Please input Answer Choice 2', 'Please input Answer Choice 3', 'Please input Answer Choice 4', 'Please input Answer Choice 5', 'Please input Answer Choice 6', 'Please input a rationale for correct answer']
+        if(requiredFields.includes(null) || requiredFields.includes('')){
+          let missingIndex = findMissingIndex(requiredFields)
+          this.createErrorMessage(
+            `Error: ${requiredFieldErrorLabels[missingIndex]}`,
+            5000
+          );
+          return;
+        }
+        if(corAns.length == 0 ){
+          this.createErrorMessage(
+            `Error: Please Select the Correct Answer(s)`,
+            5000
+          );
+          return 
+        }
         try {
           let { data: successAdd, error } = await supabase
             .from("question")

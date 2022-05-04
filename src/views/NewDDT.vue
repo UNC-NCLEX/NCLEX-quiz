@@ -401,15 +401,9 @@
 </template>
 
 <script>
-import {
-  NButton,
-  NTabPane,
-  NTabs,
-  NSpace,
-  NInput,
-  NConfigProvider,
-  useMessage
-} from "naive-ui";
+
+import { NButton, NTabPane, NTabs, NSpace, NInput, NConfigProvider, useMessage } from "naive-ui";
+
 import { supabase } from "../supabase/init";
 import { ref } from "vue";
 
@@ -425,10 +419,10 @@ export default {
     NSpace,
     NInput,
     NConfigProvider,
-    
+
   },
   setup() {
-        const message = useMessage();
+    const message = useMessage();
 
     return {
       //initialize variables for instructor entered data
@@ -459,7 +453,9 @@ export default {
       p4correct: ref(null),
       p5correct: ref(null),
       p6correct: ref(null),
-           createSuccessMessage(msg, time) {
+
+      createSuccessMessage(msg, time) {
+
         message.success(msg, { duration: time });
       },
       createErrorMessage(msg, time) {
@@ -478,6 +474,13 @@ export default {
   },
   methods: {
     enterQuestion() {
+      const findMissingIndex = function(arr){
+        let idx = arr.indexOf(null)
+        if (idx == -1){
+          idx = arr.indexOf('')
+        }
+        return idx
+      }
       //save correct answer text to corAns variable for db - answer var is INT from radio buttons, save corresponding text into corAns variable
       var corAns = [];
       if (this.p1correct == 1) {
@@ -535,10 +538,36 @@ export default {
         corAns.push(this.c2a3);
       }
       let rowH = [this.heading1, this.heading2, this.heading3];
-      //push new question to database (unused fields as empty)
+
       const addQ = async () => {
+        // Data Validation: Checks if any required field is empty or null
+        let requiredFields = [this.qid, this.questText, this.c1a1, this.c1a2, this.c1a3, this.c2a1, this.c2a2, this.c2a3, this.questionp1, this.questionp2, this.questionp3, this.rationale,]
+        let requiredFieldErrorLabels = ['Please Select a Quiz', 'Please Enter a Main Question Text', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input all Answer Choices', 'Please input the Question for Row 1', 'Please input the Question for Row 2', 'Please input the Question for Row 3', 'Please input a rationale for correct answer']
+        if(requiredFields.includes(null) || requiredFields.includes('')){
+          let missingIndex = findMissingIndex(requiredFields)
+          this.createErrorMessage(
+            `Error: ${requiredFieldErrorLabels[missingIndex]}`,
+            5000
+          );
+          return;
+        }
+        if(rowH.includes(null) || rowH.includes('')){
+          let missingIndex = findMissingIndex(requiredFields)
+          this.createErrorMessage(
+            `Error: Please Input Row Header ${missingIndex + 1}`,
+            5000
+          );
+          return 
+        }
+        if(corAns.length == 0 ){
+          this.createErrorMessage(
+            `Error: Please Select the Correct Answer`,
+            5000
+          );
+          return 
+        }
         try {
-          let { data: successAdd, error } = await supabase
+          let { error } = await supabase
             .from("question")
             .insert([
               {
@@ -591,16 +620,17 @@ export default {
             ]);
           if (error) throw error;
           //console entire question if successfully added
-          console.log(successAdd);
+
+
           this.createSuccessMessage(
             "Success! New question was created! Check selected quiz.",
             5000
           );
         } catch (error) {
           //console error if not added
-          console.warn(error.message);
           this.createErrorMessage(
-            "Error! Check to see if all fields have been entered.",
+            "Error! Check to see if all fields have been entered",
+
             5000
           );
         }
